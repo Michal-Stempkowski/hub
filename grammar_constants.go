@@ -4,14 +4,14 @@ import "hub/sheet_logic_types"
 
 type IntConstant struct {
 	*grammarElementImpl
-	value int
+	value int64
 }
 
-func (i *IntConstant) CalculateInt() (int, error) {
+func (i *IntConstant) CalculateInt() (int64, error) {
 	return i.value, nil
 }
 
-func NewIntConstant(name string, value int) *IntConstant {
+func NewIntConstant(name string, value int64) *IntConstant {
 	return &IntConstant{&grammarElementImpl{name, sheet_logic_types.IntConstant}, value}
 }
 

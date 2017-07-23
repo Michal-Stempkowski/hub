@@ -10,6 +10,15 @@ const (
 	exampleIntValueAsString = "5"
 	exampleFloatValue       = 3.14
 	exampleStringValue      = "StringValue"
+	stringPi                = "3.1416"
+	piRoundedDown           = 3
+	piRoundedUp             = 4
+	piTwoDigitPrecision     = 3.14
+	stringE                 = "2.7182"
+	floatE                  = 2.7182
+	eRoundedUp              = 3
+	eRoundedDown            = 2
+	bigNumber               = 1 << 80
 )
 
 func assertHasType(t *testing.T, el GrammarElement, expectedType sheet_logic_types.T) {
@@ -26,13 +35,20 @@ func assertHasName(t *testing.T, el GrammarElement, expectedName string) {
 	}
 }
 
-func assertCalculatesToInt(t *testing.T, expr IntExpresion, expected int, trail string) {
+func assertCalculatesToInt(t *testing.T, expr IntExpresion, expected int64, trail string) {
 	val, err := expr.CalculateInt()
 	if err != nil {
 		t.Errorf(trail, ":", "Int calculation has failed: ", err)
 	}
 	if val != expected {
 		t.Errorf(trail, ":", expected, "expected, received", val)
+	}
+}
+
+func assertCalculatesToIntFails(t *testing.T, expr IntExpresion, trail string) {
+	_, err := expr.CalculateInt()
+	if err == nil {
+		t.Errorf(trail, ":", "Int calculation should fail!")
 	}
 }
 
@@ -54,4 +70,13 @@ func assertCalculatesToFloat(t *testing.T, expr FloatExpresion, expected float64
 	if val != expected {
 		t.Errorf(trail, ":", expected, "expected, received", val)
 	}
+}
+
+func grammarElementScenario(
+	t *testing.T, uut *grammarElementImpl, expectedType sheet_logic_types.T) {
+	assertHasType(t, uut, expectedType)
+
+	assertHasName(t, uut, variableName)
+	uut.SetName(anotherVariableName)
+	assertHasName(t, uut, anotherVariableName)
 }

@@ -8,31 +8,51 @@ import (
 func TestIntToStringConversion(t *testing.T) {
 	intArg := NewIntConstant(variableName, exampleIntValue)
 	uut := NewIntToStringConversion(variableName, intArg)
-	assertHasName(t, uut, variableName)
+
+	grammarElementScenario(t, uut.grammarElementImpl, sheet_logic_types.IntToStringConversion)
+
 	assertCalculatesToString(
 		t,
 		uut,
 		exampleIntValueAsString,
 		"IntToStringConversion.CalculateString")
-
-	assertHasType(t, uut, sheet_logic_types.IntToStringConversion)
-
-	uut.SetName(anotherVariableName)
-	assertHasName(t, uut, anotherVariableName)
 }
 
 func TestIntToFloatConversion(t *testing.T) {
 	intArg := NewIntConstant(variableName, exampleIntValue)
 	uut := NewIntToFloatConversion(variableName, intArg)
-	assertHasName(t, uut, variableName)
+
+	grammarElementScenario(t, uut.grammarElementImpl, sheet_logic_types.IntToFloatConversion)
+
 	assertCalculatesToFloat(
 		t,
 		uut,
 		exampleIntValue,
 		"IntToFloatConversion.CalculateFloat")
+}
 
-	assertHasType(t, uut, sheet_logic_types.IntToFloatConversion)
+func TestFloatToIntConversion(t *testing.T) {
+	floatArg := NewFloatConstant(variableName, piTwoDigitPrecision)
+	uut := NewFloatToIntConversion(variableName, floatArg)
 
-	uut.SetName(anotherVariableName)
-	assertHasName(t, uut, anotherVariableName)
+	grammarElementScenario(t, uut.grammarElementImpl, sheet_logic_types.FloatToIntConversion)
+
+	assertCalculatesToInt(
+		t,
+		uut,
+		piRoundedDown,
+		"FloatToIntConversion.CalculateInt for pi")
+
+	floatArg.value = floatE
+	assertCalculatesToInt(
+		t,
+		uut,
+		eRoundedUp,
+		"FloatToIntConversion.CalculateInt for e")
+
+	floatArg.value = bigNumber
+	assertCalculatesToIntFails(
+		t,
+		uut,
+		"FloatToIntConversion.CalculateInt for big number")
 }

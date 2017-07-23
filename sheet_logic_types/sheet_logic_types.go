@@ -1,6 +1,6 @@
 package sheet_logic_types
 
-type T int
+type T int64
 
 const (
 	IntConstant T = iota
@@ -8,4 +8,6 @@ const (
 	FloatConstant
 	IntToStringConversion
 	IntToFloatConversion
+	StringToIntConversion
+	FloatToIntConversion
 )

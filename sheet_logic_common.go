@@ -10,7 +10,7 @@ type GrammarElement interface {
 
 // Because there will be also volatile sources (formulas, textfields etc.)
 type IntExpresion interface {
-	CalculateInt() (int, error)
+	CalculateInt() (int64, error)
 }
 
 type FloatExpresion interface {
