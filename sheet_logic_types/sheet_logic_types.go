@@ -28,4 +28,9 @@ const (
 	BoolToIntConversion
 	BoolToStringConversion
 	BoolToFloatConversion
+
+	// Sum
+	IntSum
+	FloatSum
+	StringSum
 )

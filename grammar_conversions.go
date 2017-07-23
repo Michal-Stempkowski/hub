@@ -15,8 +15,8 @@ type IntToStringConversion struct {
 
 func (i *IntToStringConversion) CalculateString() (result string, err error) {
 	var intVal int64
-	intVal, err = i.arg.CalculateInt()
-	if err == nil {
+
+	if intVal, err = i.arg.CalculateInt(); err == nil {
 		result = strconv.FormatInt(intVal, 10)
 	}
 
@@ -36,8 +36,8 @@ type IntToFloatConversion struct {
 
 func (i *IntToFloatConversion) CalculateFloat() (result float64, err error) {
 	var intVal int64
-	intVal, err = i.arg.CalculateInt()
-	if err == nil {
+
+	if intVal, err = i.arg.CalculateInt(); err == nil {
 		result = float64(intVal)
 	}
 
@@ -53,8 +53,8 @@ func NewIntToFloatConversion(name string, arg IntExpresion) *IntToFloatConversio
 func generalizedCalculateFloatAndConvertToInt(
 	expr FloatExpresion, rounding_function func(float64) float64) (result int64, err error) {
 	var floatVal float64
-	floatVal, err = expr.CalculateFloat()
-	if err == nil {
+
+	if floatVal, err = expr.CalculateFloat(); err == nil {
 		floatVal = rounding_function(floatVal)
 		if floatVal >= math.MaxInt64 || floatVal <= math.MinInt64 {
 			err = fmt.Errorf("Number %g to big to be represented as int")
@@ -124,8 +124,8 @@ type StringToIntConversion struct {
 
 func (s *StringToIntConversion) CalculateInt() (result int64, err error) {
 	var stringVal string
-	stringVal, err = s.arg.CalculateString()
-	if err == nil {
+
+	if stringVal, err = s.arg.CalculateString(); err == nil {
 		result, err = strconv.ParseInt(stringVal, 10, 64)
 	}
 
@@ -145,8 +145,8 @@ type StringToFloatConversion struct {
 
 func (s *StringToFloatConversion) CalculateFloat() (result float64, err error) {
 	var stringVal string
-	stringVal, err = s.arg.CalculateString()
-	if err == nil {
+
+	if stringVal, err = s.arg.CalculateString(); err == nil {
 		result, err = strconv.ParseFloat(stringVal, 64)
 	}
 
@@ -168,6 +168,7 @@ type FloatToStringConversion struct {
 func (f *FloatToStringConversion) CalculateString() (result string, err error) {
 	var floatVal float64
 	floatVal, err = f.arg.CalculateFloat()
+
 	if f.Precision < 0 {
 		err = fmt.Errorf("Negative precision not supported: %d", f.Precision)
 	}
@@ -197,8 +198,8 @@ type IntToBoolConversion struct {
 
 func (i *IntToBoolConversion) CalculateBool() (result bool, err error) {
 	var intVal int64
-	intVal, err = i.arg.CalculateInt()
-	if err == nil {
+
+	if intVal, err = i.arg.CalculateInt(); err == nil {
 		if intVal == 0 {
 			result = false
 		} else {
@@ -222,8 +223,8 @@ type FloatToBoolConversion struct {
 
 func (f *FloatToBoolConversion) CalculateBool() (result bool, err error) {
 	var floatVal float64
-	floatVal, err = f.arg.CalculateFloat()
-	if err == nil {
+
+	if floatVal, err = f.arg.CalculateFloat(); err == nil {
 		result = math.IsInf(floatVal, 1) ||
 			math.IsInf(floatVal, -1) ||
 			math.IsNaN(floatVal) ||
@@ -246,8 +247,8 @@ type StringToBoolConversion struct {
 
 func (s *StringToBoolConversion) CalculateBool() (result bool, err error) {
 	var stringVal string
-	stringVal, err = s.arg.CalculateString()
-	if err == nil {
+
+	if stringVal, err = s.arg.CalculateString(); err == nil {
 		switch stringVal {
 		case "true":
 			result = true
@@ -276,8 +277,8 @@ type BoolToIntConversion struct {
 
 func (b *BoolToIntConversion) CalculateInt() (result int64, err error) {
 	var boolVal bool
-	boolVal, err = b.arg.CalculateBool()
-	if err == nil {
+
+	if boolVal, err = b.arg.CalculateBool(); err == nil {
 		if boolVal {
 			result = 1
 		} else {
@@ -301,8 +302,8 @@ type BoolToFloatConversion struct {
 
 func (b *BoolToFloatConversion) CalculateFloat() (result float64, err error) {
 	var boolVal bool
-	boolVal, err = b.arg.CalculateBool()
-	if err == nil {
+
+	if boolVal, err = b.arg.CalculateBool(); err == nil {
 		if boolVal {
 			result = 1.
 		} else {
@@ -326,8 +327,8 @@ type BoolToStringConversion struct {
 
 func (b *BoolToStringConversion) CalculateString() (result string, err error) {
 	var boolVal bool
-	boolVal, err = b.arg.CalculateBool()
-	if err == nil {
+
+	if boolVal, err = b.arg.CalculateBool(); err == nil {
 		if boolVal {
 			result = "true"
 		} else {

@@ -41,3 +41,13 @@ func (g *grammarElementImpl) SetName(newName string) {
 func (g *grammarElementImpl) GetType() sheet_logic_types.T {
 	return g.grammar_type
 }
+
+func getFirstError(errors ...error) error {
+	for _, e := range errors {
+		if e != nil {
+			return e
+		}
+	}
+
+	return nil
+}
