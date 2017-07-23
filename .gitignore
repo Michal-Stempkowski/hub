@@ -17,3 +17,4 @@
 docs/*/diagrams/*.jar
 docs/*/diagrams/*.png
 docs/*/diagrams/*/*.png
+sublime_project*
