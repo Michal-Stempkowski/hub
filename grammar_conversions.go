@@ -13,10 +13,10 @@ type IntToStringConversion struct {
 }
 
 func (i *IntToStringConversion) CalculateString() (result string, err error) {
-	var int_val int64
-	int_val, err = i.arg.CalculateInt()
+	var intVal int64
+	intVal, err = i.arg.CalculateInt()
 	if err == nil {
-		result = strconv.FormatInt(int_val, 10)
+		result = strconv.FormatInt(intVal, 10)
 	}
 
 	return
@@ -34,10 +34,10 @@ type IntToFloatConversion struct {
 }
 
 func (i *IntToFloatConversion) CalculateFloat() (result float64, err error) {
-	var int_val int64
-	int_val, err = i.arg.CalculateInt()
+	var intVal int64
+	intVal, err = i.arg.CalculateInt()
 	if err == nil {
-		result = float64(int_val)
+		result = float64(intVal)
 	}
 
 	return
@@ -51,14 +51,14 @@ func NewIntToFloatConversion(name string, arg IntExpresion) *IntToFloatConversio
 
 func generalizedCalculateFloatAndConvertToInt(
 	expr FloatExpresion, rounding_function func(float64) float64) (result int64, err error) {
-	var float_val float64
-	float_val, err = expr.CalculateFloat()
+	var floatVal float64
+	floatVal, err = expr.CalculateFloat()
 	if err == nil {
-		float_val = rounding_function(float_val)
-		if float_val >= math.MaxInt64 || float_val <= math.MinInt64 {
+		floatVal = rounding_function(floatVal)
+		if floatVal >= math.MaxInt64 || floatVal <= math.MinInt64 {
 			err = fmt.Errorf("Number %g to big to be represented as int")
 		} else {
-			result = int64(float_val)
+			result = int64(floatVal)
 		}
 	}
 
@@ -113,5 +113,47 @@ func NewFloatToIntRoundUpConversion(
 	name string, arg FloatExpresion) *FloatToIntRoundUpConversion {
 	return &FloatToIntRoundUpConversion{
 		&grammarElementImpl{name, sheet_logic_types.FloatToIntRoundUpConversion},
+		arg}
+}
+
+type StringToIntConversion struct {
+	*grammarElementImpl
+	arg StringExpresion
+}
+
+func (s *StringToIntConversion) CalculateInt() (result int64, err error) {
+	var stringVal string
+	stringVal, err = s.arg.CalculateString()
+	if err == nil {
+		result, err = strconv.ParseInt(stringVal, 10, 64)
+	}
+
+	return
+}
+
+func NewStringToIntConversion(name string, arg StringExpresion) *StringToIntConversion {
+	return &StringToIntConversion{
+		&grammarElementImpl{name, sheet_logic_types.StringToIntConversion},
+		arg}
+}
+
+type StringToFloatConversion struct {
+	*grammarElementImpl
+	arg StringExpresion
+}
+
+func (s *StringToFloatConversion) CalculateFloat() (result float64, err error) {
+	var stringVal string
+	stringVal, err = s.arg.CalculateString()
+	if err == nil {
+		result, err = strconv.ParseFloat(stringVal, 64)
+	}
+
+	return
+}
+
+func NewStringToFloatConversion(name string, arg StringExpresion) *StringToFloatConversion {
+	return &StringToFloatConversion{
+		&grammarElementImpl{name, sheet_logic_types.StringToFloatConversion},
 		arg}
 }

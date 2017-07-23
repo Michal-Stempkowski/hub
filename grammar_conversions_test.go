@@ -110,3 +110,55 @@ func TestFloatToIntRoundUpConversion(t *testing.T) {
 		uut,
 		"FloatToIntRoundUpConversion.CalculateInt for big number")
 }
+
+func TestStringToIntConversion(t *testing.T) {
+	stringArg := NewStringConstant(variableName, exampleIntValueAsString)
+	uut := NewStringToIntConversion(variableName, stringArg)
+
+	grammarElementScenario(t, uut.grammarElementImpl, sheet_logic_types.StringToIntConversion)
+
+	assertCalculatesToInt(
+		t,
+		uut,
+		exampleIntValue,
+		"StringToIntConversion.CalculateInt some integer")
+
+	stringArg.value = bigNumberAsString
+	assertCalculatesToIntFails(
+		t,
+		uut,
+		"StringToIntConversion.CalculateInt for big number")
+
+	stringArg.value = stringPi
+	assertCalculatesToIntFails(
+		t,
+		uut,
+		"StringToIntConversion.CalculateInt for float number")
+}
+
+func TestStringToFloatConversion(t *testing.T) {
+	stringArg := NewStringConstant(variableName, stringPiTwoDigitPrecision)
+	uut := NewStringToFloatConversion(variableName, stringArg)
+
+	grammarElementScenario(
+		t, uut.grammarElementImpl, sheet_logic_types.StringToFloatConversion)
+
+	assertCalculatesToFloat(
+		t,
+		uut,
+		piTwoDigitPrecision,
+		"StringToFloatConversion.CalculateFloat for pi")
+
+	stringArg.value = exampleIntValueAsString
+	assertCalculatesToFloat(
+		t,
+		uut,
+		exampleIntValue,
+		"StringToFloatConversion.CalculateFloat for int")
+
+	stringArg.value = exampleStringValue
+	assertCalculatesToFloatFails(
+		t,
+		uut,
+		"StringToFloatConversion.CalculateFloat for no number")
+}
