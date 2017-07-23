@@ -72,6 +72,16 @@ func assertCalculatesToFloat(t *testing.T, expr FloatExpresion, expected float64
 	}
 }
 
+func assertCalculatesToBool(t *testing.T, expr BoolExpresion, expected bool, trail string) {
+	val, err := expr.CalculateBool()
+	if err != nil {
+		t.Errorf(trail, ":", "Bool calculation has failed: ", err)
+	}
+	if val != expected {
+		t.Errorf(trail, ":", expected, "expected, received", val)
+	}
+}
+
 func grammarElementScenario(
 	t *testing.T, uut *grammarElementImpl, expectedType sheet_logic_types.T) {
 	assertHasType(t, uut, expectedType)

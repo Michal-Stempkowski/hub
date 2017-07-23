@@ -40,3 +40,16 @@ func (f *FloatConstant) CalculateFloat() (float64, error) {
 func NewFloatConstant(name string, value float64) *FloatConstant {
 	return &FloatConstant{&grammarElementImpl{name, sheet_logic_types.FloatConstant}, value}
 }
+
+type BoolConstant struct {
+	*grammarElementImpl
+	value bool
+}
+
+func (b *BoolConstant) CalculateBool() (bool, error) {
+	return b.value, nil
+}
+
+func NewBoolConstant(name string, value bool) *BoolConstant {
+	return &BoolConstant{&grammarElementImpl{name, sheet_logic_types.BoolConstant}, value}
+}

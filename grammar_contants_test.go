@@ -23,3 +23,10 @@ func TestShouldBeAbleToCreateFloatConstant(t *testing.T) {
 	grammarElementScenario(t, uut.grammarElementImpl, sheet_logic_types.FloatConstant)
 	assertCalculatesToFloat(t, uut, exampleFloatValue, "FloatConstant.CalculateFloat")
 }
+
+func TestShouldBeAbleToCreateBoolConstant(t *testing.T) {
+	uut := NewBoolConstant(variableName, true)
+
+	grammarElementScenario(t, uut.grammarElementImpl, sheet_logic_types.BoolConstant)
+	assertCalculatesToBool(t, uut, true, "BoolConstant.CalculateBool")
+}

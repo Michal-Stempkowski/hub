@@ -21,6 +21,10 @@ type StringExpresion interface {
 	CalculateString() (string, error)
 }
 
+type BoolExpresion interface {
+	CalculateBool() (bool, error)
+}
+
 type grammarElementImpl struct {
 	name         string
 	grammar_type sheet_logic_types.T
