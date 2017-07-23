@@ -268,3 +268,78 @@ func NewStringToBoolConversion(name string, arg StringExpresion) *StringToBoolCo
 		&grammarElementImpl{name, sheet_logic_types.StringToBoolConversion},
 		arg}
 }
+
+type BoolToIntConversion struct {
+	*grammarElementImpl
+	arg BoolExpresion
+}
+
+func (b *BoolToIntConversion) CalculateInt() (result int64, err error) {
+	var boolVal bool
+	boolVal, err = b.arg.CalculateBool()
+	if err == nil {
+		if boolVal {
+			result = 1
+		} else {
+			result = 0
+		}
+	}
+
+	return
+}
+
+func NewBoolToIntConversion(name string, arg BoolExpresion) *BoolToIntConversion {
+	return &BoolToIntConversion{
+		&grammarElementImpl{name, sheet_logic_types.BoolToIntConversion},
+		arg}
+}
+
+type BoolToFloatConversion struct {
+	*grammarElementImpl
+	arg BoolExpresion
+}
+
+func (b *BoolToFloatConversion) CalculateFloat() (result float64, err error) {
+	var boolVal bool
+	boolVal, err = b.arg.CalculateBool()
+	if err == nil {
+		if boolVal {
+			result = 1.
+		} else {
+			result = 0.
+		}
+	}
+
+	return
+}
+
+func NewBoolToFloatConversion(name string, arg BoolExpresion) *BoolToFloatConversion {
+	return &BoolToFloatConversion{
+		&grammarElementImpl{name, sheet_logic_types.BoolToFloatConversion},
+		arg}
+}
+
+type BoolToStringConversion struct {
+	*grammarElementImpl
+	arg BoolExpresion
+}
+
+func (b *BoolToStringConversion) CalculateString() (result string, err error) {
+	var boolVal bool
+	boolVal, err = b.arg.CalculateBool()
+	if err == nil {
+		if boolVal {
+			result = "true"
+		} else {
+			result = "false"
+		}
+	}
+
+	return
+}
+
+func NewBoolToStringConversion(name string, arg BoolExpresion) *BoolToStringConversion {
+	return &BoolToStringConversion{
+		&grammarElementImpl{name, sheet_logic_types.BoolToStringConversion},
+		arg}
+}

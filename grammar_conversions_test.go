@@ -283,3 +283,63 @@ func TestStringToBoolConversion(t *testing.T) {
 		uut,
 		"StringToBoolConversion.CalculateBool for anything else fails")
 }
+
+func TestBoolToIntConversion(t *testing.T) {
+	boolArg := NewBoolConstant(variableName, true)
+	uut := NewBoolToIntConversion(variableName, boolArg)
+
+	grammarElementScenario(t, uut.grammarElementImpl, sheet_logic_types.BoolToIntConversion)
+
+	assertCalculatesToInt(
+		t,
+		uut,
+		1,
+		"IntToStringConversion.CalculateInt")
+
+	boolArg.value = false
+	assertCalculatesToInt(
+		t,
+		uut,
+		0,
+		"IntToStringConversion.CalculateInt")
+}
+
+func TestBoolToFloatConversion(t *testing.T) {
+	boolArg := NewBoolConstant(variableName, true)
+	uut := NewBoolToFloatConversion(variableName, boolArg)
+
+	grammarElementScenario(t, uut.grammarElementImpl, sheet_logic_types.BoolToFloatConversion)
+
+	assertCalculatesToFloat(
+		t,
+		uut,
+		1.,
+		"BoolToFloatConversion.CalculateFloat")
+
+	boolArg.value = false
+	assertCalculatesToFloat(
+		t,
+		uut,
+		0.,
+		"BoolToFloatConversion.CalculateFloat")
+}
+
+func TestBoolToStringConversion(t *testing.T) {
+	boolArg := NewBoolConstant(variableName, true)
+	uut := NewBoolToStringConversion(variableName, boolArg)
+
+	grammarElementScenario(t, uut.grammarElementImpl, sheet_logic_types.BoolToStringConversion)
+
+	assertCalculatesToString(
+		t,
+		uut,
+		"true",
+		"BoolToStringConversion.CalculateString")
+
+	boolArg.value = false
+	assertCalculatesToString(
+		t,
+		uut,
+		"false",
+		"BoolToStringConversion.CalculateString")
+}
