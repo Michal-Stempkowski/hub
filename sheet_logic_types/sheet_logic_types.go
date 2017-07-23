@@ -5,4 +5,5 @@ type T int
 const (
 	IntConstant T = iota
 	StringConstant
+	FloatConstant
 )

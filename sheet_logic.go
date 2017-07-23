@@ -42,3 +42,12 @@ type StringConstant struct {
 func NewStringConstant(name string, value string) *StringConstant {
 	return &StringConstant{&grammarElementImpl{name, sheet_logic_types.StringConstant}, value}
 }
+
+type FloatConstant struct {
+	*grammarElementImpl
+	Value float32
+}
+
+func NewFloatConstant(name string, value float32) *FloatConstant {
+	return &FloatConstant{&grammarElementImpl{name, sheet_logic_types.FloatConstant}, value}
+}

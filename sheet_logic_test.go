@@ -7,6 +7,7 @@ const (
 	variableName        = "VariableName"
 	anotherVariableName = "AnotherVariableName"
 	exampleIntValue     = 5
+	exampleFloatValue   = 3.14
 	exampleStringValue  = "StringValue"
 )
 
@@ -45,6 +46,16 @@ func TestShouldBeAbleToCreateStringConstant(t *testing.T) {
 	assertHasName(t, uut, variableName)
 	assertEqual(t, uut.Value, exampleStringValue, "StringConstant value")
 	assertHasType(t, uut, sheet_logic_types.StringConstant)
+
+	uut.SetName(anotherVariableName)
+	assertHasName(t, uut, anotherVariableName)
+}
+
+func TestShouldBeAbleToCreateFloatConstant(t *testing.T) {
+	uut := NewFloatConstant(variableName, exampleFloatValue)
+	assertHasName(t, uut, variableName)
+	assertEqual(t, uut.Value, float32(exampleFloatValue), "FloatConstant value")
+	assertHasType(t, uut, sheet_logic_types.FloatConstant)
 
 	uut.SetName(anotherVariableName)
 	assertHasName(t, uut, anotherVariableName)
