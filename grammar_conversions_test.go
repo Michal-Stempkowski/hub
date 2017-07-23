@@ -195,3 +195,23 @@ func TestFloatToStringConversion(t *testing.T) {
 		uut,
 		"FloatToStringConversion.CalculateInt for big number")
 }
+
+func TestIntToBoolConversion(t *testing.T) {
+	intArg := NewIntConstant(variableName, 5)
+	uut := NewIntToBoolConversion(variableName, intArg)
+
+	grammarElementScenario(t, uut.grammarElementImpl, sheet_logic_types.IntToBoolConversion)
+
+	assertCalculatesToBool(
+		t,
+		uut,
+		true,
+		"IntToBoolConversion.CalculateBool for non zero number")
+
+	intArg.value = 0
+	assertCalculatesToBool(
+		t,
+		uut,
+		false,
+		"IntToBoolConversion.CalculateBool for zero")
+}

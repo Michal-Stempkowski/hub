@@ -189,3 +189,28 @@ func NewFloatToStringConversion(
 		arg,
 		precision}
 }
+
+type IntToBoolConversion struct {
+	*grammarElementImpl
+	arg IntExpresion
+}
+
+func (i *IntToBoolConversion) CalculateBool() (result bool, err error) {
+	var intVal int64
+	intVal, err = i.arg.CalculateInt()
+	if err == nil {
+		if intVal == 0 {
+			result = false
+		} else {
+			result = true
+		}
+	}
+
+	return
+}
+
+func NewIntToBoolConversion(name string, arg IntExpresion) *IntToBoolConversion {
+	return &IntToBoolConversion{
+		&grammarElementImpl{name, sheet_logic_types.IntToBoolConversion},
+		arg}
+}

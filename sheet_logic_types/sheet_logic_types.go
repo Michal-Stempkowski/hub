@@ -13,6 +13,7 @@ const (
 	// Conversions
 	IntToStringConversion
 	IntToFloatConversion
+	IntToBoolConversion
 
 	StringToIntConversion
 	StringToFloatConversion
