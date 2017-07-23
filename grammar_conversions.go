@@ -214,3 +214,27 @@ func NewIntToBoolConversion(name string, arg IntExpresion) *IntToBoolConversion 
 		&grammarElementImpl{name, sheet_logic_types.IntToBoolConversion},
 		arg}
 }
+
+type FloatToBoolConversion struct {
+	*grammarElementImpl
+	arg FloatExpresion
+}
+
+func (f *FloatToBoolConversion) CalculateBool() (result bool, err error) {
+	var floatVal float64
+	floatVal, err = f.arg.CalculateFloat()
+	if err == nil {
+		result = math.IsInf(floatVal, 1) ||
+			math.IsInf(floatVal, -1) ||
+			math.IsNaN(floatVal) ||
+			math.Abs(floatVal) >= sheet_logic_types.FloatPrecision
+	}
+
+	return
+}
+
+func NewFloatToBoolConversion(name string, arg FloatExpresion) *FloatToBoolConversion {
+	return &FloatToBoolConversion{
+		&grammarElementImpl{name, sheet_logic_types.FloatToBoolConversion},
+		arg}
+}

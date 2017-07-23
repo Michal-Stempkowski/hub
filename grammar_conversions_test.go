@@ -2,6 +2,7 @@ package sheet_logic
 
 import (
 	"hub/sheet_logic_types"
+	"math"
 	"testing"
 )
 
@@ -214,4 +215,45 @@ func TestIntToBoolConversion(t *testing.T) {
 		uut,
 		false,
 		"IntToBoolConversion.CalculateBool for zero")
+}
+
+func TestFloatToBoolConversion(t *testing.T) {
+	floatArg := NewFloatConstant(variableName, 12.)
+	uut := NewFloatToBoolConversion(variableName, floatArg)
+
+	grammarElementScenario(t, uut.grammarElementImpl, sheet_logic_types.FloatToBoolConversion)
+
+	assertCalculatesToBool(
+		t,
+		uut,
+		true,
+		"FloatToBoolConversion.CalculateBool for non zero number")
+
+	floatArg.value = 0.
+	assertCalculatesToBool(
+		t,
+		uut,
+		false,
+		"FloatToBoolConversion.CalculateBool for zero")
+
+	floatArg.value = math.NaN()
+	assertCalculatesToBool(
+		t,
+		uut,
+		true,
+		"FloatToBoolConversion.CalculateBool for zero")
+
+	floatArg.value = math.Inf(1)
+	assertCalculatesToBool(
+		t,
+		uut,
+		true,
+		"FloatToBoolConversion.CalculateBool for zero")
+
+	floatArg.value = math.Inf(-1)
+	assertCalculatesToBool(
+		t,
+		uut,
+		true,
+		"FloatToBoolConversion.CalculateBool for zero")
 }
