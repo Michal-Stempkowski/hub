@@ -162,3 +162,36 @@ func TestStringToFloatConversion(t *testing.T) {
 		uut,
 		"StringToFloatConversion.CalculateFloat for no number")
 }
+
+func TestFloatToStringConversion(t *testing.T) {
+	floatArg := NewFloatConstant(variableName, pi)
+	uut := NewFloatToStringConversion(variableName, floatArg, 4)
+
+	grammarElementScenario(t, uut.grammarElementImpl, sheet_logic_types.FloatToStringConversion)
+
+	assertCalculatesToString(
+		t,
+		uut,
+		stringPi,
+		"FloatToStringConversion.CalculateInt for pi")
+
+	uut.Precision = 2
+	assertCalculatesToString(
+		t,
+		uut,
+		stringPiTwoDigitPrecision,
+		"FloatToStringConversion.CalculateInt for e")
+
+	uut.Precision = 10
+	assertCalculatesToString(
+		t,
+		uut,
+		stringPi,
+		"FloatToStringConversion.CalculateInt for pi")
+
+	uut.Precision = -1
+	assertCalculatesToStringFails(
+		t,
+		uut,
+		"FloatToStringConversion.CalculateInt for big number")
+}

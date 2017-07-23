@@ -5,6 +5,7 @@ import (
 	"hub/sheet_logic_types"
 	"math"
 	"strconv"
+	"strings"
 )
 
 type IntToStringConversion struct {
@@ -156,4 +157,35 @@ func NewStringToFloatConversion(name string, arg StringExpresion) *StringToFloat
 	return &StringToFloatConversion{
 		&grammarElementImpl{name, sheet_logic_types.StringToFloatConversion},
 		arg}
+}
+
+type FloatToStringConversion struct {
+	*grammarElementImpl
+	arg       FloatExpresion
+	Precision int64
+}
+
+func (f *FloatToStringConversion) CalculateString() (result string, err error) {
+	var floatVal float64
+	floatVal, err = f.arg.CalculateFloat()
+	if f.Precision < 0 {
+		err = fmt.Errorf("Negative precision not supported: %d", f.Precision)
+	}
+
+	if err == nil {
+		result = strconv.FormatFloat(floatVal, 'f', -1, 64)
+		dotIndex := int64(strings.Index(result, "."))
+		if shift := dotIndex + f.Precision + 1; shift < int64(len(result)) {
+			result = result[:shift]
+		}
+	}
+	return
+}
+
+func NewFloatToStringConversion(
+	name string, arg FloatExpresion, precision int64) *FloatToStringConversion {
+	return &FloatToStringConversion{
+		&grammarElementImpl{name, sheet_logic_types.FloatToStringConversion},
+		arg,
+		precision}
 }

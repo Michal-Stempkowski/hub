@@ -20,4 +20,5 @@ const (
 	FloatToIntConversion
 	FloatToIntRoundDownConversion
 	FloatToIntRoundUpConversion
+	FloatToStringConversion
 )

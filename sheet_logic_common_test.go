@@ -7,90 +7,99 @@ import (
 )
 
 const (
-	variableName              = "VariableName"
-	anotherVariableName       = "AnotherVariableName"
-	exampleIntValue           = 5
-	exampleIntValueAsString   = "5"
-	exampleFloatValue         = 3.14
-	exampleStringValue        = "StringValue"
-	stringPi                  = "3.1416"
-	stringPiTwoDigitPrecision = "3.14"
-	piRoundedDown             = 3
-	piRoundedUp               = 4
-	piTwoDigitPrecision       = 3.14
-	stringE                   = "2.7182"
-	floatE                    = 2.7182
-	eRoundedUp                = 3
-	eRoundedDown              = 2
-	bigNumber                 = 1 << 80
-	bigNumberAsString         = "1.0e80"
+	variableName               = "VariableName"
+	anotherVariableName        = "AnotherVariableName"
+	exampleIntValue            = 5
+	exampleIntValueAsString    = "5"
+	exampleFloatValue          = 3.14
+	exampleStringValue         = "StringValue"
+	stringPi                   = "3.1416"
+	stringPiTwoDigitPrecision  = "3.14"
+	stringPiZeroDigitPrecision = "3."
+	piRoundedDown              = 3
+	piRoundedUp                = 4
+	piTwoDigitPrecision        = 3.14
+	pi                         = 3.1416
+	stringE                    = "2.7182"
+	floatE                     = 2.7182
+	eRoundedUp                 = 3
+	eRoundedDown               = 2
+	bigNumber                  = 1 << 80
+	bigNumberAsString          = "1.0e80"
 )
 
 func assertHasType(t *testing.T, el GrammarElement, expectedType sheet_logic_types.T) {
 	grammar_type := el.GetType()
 	if grammar_type != expectedType {
-		t.Errorf("Grammar element type", expectedType, "expected, received", grammar_type)
+		t.Errorf("Grammar element type %v expected, received %v", expectedType, grammar_type)
 	}
 }
 
 func assertHasName(t *testing.T, el GrammarElement, expectedName string) {
 	grammar_name := el.GetName()
 	if grammar_name != expectedName {
-		t.Errorf("Grammar element name", expectedName, "expected, received", grammar_name)
+		t.Errorf("Grammar element name %v expected, received %v", expectedName, grammar_name)
 	}
 }
 
 func assertCalculatesToInt(t *testing.T, expr IntExpresion, expected int64, trail string) {
 	val, err := expr.CalculateInt()
 	if err != nil {
-		t.Errorf(trail, ":", "Int calculation has failed: ", err)
+		t.Errorf("%v: Int calculation has failed: %v", trail, err)
 	}
 	if val != expected {
-		t.Errorf(trail, ":", expected, "expected, received", val)
+		t.Errorf("%v: %v expected, received %v", trail, expected, val)
 	}
 }
 
 func assertCalculatesToFloat(t *testing.T, expr FloatExpresion, expected float64, trail string) {
 	val, err := expr.CalculateFloat()
 	if err != nil {
-		t.Errorf(trail, ":", "Float calculation has failed: ", err)
+		t.Errorf("%v: Float calculation has failed: %v", trail, err)
 	}
 	if diff := math.Abs(val - expected); diff >= sheet_logic_types.FloatPrecision {
-		t.Errorf(trail, ":", expected, "expected, received", val)
+		t.Errorf("%v: %v expected, received %v", trail, expected, val)
 	}
 }
 
 func assertCalculatesToIntFails(t *testing.T, expr IntExpresion, trail string) {
 	_, err := expr.CalculateInt()
 	if err == nil {
-		t.Errorf(trail, ":", "Int calculation should fail!")
+		t.Errorf("%v: Int calculation should fail!", trail)
 	}
 }
 
 func assertCalculatesToFloatFails(t *testing.T, expr FloatExpresion, trail string) {
 	_, err := expr.CalculateFloat()
 	if err == nil {
-		t.Errorf(trail, ":", "Int calculation should fail!")
+		t.Errorf("%v: Float calculation should fail!", trail)
+	}
+}
+
+func assertCalculatesToStringFails(t *testing.T, expr StringExpresion, trail string) {
+	_, err := expr.CalculateString()
+	if err == nil {
+		t.Errorf("%v: String calculation should fail!", trail)
 	}
 }
 
 func assertCalculatesToString(t *testing.T, expr StringExpresion, expected string, trail string) {
 	val, err := expr.CalculateString()
 	if err != nil {
-		t.Errorf(trail, ":", "String calculation has failed: ", err)
+		t.Errorf("%v: String calculation has failed: %v", trail, err)
 	}
 	if val != expected {
-		t.Errorf(trail, ":", expected, "expected, received", val)
+		t.Errorf("%v: %v expected, received %v", trail, expected, val)
 	}
 }
 
 func assertCalculatesToBool(t *testing.T, expr BoolExpresion, expected bool, trail string) {
 	val, err := expr.CalculateBool()
 	if err != nil {
-		t.Errorf(trail, ":", "Bool calculation has failed: ", err)
+		t.Errorf("%v: Bool calculation has failed: %v", trail, err)
 	}
 	if val != expected {
-		t.Errorf(trail, ":", expected, "expected, received", val)
+		t.Errorf("%v: %v expected, received %v", trail, expected, val)
 	}
 }
 
