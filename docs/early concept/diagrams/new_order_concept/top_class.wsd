@@ -1,0 +1,22 @@
+@startuml
+
+class AppRootLogic {
+	{static} bool init(List<PackageInitializer> packageInitializers)
+	{static} void start()
+	{static} void notify_termination()
+}
+AppRootLogic <.. PackageInitializer: used by
+
+class PackageInitializer {
+	List<Domain> init()
+}
+PackageInitializer <-- Domain: created by
+ConcretePackageInitializer --|> PackageInitializer
+
+interface Domain {
+	ErrorMonad init()
+}
+ConcreteDomain ..|> Domain
+ConcreteDomain --> ConcretePackageInitializer: created by
+
+@enduml

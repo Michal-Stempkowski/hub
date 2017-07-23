@@ -1,0 +1,61 @@
+@startuml
+
+actor OuterStartingMethod
+actor TaskOwner
+entity MainLoop
+
+TaskOwner -> MainLoop: scheduleTask(task)
+activate MainLoop
+	loop for task in tasksToBeScheduled
+		MainLoop -> MainLoop: updateTaskQueue(task)
+	end
+	MainLoop --> TaskOwner
+deactivate MainLoop
+OuterStartingMethod -> MainLoop: init()
+activate MainLoop
+	loop while running
+		loop for task in scheduledTasks
+			MainLoop -> MainLoop: errorMonad[task] = runCycle()
+		end
+		loop for taks in scheduledTasks
+			MainLoop -> MainLoop: evaluateTask(task)
+		end
+
+		... Some time later ...
+
+		MainLoop -> MainLoop: handleTaskFinished(task)
+		MainLoop --> TaskOwner: PARALLELISM.TASK_FINISHED_EVENT
+
+		... Some time later ...
+
+	end
+	MainLoop -> MainLoop: performCloseUp()
+	MainLoop --> OuterStartingMethod
+deactivate MainLoop
+
+note over OuterStartingMethod, MainLoop
+	In sequential implementation performCloseUp does nothing.
+	In parallel implementation body of each tasks Runnable looks somewhat like this:
+
+		while(evaluateTask(this)) {
+			errorMonad = runCycle()
+		}
+
+	... and performCloseUp() contains passive waiting for closeUp:
+
+		factoryLock.lock();
+	        try {
+	            isRunning = true;
+	            while (isRunning) {
+	                shutdownPerformedCondition.await();
+	            }
+	        } catch (InterruptedException e) {
+	            e.printStackTrace();
+	        } finally {
+	            factoryLock.unlock();
+	        }
+
+    in reality performCloseUp is one of running threads.
+end note
+
+@enduml

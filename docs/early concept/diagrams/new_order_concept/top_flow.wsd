@@ -1,0 +1,59 @@
+@startuml
+
+actor User
+
+entity Main
+
+entity AppRootLogic
+note right of AppRootLogic
+	Package Initialization order:
+	- Basic functionalities (environment?, logger, event dispatcher);
+	- Data layer domains;
+	- Networking domains;
+	- Internal domains;
+	- GUI domains;
+end note
+
+entity PackageInitializer
+
+entity Domain
+
+User -> Main : (run app)
+activate Main
+	Main -> AppRootLogic : __init()__
+	activate AppRootLogic
+		loop for all packages
+			AppRootLogic -> PackageInitializer: init()
+				activate PackageInitializer
+					loop for all domains
+						PackageInitializer -> Domain: init()
+						activate Domain
+							Domain --> PackageInitializer: (ErrorMonad)
+						deactivate Domain
+					end
+				deactivate PackageInitializer
+			PackageInitializer --> AppRootLogic: (domains)
+		end
+		AppRootLogic --> Main: (bool)
+	deactivate AppRootLogic
+
+	Main -> AppRootLogic: __start()__
+	activate AppRootLogic
+		AppRootLogic ->o Domain: ~~INITIALIZE_EVENT~~
+		activate Domain
+			AppRootLogic -> AppRootLogic : __await_termination()__
+			Domain -> Domain: (inits everything required - connections, data etc.)
+			Domain --> User: (shows some GUI)
+
+
+		... application is in use ...
+			Domain ->o Domain: ~~SHUTDOWN_DECIDED~~
+			Domain ->o Domain: ~~SHUTDOWN_PERFORMED~~
+			Domain -> AppRootLogic: __notify_termination()__
+			AppRootLogic -> AppRootLogic: event_dispatcher.gentle_shutdown()
+		deactivate Domain
+		AppRootLogic --> Main
+	deactivate AppRootLogic
+deactivate Main
+
+@enduml

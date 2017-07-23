@@ -1,0 +1,51 @@
+@startuml
+
+package Framework {
+	[StaticallyAccessibleFunctionalities]
+	interface utils
+}
+
+package TargetDependant {
+	[BasicFunctionalityInitializer]
+	[DataLayerInitializer]
+	[NetworkingInitializer]
+	[GuiInitializer]
+}
+
+package Internal {
+	[InternalLogicInitializer]
+}
+
+interface StaticallyAccessibleFunctionalities
+
+node BasicFunctionalityInitializer {
+	[EventDispatcherDomain]
+	[EnvironmentDomain] #Green
+	[LoggerDomain]
+
+	[StaticallyAccessibleFunctionalities] - BasicFunctionalityInitializer
+}
+
+node DataLayerInitializer {
+	[FileSystemDomain]
+	[OsPropertiesDomain] #Green
+}
+
+node NetworkingInitializer #Green {
+	[P2PConnectionDomain] #Green
+	[SoftwareUpdateDomain] #Green
+	[SecuredConnectionDomain] #Green
+}
+
+node InternalLogicInitializer {
+
+}
+
+node GuiInitializer {
+	[DesktopApplicationDomain]
+	[AndroidApplicationDomain] #Green
+}
+
+
+
+@enduml
