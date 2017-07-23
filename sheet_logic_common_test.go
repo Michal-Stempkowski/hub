@@ -83,6 +83,13 @@ func assertCalculatesToStringFails(t *testing.T, expr StringExpresion, trail str
 	}
 }
 
+func assertCalculatesToBoolFails(t *testing.T, expr BoolExpresion, trail string) {
+	_, err := expr.CalculateBool()
+	if err == nil {
+		t.Errorf("%v: Bool calculation should fail!", trail)
+	}
+}
+
 func assertCalculatesToString(t *testing.T, expr StringExpresion, expected string, trail string) {
 	val, err := expr.CalculateString()
 	if err != nil {

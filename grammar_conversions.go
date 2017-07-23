@@ -238,3 +238,33 @@ func NewFloatToBoolConversion(name string, arg FloatExpresion) *FloatToBoolConve
 		&grammarElementImpl{name, sheet_logic_types.FloatToBoolConversion},
 		arg}
 }
+
+type StringToBoolConversion struct {
+	*grammarElementImpl
+	arg StringExpresion
+}
+
+func (s *StringToBoolConversion) CalculateBool() (result bool, err error) {
+	var stringVal string
+	stringVal, err = s.arg.CalculateString()
+	if err == nil {
+		switch stringVal {
+		case "true":
+			result = true
+		case "false":
+			result = false
+		default:
+			err = fmt.Errorf(
+				"StringToBoolConversion.CalculateBool failed for '%s'",
+				stringVal)
+		}
+	}
+
+	return
+}
+
+func NewStringToBoolConversion(name string, arg StringExpresion) *StringToBoolConversion {
+	return &StringToBoolConversion{
+		&grammarElementImpl{name, sheet_logic_types.StringToBoolConversion},
+		arg}
+}

@@ -17,6 +17,7 @@ const (
 
 	StringToIntConversion
 	StringToFloatConversion
+	StringToBoolConversion
 
 	FloatToIntConversion
 	FloatToIntRoundDownConversion

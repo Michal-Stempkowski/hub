@@ -257,3 +257,29 @@ func TestFloatToBoolConversion(t *testing.T) {
 		true,
 		"FloatToBoolConversion.CalculateBool for zero")
 }
+
+func TestStringToBoolConversion(t *testing.T) {
+	stringArg := NewStringConstant(variableName, "true")
+	uut := NewStringToBoolConversion(variableName, stringArg)
+
+	grammarElementScenario(t, uut.grammarElementImpl, sheet_logic_types.StringToBoolConversion)
+
+	assertCalculatesToBool(
+		t,
+		uut,
+		true,
+		"StringToBoolConversion.CalculateBool for 'true'")
+
+	stringArg.value = "false"
+	assertCalculatesToBool(
+		t,
+		uut,
+		false,
+		"StringToBoolConversion.CalculateBool for 'false'")
+
+	stringArg.value = "Anything else"
+	assertCalculatesToBoolFails(
+		t,
+		uut,
+		"StringToBoolConversion.CalculateBool for anything else fails")
+}
