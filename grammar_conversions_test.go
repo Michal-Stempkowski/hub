@@ -56,3 +56,57 @@ func TestFloatToIntConversion(t *testing.T) {
 		uut,
 		"FloatToIntConversion.CalculateInt for big number")
 }
+
+func TestFloatToIntRoundDownConversion(t *testing.T) {
+	floatArg := NewFloatConstant(variableName, piTwoDigitPrecision)
+	uut := NewFloatToIntRoundDownConversion(variableName, floatArg)
+
+	grammarElementScenario(
+		t, uut.grammarElementImpl, sheet_logic_types.FloatToIntRoundDownConversion)
+
+	assertCalculatesToInt(
+		t,
+		uut,
+		piRoundedDown,
+		"FloatToIntRoundDownConversion.CalculateInt for pi")
+
+	floatArg.value = floatE
+	assertCalculatesToInt(
+		t,
+		uut,
+		eRoundedDown,
+		"FloatToIntRoundDownConversion.CalculateInt for e")
+
+	floatArg.value = bigNumber
+	assertCalculatesToIntFails(
+		t,
+		uut,
+		"FloatToIntRoundDownConversion.CalculateInt for big number")
+}
+
+func TestFloatToIntRoundUpConversion(t *testing.T) {
+	floatArg := NewFloatConstant(variableName, piTwoDigitPrecision)
+	uut := NewFloatToIntRoundUpConversion(variableName, floatArg)
+
+	grammarElementScenario(
+		t, uut.grammarElementImpl, sheet_logic_types.FloatToIntRoundUpConversion)
+
+	assertCalculatesToInt(
+		t,
+		uut,
+		piRoundedUp,
+		"FloatToIntRoundUpConversion.CalculateInt for pi")
+
+	floatArg.value = floatE
+	assertCalculatesToInt(
+		t,
+		uut,
+		eRoundedUp,
+		"FloatToIntRoundUpConversion.CalculateInt for e")
+
+	floatArg.value = bigNumber
+	assertCalculatesToIntFails(
+		t,
+		uut,
+		"FloatToIntRoundUpConversion.CalculateInt for big number")
+}

@@ -10,4 +10,6 @@ const (
 	IntToFloatConversion
 	StringToIntConversion
 	FloatToIntConversion
+	FloatToIntRoundDownConversion
+	FloatToIntRoundUpConversion
 )

@@ -49,16 +49,12 @@ func NewIntToFloatConversion(name string, arg IntExpresion) *IntToFloatConversio
 		arg}
 }
 
-type FloatToIntConversion struct {
-	*grammarElementImpl
-	arg FloatExpresion
-}
-
-func (f *FloatToIntConversion) CalculateInt() (result int64, err error) {
+func generalizedCalculateFloatAndConvertToInt(
+	expr FloatExpresion, rounding_function func(float64) float64) (result int64, err error) {
 	var float_val float64
-	float_val, err = f.arg.CalculateFloat()
+	float_val, err = expr.CalculateFloat()
 	if err == nil {
-		float_val = math.Floor(float_val + 0.5)
+		float_val = rounding_function(float_val)
 		if float_val >= math.MaxInt64 || float_val <= math.MinInt64 {
 			err = fmt.Errorf("Number %g to big to be represented as int")
 		} else {
@@ -69,8 +65,53 @@ func (f *FloatToIntConversion) CalculateInt() (result int64, err error) {
 	return
 }
 
+func round(val float64) float64 {
+	return math.Floor(val + 0.5)
+}
+
+type FloatToIntConversion struct {
+	*grammarElementImpl
+	arg FloatExpresion
+}
+
+func (f *FloatToIntConversion) CalculateInt() (int64, error) {
+	return generalizedCalculateFloatAndConvertToInt(f.arg, round)
+}
+
 func NewFloatToIntConversion(name string, arg FloatExpresion) *FloatToIntConversion {
 	return &FloatToIntConversion{
 		&grammarElementImpl{name, sheet_logic_types.FloatToIntConversion},
+		arg}
+}
+
+type FloatToIntRoundDownConversion struct {
+	*grammarElementImpl
+	arg FloatExpresion
+}
+
+func (f *FloatToIntRoundDownConversion) CalculateInt() (result int64, err error) {
+	return generalizedCalculateFloatAndConvertToInt(f.arg, math.Floor)
+}
+
+func NewFloatToIntRoundDownConversion(
+	name string, arg FloatExpresion) *FloatToIntRoundDownConversion {
+	return &FloatToIntRoundDownConversion{
+		&grammarElementImpl{name, sheet_logic_types.FloatToIntRoundDownConversion},
+		arg}
+}
+
+type FloatToIntRoundUpConversion struct {
+	*grammarElementImpl
+	arg FloatExpresion
+}
+
+func (f *FloatToIntRoundUpConversion) CalculateInt() (result int64, err error) {
+	return generalizedCalculateFloatAndConvertToInt(f.arg, math.Ceil)
+}
+
+func NewFloatToIntRoundUpConversion(
+	name string, arg FloatExpresion) *FloatToIntRoundUpConversion {
+	return &FloatToIntRoundUpConversion{
+		&grammarElementImpl{name, sheet_logic_types.FloatToIntRoundUpConversion},
 		arg}
 }
