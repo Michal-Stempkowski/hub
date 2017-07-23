@@ -1,6 +1,9 @@
 package sheet_logic
 
-import "hub/sheet_logic_types"
+import (
+	"fmt"
+	"hub/sheet_logic_types"
+)
 
 type GrammarElement interface {
 	GetType() sheet_logic_types.T
@@ -11,6 +14,19 @@ type GrammarElement interface {
 // Because there will be also volatile sources (formulas, textfields etc.)
 type IntExpresion interface {
 	CalculateInt() (int64, error)
+}
+
+type EmptyIntExpression struct {
+	*grammarElementImpl
+}
+
+func (e *EmptyIntExpression) CalculateInt() (int64, error) {
+	return 0, fmt.Errorf("%T.CalculateInt", e, e.CalculateInt)
+}
+
+func NewEmptyIntExpression() *EmptyIntExpression {
+	return &EmptyIntExpression{
+		&grammarElementImpl{"<none>", sheet_logic_types.EmptyIntExpression}}
 }
 
 type FloatExpresion interface {

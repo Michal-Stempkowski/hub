@@ -5,8 +5,10 @@ type T int64
 const FloatPrecision = 0.000001
 
 const (
+	// Empty types
+	EmptyIntExpression T = iota
 	// Constants
-	IntConstant T = iota
+	IntConstant
 	StringConstant
 	FloatConstant
 	BoolConstant

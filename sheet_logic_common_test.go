@@ -118,3 +118,16 @@ func grammarElementScenario(
 	uut.SetName(anotherVariableName)
 	assertHasName(t, uut, anotherVariableName)
 }
+
+func emptyGrammarElementScenario(
+	t *testing.T, uut *grammarElementImpl, expectedType sheet_logic_types.T) {
+	assertHasType(t, uut, expectedType)
+	assertHasName(t, uut, "<none>")
+}
+
+func TestEmptyIntExpression(t *testing.T) {
+	uut := NewEmptyIntExpression()
+
+	emptyGrammarElementScenario(t, uut.grammarElementImpl, sheet_logic_types.EmptyIntExpression)
+	assertCalculatesToIntFails(t, uut, "EmptyIntExpression.CalculateInt")
+}
