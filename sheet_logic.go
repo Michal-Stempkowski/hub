@@ -8,6 +8,19 @@ type GrammarElement interface {
 	SetName(string)
 }
 
+// Because there will be also volatile sources (formulas, textfields etc.)
+type IntExpresion interface {
+	CalculateInt() int
+}
+
+type FloatExpresion interface {
+	CalculateFloat() float32
+}
+
+type StringExpresion interface {
+	CalculateString() string
+}
+
 type grammarElementImpl struct {
 	name         string
 	grammar_type sheet_logic_types.T
@@ -27,7 +40,11 @@ func (g *grammarElementImpl) GetType() sheet_logic_types.T {
 
 type IntConstant struct {
 	*grammarElementImpl
-	Value int
+	value int
+}
+
+func (i *IntConstant) CalculateInt() int {
+	return i.value
 }
 
 func NewIntConstant(name string, value int) *IntConstant {
@@ -36,7 +53,11 @@ func NewIntConstant(name string, value int) *IntConstant {
 
 type StringConstant struct {
 	*grammarElementImpl
-	Value string
+	value string
+}
+
+func (s *StringConstant) CalculateString() string {
+	return s.value
 }
 
 func NewStringConstant(name string, value string) *StringConstant {
@@ -45,7 +66,11 @@ func NewStringConstant(name string, value string) *StringConstant {
 
 type FloatConstant struct {
 	*grammarElementImpl
-	Value float32
+	value float32
+}
+
+func (f *FloatConstant) CalculateFloat() float32 {
+	return f.value
 }
 
 func NewFloatConstant(name string, value float32) *FloatConstant {

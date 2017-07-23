@@ -34,7 +34,7 @@ func assertEqual(t *testing.T, a interface{}, b interface{}, trail string) {
 func TestShouldBeAbleToCreateIntConstant(t *testing.T) {
 	uut := NewIntConstant(variableName, exampleIntValue)
 	assertHasName(t, uut, variableName)
-	assertEqual(t, uut.Value, exampleIntValue, "IntConstant value")
+	assertEqual(t, uut.CalculateInt(), exampleIntValue, "IntConstant.CalculateInt")
 	assertHasType(t, uut, sheet_logic_types.IntConstant)
 
 	uut.SetName(anotherVariableName)
@@ -44,7 +44,7 @@ func TestShouldBeAbleToCreateIntConstant(t *testing.T) {
 func TestShouldBeAbleToCreateStringConstant(t *testing.T) {
 	uut := NewStringConstant(variableName, exampleStringValue)
 	assertHasName(t, uut, variableName)
-	assertEqual(t, uut.Value, exampleStringValue, "StringConstant value")
+	assertEqual(t, uut.CalculateString(), exampleStringValue, "StringConstant.CalculateString")
 	assertHasType(t, uut, sheet_logic_types.StringConstant)
 
 	uut.SetName(anotherVariableName)
@@ -54,7 +54,7 @@ func TestShouldBeAbleToCreateStringConstant(t *testing.T) {
 func TestShouldBeAbleToCreateFloatConstant(t *testing.T) {
 	uut := NewFloatConstant(variableName, exampleFloatValue)
 	assertHasName(t, uut, variableName)
-	assertEqual(t, uut.Value, float32(exampleFloatValue), "FloatConstant value")
+	assertEqual(t, uut.CalculateFloat(), float32(exampleFloatValue), "FloatConstant.CalculateFloat")
 	assertHasType(t, uut, sheet_logic_types.FloatConstant)
 
 	uut.SetName(anotherVariableName)

@@ -6,4 +6,5 @@ const (
 	IntConstant T = iota
 	StringConstant
 	FloatConstant
+	IntToStringConversion
 )
