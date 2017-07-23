@@ -30,13 +30,13 @@ func NewStringConstant(name string, value string) *StringConstant {
 
 type FloatConstant struct {
 	*grammarElementImpl
-	value float32
+	value float64
 }
 
-func (f *FloatConstant) CalculateFloat() (float32, error) {
+func (f *FloatConstant) CalculateFloat() (float64, error) {
 	return f.value, nil
 }
 
-func NewFloatConstant(name string, value float32) *FloatConstant {
+func NewFloatConstant(name string, value float64) *FloatConstant {
 	return &FloatConstant{&grammarElementImpl{name, sheet_logic_types.FloatConstant}, value}
 }

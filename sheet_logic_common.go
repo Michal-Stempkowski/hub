@@ -14,7 +14,7 @@ type IntExpresion interface {
 }
 
 type FloatExpresion interface {
-	CalculateFloat() (float32, error)
+	CalculateFloat() (float64, error)
 }
 
 type StringExpresion interface {

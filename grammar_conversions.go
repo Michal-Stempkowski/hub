@@ -25,3 +25,24 @@ func NewIntToStringConversion(name string, arg *IntConstant) *IntToStringConvers
 		&grammarElementImpl{name, sheet_logic_types.IntToStringConversion},
 		arg}
 }
+
+type IntToFloatConversion struct {
+	*grammarElementImpl
+	arg *IntConstant
+}
+
+func (i *IntToFloatConversion) CalculateFloat() (result float64, err error) {
+	var int_val int
+	int_val, err = i.arg.CalculateInt()
+	if err == nil {
+		result = float64(int_val)
+	}
+
+	return
+}
+
+func NewIntToFloatConversion(name string, arg *IntConstant) *IntToFloatConversion {
+	return &IntToFloatConversion{
+		&grammarElementImpl{name, sheet_logic_types.IntToFloatConversion},
+		arg}
+}

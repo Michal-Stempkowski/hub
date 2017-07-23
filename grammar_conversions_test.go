@@ -20,3 +20,19 @@ func TestIntToStringConversion(t *testing.T) {
 	uut.SetName(anotherVariableName)
 	assertHasName(t, uut, anotherVariableName)
 }
+
+func TestIntToFloatConversion(t *testing.T) {
+	intArg := NewIntConstant(variableName, exampleIntValue)
+	uut := NewIntToFloatConversion(variableName, intArg)
+	assertHasName(t, uut, variableName)
+	assertCalculatesToFloat(
+		t,
+		uut,
+		exampleIntValue,
+		"IntToFloatConversion.CalculateFloat")
+
+	assertHasType(t, uut, sheet_logic_types.IntToFloatConversion)
+
+	uut.SetName(anotherVariableName)
+	assertHasName(t, uut, anotherVariableName)
+}

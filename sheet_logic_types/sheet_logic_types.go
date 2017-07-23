@@ -7,4 +7,5 @@ const (
 	StringConstant
 	FloatConstant
 	IntToStringConversion
+	IntToFloatConversion
 )

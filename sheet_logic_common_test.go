@@ -46,7 +46,7 @@ func assertCalculatesToString(t *testing.T, expr StringExpresion, expected strin
 	}
 }
 
-func assertCalculatesToFloat(t *testing.T, expr FloatExpresion, expected float32, trail string) {
+func assertCalculatesToFloat(t *testing.T, expr FloatExpresion, expected float64, trail string) {
 	val, err := expr.CalculateFloat()
 	if err != nil {
 		t.Errorf(trail, ":", "Float calculation has failed: ", err)
