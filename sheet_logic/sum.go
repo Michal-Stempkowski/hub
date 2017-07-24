@@ -5,14 +5,13 @@ import (
 )
 
 type IntSum struct {
-	*grammarElementImpl
-	argLeft  IntExpresion
-	argRight IntExpresion
+	GrammarElement
+	BinaryOperationInt
 }
 
 func (i *IntSum) CalculateInt() (result int64, err error) {
-	leftVal, errL := i.argLeft.CalculateInt()
-	rightVal, errR := i.argRight.CalculateInt()
+	leftVal, errL := i.GetLeftArg().CalculateInt()
+	rightVal, errR := i.GetRightArg().CalculateInt()
 	if err = getFirstError(errL, errR); err == nil {
 		result = leftVal + rightVal
 	}
@@ -20,9 +19,8 @@ func (i *IntSum) CalculateInt() (result int64, err error) {
 	return
 }
 
-func NewIntSum(name string, argLeft, argRight IntExpresion) *IntSum {
+func NewIntSum(name string) *IntSum {
 	return &IntSum{
 		&grammarElementImpl{name, sheet_logic_types.IntSum},
-		argLeft,
-		argRight}
+		DefaultBinaryOperationIntImpl()}
 }

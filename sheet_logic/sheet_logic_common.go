@@ -13,6 +13,14 @@ type GrammarElement interface {
 	SetName(string)
 }
 
+type BinaryOperationInt interface {
+	GetLeftArg() IntExpresion
+	SetLeftArg(IntExpresion)
+
+	GetRightArg() IntExpresion
+	SetRightArg(IntExpresion)
+}
+
 // Because there will be also volatile sources (formulas, textfields etc.)
 type IntExpresion interface {
 	CalculateInt() (int64, error)
@@ -97,6 +105,33 @@ func (g *grammarElementImpl) SetName(newName string) {
 
 func (g *grammarElementImpl) GetType() sheet_logic_types.T {
 	return g.grammar_type
+}
+
+type BinaryOperationIntImpl struct {
+	argLeft  IntExpresion
+	argRight IntExpresion
+}
+
+func (b *BinaryOperationIntImpl) GetLeftArg() IntExpresion {
+	return b.argLeft
+}
+
+func (b *BinaryOperationIntImpl) GetRightArg() IntExpresion {
+	return b.argRight
+}
+
+func (b *BinaryOperationIntImpl) SetLeftArg(newExpr IntExpresion) {
+	b.argLeft = newExpr
+}
+
+func (b *BinaryOperationIntImpl) SetRightArg(newExpr IntExpresion) {
+	b.argRight = newExpr
+}
+
+func DefaultBinaryOperationIntImpl() BinaryOperationInt {
+	return &BinaryOperationIntImpl{
+		NewEmptyIntExpression(),
+		NewEmptyIntExpression()}
 }
 
 func getFirstError(errors ...error) error {

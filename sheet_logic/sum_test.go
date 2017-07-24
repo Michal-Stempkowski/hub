@@ -6,11 +6,11 @@ import (
 )
 
 func TestIntSum(t *testing.T) {
-	argLeft := NewIntConstant(variableName, 2)
-	argRight := NewIntConstant(variableName, 3)
-	uut := NewIntSum(variableName, argLeft, argRight)
+	uut := NewIntSum(variableName)
+	uut.SetLeftArg(NewIntConstant(variableName, 2))
+	uut.SetRightArg(NewIntConstant(variableName, 3))
 
-	grammarElementScenario(t, uut.grammarElementImpl, sheet_logic_types.IntSum)
+	grammarElementScenario(t, uut.GrammarElement, sheet_logic_types.IntSum)
 
 	assertCalculatesToInt(
 		t,
@@ -18,16 +18,16 @@ func TestIntSum(t *testing.T) {
 		5,
 		"IntSum.CalculateInt")
 
-	// uut.argLeft = nil
-	// assertCalculatesToIntFails(
-	// 	t,
-	// 	uut,
-	// 	"IntSum.CalculateInt fails when argLeft missing")
+	uut.SetLeftArg(NewEmptyIntExpression())
+	assertCalculatesToIntFails(
+		t,
+		uut,
+		"IntSum.CalculateInt fails when argLeft missing")
 
-	// uut.argLeft = NewIntConstant(variableName, 2)
-	// uut.argRight = nil
-	// assertCalculatesToIntFails(
-	// 	t,
-	// 	uut,
-	// 	"IntSum.CalculateInt fails when argRight missing")
+	uut.SetLeftArg(NewIntConstant(variableName, 2))
+	uut.SetRightArg(NewEmptyIntExpression())
+	assertCalculatesToIntFails(
+		t,
+		uut,
+		"IntSum.CalculateInt fails when argRight missing")
 }
