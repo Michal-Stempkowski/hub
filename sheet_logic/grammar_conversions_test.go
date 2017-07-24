@@ -8,10 +8,14 @@ import (
 
 func TestIntToStringConversion(t *testing.T) {
 	uut := NewIntToStringConversion(variableName)
-	uut.SetArg(NewIntConstant(variableName, exampleIntValue))
-
 	grammarElementScenario(t, uut.GrammarElement, sheet_logic_types.IntToStringConversion)
 
+	assertCalculatesToStringFails(
+		t,
+		uut,
+		"IntToStringConversion.CalculateString fails on uninitialized")
+
+	uut.SetArg(NewIntConstant(variableName, exampleIntValue))
 	assertCalculatesToString(
 		t,
 		uut,
@@ -21,10 +25,14 @@ func TestIntToStringConversion(t *testing.T) {
 
 func TestIntToFloatConversion(t *testing.T) {
 	uut := NewIntToFloatConversion(variableName)
-	uut.SetArg(NewIntConstant(variableName, exampleIntValue))
-
 	grammarElementScenario(t, uut.GrammarElement, sheet_logic_types.IntToFloatConversion)
 
+	assertCalculatesToFloatFails(
+		t,
+		uut,
+		"IntToFloatConversion.CalculateFloat fails on uninitialized")
+
+	uut.SetArg(NewIntConstant(variableName, exampleIntValue))
 	assertCalculatesToFloat(
 		t,
 		uut,
@@ -35,10 +43,14 @@ func TestIntToFloatConversion(t *testing.T) {
 func TestFloatToIntConversion(t *testing.T) {
 	floatArg := NewFloatConstant(variableName, piTwoDigitPrecision)
 	uut := NewFloatToIntConversion(variableName)
-	uut.SetArg(floatArg)
-
 	grammarElementScenario(t, uut.GrammarElement, sheet_logic_types.FloatToIntConversion)
 
+	assertCalculatesToIntFails(
+		t,
+		uut,
+		"FloatToIntConversion.CalculateInt fails on uninitialized")
+
+	uut.SetArg(floatArg)
 	assertCalculatesToInt(
 		t,
 		uut,
@@ -62,11 +74,14 @@ func TestFloatToIntConversion(t *testing.T) {
 func TestFloatToIntRoundDownConversion(t *testing.T) {
 	floatArg := NewFloatConstant(variableName, piTwoDigitPrecision)
 	uut := NewFloatToIntRoundDownConversion(variableName)
+	grammarElementScenario(t, uut.GrammarElement, sheet_logic_types.FloatToIntRoundDownConversion)
+
+	assertCalculatesToIntFails(
+		t,
+		uut,
+		"FloatToIntRoundDownConversion.CalculateInt fails on uninitialized")
+
 	uut.SetArg(floatArg)
-
-	grammarElementScenario(
-		t, uut.GrammarElement, sheet_logic_types.FloatToIntRoundDownConversion)
-
 	assertCalculatesToInt(
 		t,
 		uut,
@@ -90,11 +105,14 @@ func TestFloatToIntRoundDownConversion(t *testing.T) {
 func TestFloatToIntRoundUpConversion(t *testing.T) {
 	floatArg := NewFloatConstant(variableName, piTwoDigitPrecision)
 	uut := NewFloatToIntRoundUpConversion(variableName)
+	grammarElementScenario(t, uut.GrammarElement, sheet_logic_types.FloatToIntRoundUpConversion)
+
+	assertCalculatesToIntFails(
+		t,
+		uut,
+		"FloatToIntRoundUpConversion.CalculateInt fails on uninitialized")
+
 	uut.SetArg(floatArg)
-
-	grammarElementScenario(
-		t, uut.GrammarElement, sheet_logic_types.FloatToIntRoundUpConversion)
-
 	assertCalculatesToInt(
 		t,
 		uut,
@@ -118,10 +136,14 @@ func TestFloatToIntRoundUpConversion(t *testing.T) {
 func TestStringToIntConversion(t *testing.T) {
 	stringArg := NewStringConstant(variableName, exampleIntValueAsString)
 	uut := NewStringToIntConversion(variableName)
-	uut.SetArg(stringArg)
-
 	grammarElementScenario(t, uut.GrammarElement, sheet_logic_types.StringToIntConversion)
 
+	assertCalculatesToIntFails(
+		t,
+		uut,
+		"StringToIntConversion.CalculateInt fails on uninitialized")
+
+	uut.SetArg(stringArg)
 	assertCalculatesToInt(
 		t,
 		uut,
@@ -144,11 +166,14 @@ func TestStringToIntConversion(t *testing.T) {
 func TestStringToFloatConversion(t *testing.T) {
 	stringArg := NewStringConstant(variableName, stringPiTwoDigitPrecision)
 	uut := NewStringToFloatConversion(variableName)
+	grammarElementScenario(t, uut.GrammarElement, sheet_logic_types.StringToFloatConversion)
+
+	assertCalculatesToFloatFails(
+		t,
+		uut,
+		"StringToFloatConversion.CalculateFloat fails on uninitialized")
+
 	uut.SetArg(stringArg)
-
-	grammarElementScenario(
-		t, uut.GrammarElement, sheet_logic_types.StringToFloatConversion)
-
 	assertCalculatesToFloat(
 		t,
 		uut,
@@ -172,11 +197,15 @@ func TestStringToFloatConversion(t *testing.T) {
 func TestFloatToStringConversion(t *testing.T) {
 	floatArg := NewFloatConstant(variableName, pi)
 	uut := NewFloatToStringConversion(variableName)
-	uut.SetArg(floatArg)
-	uut.Precision = 4
-
 	grammarElementScenario(t, uut.GrammarElement, sheet_logic_types.FloatToStringConversion)
 
+	assertCalculatesToStringFails(
+		t,
+		uut,
+		"FloatToStringConversion.CalculateInt fails on uninitialized")
+
+	uut.SetArg(floatArg)
+	uut.Precision = 4
 	assertCalculatesToString(
 		t,
 		uut,
@@ -207,10 +236,14 @@ func TestFloatToStringConversion(t *testing.T) {
 func TestIntToBoolConversion(t *testing.T) {
 	intArg := NewIntConstant(variableName, 5)
 	uut := NewIntToBoolConversion(variableName)
-	uut.SetArg(intArg)
-
 	grammarElementScenario(t, uut.GrammarElement, sheet_logic_types.IntToBoolConversion)
 
+	assertCalculatesToBoolFails(
+		t,
+		uut,
+		"IntToBoolConversion.CalculateBool fails on uninitialized")
+
+	uut.SetArg(intArg)
 	assertCalculatesToBool(
 		t,
 		uut,
@@ -228,10 +261,14 @@ func TestIntToBoolConversion(t *testing.T) {
 func TestFloatToBoolConversion(t *testing.T) {
 	floatArg := NewFloatConstant(variableName, 12.)
 	uut := NewFloatToBoolConversion(variableName)
-	uut.SetArg(floatArg)
-
 	grammarElementScenario(t, uut.GrammarElement, sheet_logic_types.FloatToBoolConversion)
 
+	assertCalculatesToBoolFails(
+		t,
+		uut,
+		"FloatToBoolConversion.CalculateBool fails on uninitialized")
+
+	uut.SetArg(floatArg)
 	assertCalculatesToBool(
 		t,
 		uut,
@@ -270,9 +307,14 @@ func TestFloatToBoolConversion(t *testing.T) {
 func TestStringToBoolConversion(t *testing.T) {
 	stringArg := NewStringConstant(variableName, "true")
 	uut := NewStringToBoolConversion(variableName)
-	uut.SetArg(stringArg)
 	grammarElementScenario(t, uut.GrammarElement, sheet_logic_types.StringToBoolConversion)
 
+	assertCalculatesToBoolFails(
+		t,
+		uut,
+		"StringToBoolConversion.CalculateBool fails on uninitialized")
+
+	uut.SetArg(stringArg)
 	assertCalculatesToBool(
 		t,
 		uut,
@@ -296,10 +338,14 @@ func TestStringToBoolConversion(t *testing.T) {
 func TestBoolToIntConversion(t *testing.T) {
 	boolArg := NewBoolConstant(variableName, true)
 	uut := NewBoolToIntConversion(variableName)
-	uut.SetArg(boolArg)
-
 	grammarElementScenario(t, uut.GrammarElement, sheet_logic_types.BoolToIntConversion)
 
+	assertCalculatesToIntFails(
+		t,
+		uut,
+		"IntToStringConversion.CalculateInt fails on uninitialized")
+
+	uut.SetArg(boolArg)
 	assertCalculatesToInt(
 		t,
 		uut,
@@ -317,10 +363,14 @@ func TestBoolToIntConversion(t *testing.T) {
 func TestBoolToFloatConversion(t *testing.T) {
 	boolArg := NewBoolConstant(variableName, true)
 	uut := NewBoolToFloatConversion(variableName)
-	uut.SetArg(boolArg)
-
 	grammarElementScenario(t, uut.GrammarElement, sheet_logic_types.BoolToFloatConversion)
 
+	assertCalculatesToFloatFails(
+		t,
+		uut,
+		"BoolToFloatConversion.CalculateFloat fails on uninitialized")
+
+	uut.SetArg(boolArg)
 	assertCalculatesToFloat(
 		t,
 		uut,
@@ -338,10 +388,14 @@ func TestBoolToFloatConversion(t *testing.T) {
 func TestBoolToStringConversion(t *testing.T) {
 	boolArg := NewBoolConstant(variableName, true)
 	uut := NewBoolToStringConversion(variableName)
-	uut.SetArg(boolArg)
-
 	grammarElementScenario(t, uut.GrammarElement, sheet_logic_types.BoolToStringConversion)
 
+	assertCalculatesToStringFails(
+		t,
+		uut,
+		"BoolToStringConversion.CalculateString fails on uninitialized")
+
+	uut.SetArg(boolArg)
 	assertCalculatesToString(
 		t,
 		uut,
