@@ -295,7 +295,8 @@ func TestStringToBoolConversion(t *testing.T) {
 
 func TestBoolToIntConversion(t *testing.T) {
 	boolArg := NewBoolConstant(variableName, true)
-	uut := NewBoolToIntConversion(variableName, boolArg)
+	uut := NewBoolToIntConversion(variableName)
+	uut.SetArg(boolArg)
 
 	grammarElementScenario(t, uut.GrammarElement, sheet_logic_types.BoolToIntConversion)
 
@@ -315,7 +316,8 @@ func TestBoolToIntConversion(t *testing.T) {
 
 func TestBoolToFloatConversion(t *testing.T) {
 	boolArg := NewBoolConstant(variableName, true)
-	uut := NewBoolToFloatConversion(variableName, boolArg)
+	uut := NewBoolToFloatConversion(variableName)
+	uut.SetArg(boolArg)
 
 	grammarElementScenario(t, uut.GrammarElement, sheet_logic_types.BoolToFloatConversion)
 
@@ -335,7 +337,8 @@ func TestBoolToFloatConversion(t *testing.T) {
 
 func TestBoolToStringConversion(t *testing.T) {
 	boolArg := NewBoolConstant(variableName, true)
-	uut := NewBoolToStringConversion(variableName, boolArg)
+	uut := NewBoolToStringConversion(variableName)
+	uut.SetArg(boolArg)
 
 	grammarElementScenario(t, uut.GrammarElement, sheet_logic_types.BoolToStringConversion)
 

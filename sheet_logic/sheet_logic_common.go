@@ -28,6 +28,11 @@ type UnaryOperationString interface {
 	SetArg(StringExpresion)
 }
 
+type UnaryOperationBool interface {
+	GetArg() BoolExpresion
+	SetArg(BoolExpresion)
+}
+
 type BinaryOperationInt interface {
 	GetLeftArg() IntExpresion
 	SetLeftArg(IntExpresion)
@@ -171,6 +176,23 @@ func (u *UnaryOperationStringImpl) SetArg(newExpr StringExpresion) {
 func DefaultUnaryOperationStringImpl() UnaryOperationString {
 	return &UnaryOperationStringImpl{
 		NewEmptyStringExpression()}
+}
+
+type UnaryOperationBoolImpl struct {
+	arg BoolExpresion
+}
+
+func (u *UnaryOperationBoolImpl) GetArg() BoolExpresion {
+	return u.arg
+}
+
+func (u *UnaryOperationBoolImpl) SetArg(newExpr BoolExpresion) {
+	u.arg = newExpr
+}
+
+func DefaultUnaryOperationBoolImpl() UnaryOperationBool {
+	return &UnaryOperationBoolImpl{
+		NewEmptyBoolExpression()}
 }
 
 type BinaryOperationIntImpl struct {

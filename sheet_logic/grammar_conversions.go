@@ -270,13 +270,13 @@ func NewStringToBoolConversion(name string) *StringToBoolConversion {
 
 type BoolToIntConversion struct {
 	GrammarElement
-	arg BoolExpresion
+	UnaryOperationBool
 }
 
 func (b *BoolToIntConversion) CalculateInt() (result int64, err error) {
 	var boolVal bool
 
-	if boolVal, err = b.arg.CalculateBool(); err == nil {
+	if boolVal, err = b.GetArg().CalculateBool(); err == nil {
 		if boolVal {
 			result = 1
 		} else {
@@ -287,21 +287,21 @@ func (b *BoolToIntConversion) CalculateInt() (result int64, err error) {
 	return
 }
 
-func NewBoolToIntConversion(name string, arg BoolExpresion) *BoolToIntConversion {
+func NewBoolToIntConversion(name string) *BoolToIntConversion {
 	return &BoolToIntConversion{
 		&grammarElementImpl{name, sheet_logic_types.BoolToIntConversion},
-		arg}
+		DefaultUnaryOperationBoolImpl()}
 }
 
 type BoolToFloatConversion struct {
 	GrammarElement
-	arg BoolExpresion
+	UnaryOperationBool
 }
 
 func (b *BoolToFloatConversion) CalculateFloat() (result float64, err error) {
 	var boolVal bool
 
-	if boolVal, err = b.arg.CalculateBool(); err == nil {
+	if boolVal, err = b.GetArg().CalculateBool(); err == nil {
 		if boolVal {
 			result = 1.
 		} else {
@@ -312,21 +312,21 @@ func (b *BoolToFloatConversion) CalculateFloat() (result float64, err error) {
 	return
 }
 
-func NewBoolToFloatConversion(name string, arg BoolExpresion) *BoolToFloatConversion {
+func NewBoolToFloatConversion(name string) *BoolToFloatConversion {
 	return &BoolToFloatConversion{
 		&grammarElementImpl{name, sheet_logic_types.BoolToFloatConversion},
-		arg}
+		DefaultUnaryOperationBoolImpl()}
 }
 
 type BoolToStringConversion struct {
 	GrammarElement
-	arg BoolExpresion
+	UnaryOperationBool
 }
 
 func (b *BoolToStringConversion) CalculateString() (result string, err error) {
 	var boolVal bool
 
-	if boolVal, err = b.arg.CalculateBool(); err == nil {
+	if boolVal, err = b.GetArg().CalculateBool(); err == nil {
 		if boolVal {
 			result = "true"
 		} else {
@@ -337,8 +337,8 @@ func (b *BoolToStringConversion) CalculateString() (result string, err error) {
 	return
 }
 
-func NewBoolToStringConversion(name string, arg BoolExpresion) *BoolToStringConversion {
+func NewBoolToStringConversion(name string) *BoolToStringConversion {
 	return &BoolToStringConversion{
 		&grammarElementImpl{name, sheet_logic_types.BoolToStringConversion},
-		arg}
+		DefaultUnaryOperationBoolImpl()}
 }
