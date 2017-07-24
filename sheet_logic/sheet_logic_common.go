@@ -13,6 +13,11 @@ type GrammarElement interface {
 	SetName(string)
 }
 
+type UnaryOperationInt interface {
+	GetArg() IntExpresion
+	SetArg(IntExpresion)
+}
+
 type BinaryOperationInt interface {
 	GetLeftArg() IntExpresion
 	SetLeftArg(IntExpresion)
@@ -105,6 +110,23 @@ func (g *grammarElementImpl) SetName(newName string) {
 
 func (g *grammarElementImpl) GetType() sheet_logic_types.T {
 	return g.grammar_type
+}
+
+type UnaryOperationIntImpl struct {
+	arg IntExpresion
+}
+
+func (u *UnaryOperationIntImpl) GetArg() IntExpresion {
+	return u.arg
+}
+
+func (u *UnaryOperationIntImpl) SetArg(newExpr IntExpresion) {
+	u.arg = newExpr
+}
+
+func DefaultUnaryOperationIntImpl() UnaryOperationInt {
+	return &UnaryOperationIntImpl{
+		NewEmptyIntExpression()}
 }
 
 type BinaryOperationIntImpl struct {

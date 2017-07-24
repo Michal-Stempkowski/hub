@@ -11,44 +11,44 @@ import (
 
 type IntToStringConversion struct {
 	GrammarElement
-	arg IntExpresion
+	UnaryOperationInt
 }
 
 func (i *IntToStringConversion) CalculateString() (result string, err error) {
 	var intVal int64
 
-	if intVal, err = i.arg.CalculateInt(); err == nil {
+	if intVal, err = i.GetArg().CalculateInt(); err == nil {
 		result = strconv.FormatInt(intVal, 10)
 	}
 
 	return
 }
 
-func NewIntToStringConversion(name string, arg IntExpresion) *IntToStringConversion {
+func NewIntToStringConversion(name string) *IntToStringConversion {
 	return &IntToStringConversion{
 		&grammarElementImpl{name, sheet_logic_types.IntToStringConversion},
-		arg}
+		DefaultUnaryOperationIntImpl()}
 }
 
 type IntToFloatConversion struct {
 	GrammarElement
-	arg IntExpresion
+	UnaryOperationInt
 }
 
 func (i *IntToFloatConversion) CalculateFloat() (result float64, err error) {
 	var intVal int64
 
-	if intVal, err = i.arg.CalculateInt(); err == nil {
+	if intVal, err = i.GetArg().CalculateInt(); err == nil {
 		result = float64(intVal)
 	}
 
 	return
 }
 
-func NewIntToFloatConversion(name string, arg IntExpresion) *IntToFloatConversion {
+func NewIntToFloatConversion(name string) *IntToFloatConversion {
 	return &IntToFloatConversion{
 		&grammarElementImpl{name, sheet_logic_types.IntToFloatConversion},
-		arg}
+		DefaultUnaryOperationIntImpl()}
 }
 
 func generalizedCalculateFloatAndConvertToInt(
@@ -194,13 +194,13 @@ func NewFloatToStringConversion(
 
 type IntToBoolConversion struct {
 	GrammarElement
-	arg IntExpresion
+	UnaryOperationInt
 }
 
 func (i *IntToBoolConversion) CalculateBool() (result bool, err error) {
 	var intVal int64
 
-	if intVal, err = i.arg.CalculateInt(); err == nil {
+	if intVal, err = i.GetArg().CalculateInt(); err == nil {
 		if intVal == 0 {
 			result = false
 		} else {
@@ -211,10 +211,10 @@ func (i *IntToBoolConversion) CalculateBool() (result bool, err error) {
 	return
 }
 
-func NewIntToBoolConversion(name string, arg IntExpresion) *IntToBoolConversion {
+func NewIntToBoolConversion(name string) *IntToBoolConversion {
 	return &IntToBoolConversion{
 		&grammarElementImpl{name, sheet_logic_types.IntToBoolConversion},
-		arg}
+		DefaultUnaryOperationIntImpl()}
 }
 
 type FloatToBoolConversion struct {

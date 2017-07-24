@@ -7,8 +7,8 @@ import (
 )
 
 func TestIntToStringConversion(t *testing.T) {
-	intArg := NewIntConstant(variableName, exampleIntValue)
-	uut := NewIntToStringConversion(variableName, intArg)
+	uut := NewIntToStringConversion(variableName)
+	uut.SetArg(NewIntConstant(variableName, exampleIntValue))
 
 	grammarElementScenario(t, uut.GrammarElement, sheet_logic_types.IntToStringConversion)
 
@@ -20,8 +20,8 @@ func TestIntToStringConversion(t *testing.T) {
 }
 
 func TestIntToFloatConversion(t *testing.T) {
-	intArg := NewIntConstant(variableName, exampleIntValue)
-	uut := NewIntToFloatConversion(variableName, intArg)
+	uut := NewIntToFloatConversion(variableName)
+	uut.SetArg(NewIntConstant(variableName, exampleIntValue))
 
 	grammarElementScenario(t, uut.GrammarElement, sheet_logic_types.IntToFloatConversion)
 
@@ -199,7 +199,8 @@ func TestFloatToStringConversion(t *testing.T) {
 
 func TestIntToBoolConversion(t *testing.T) {
 	intArg := NewIntConstant(variableName, 5)
-	uut := NewIntToBoolConversion(variableName, intArg)
+	uut := NewIntToBoolConversion(variableName)
+	uut.SetArg(intArg)
 
 	grammarElementScenario(t, uut.GrammarElement, sheet_logic_types.IntToBoolConversion)
 
