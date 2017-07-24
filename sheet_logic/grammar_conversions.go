@@ -118,44 +118,44 @@ func NewFloatToIntRoundUpConversion(name string) *FloatToIntRoundUpConversion {
 
 type StringToIntConversion struct {
 	GrammarElement
-	arg StringExpresion
+	UnaryOperationString
 }
 
 func (s *StringToIntConversion) CalculateInt() (result int64, err error) {
 	var stringVal string
 
-	if stringVal, err = s.arg.CalculateString(); err == nil {
+	if stringVal, err = s.GetArg().CalculateString(); err == nil {
 		result, err = strconv.ParseInt(stringVal, 10, 64)
 	}
 
 	return
 }
 
-func NewStringToIntConversion(name string, arg StringExpresion) *StringToIntConversion {
+func NewStringToIntConversion(name string) *StringToIntConversion {
 	return &StringToIntConversion{
 		&grammarElementImpl{name, sheet_logic_types.StringToIntConversion},
-		arg}
+		DefaultUnaryOperationStringImpl()}
 }
 
 type StringToFloatConversion struct {
 	GrammarElement
-	arg StringExpresion
+	UnaryOperationString
 }
 
 func (s *StringToFloatConversion) CalculateFloat() (result float64, err error) {
 	var stringVal string
 
-	if stringVal, err = s.arg.CalculateString(); err == nil {
+	if stringVal, err = s.GetArg().CalculateString(); err == nil {
 		result, err = strconv.ParseFloat(stringVal, 64)
 	}
 
 	return
 }
 
-func NewStringToFloatConversion(name string, arg StringExpresion) *StringToFloatConversion {
+func NewStringToFloatConversion(name string) *StringToFloatConversion {
 	return &StringToFloatConversion{
 		&grammarElementImpl{name, sheet_logic_types.StringToFloatConversion},
-		arg}
+		DefaultUnaryOperationStringImpl()}
 }
 
 type FloatToStringConversion struct {
@@ -240,13 +240,13 @@ func NewFloatToBoolConversion(name string) *FloatToBoolConversion {
 
 type StringToBoolConversion struct {
 	GrammarElement
-	arg StringExpresion
+	UnaryOperationString
 }
 
 func (s *StringToBoolConversion) CalculateBool() (result bool, err error) {
 	var stringVal string
 
-	if stringVal, err = s.arg.CalculateString(); err == nil {
+	if stringVal, err = s.GetArg().CalculateString(); err == nil {
 		switch stringVal {
 		case "true":
 			result = true
@@ -262,10 +262,10 @@ func (s *StringToBoolConversion) CalculateBool() (result bool, err error) {
 	return
 }
 
-func NewStringToBoolConversion(name string, arg StringExpresion) *StringToBoolConversion {
+func NewStringToBoolConversion(name string) *StringToBoolConversion {
 	return &StringToBoolConversion{
 		&grammarElementImpl{name, sheet_logic_types.StringToBoolConversion},
-		arg}
+		DefaultUnaryOperationStringImpl()}
 }
 
 type BoolToIntConversion struct {

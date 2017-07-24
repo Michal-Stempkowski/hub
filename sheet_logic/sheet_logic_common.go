@@ -23,6 +23,11 @@ type UnaryOperationFloat interface {
 	SetArg(FloatExpresion)
 }
 
+type UnaryOperationString interface {
+	GetArg() StringExpresion
+	SetArg(StringExpresion)
+}
+
 type BinaryOperationInt interface {
 	GetLeftArg() IntExpresion
 	SetLeftArg(IntExpresion)
@@ -149,6 +154,23 @@ func (u *UnaryOperationFloatImpl) SetArg(newExpr FloatExpresion) {
 func DefaultUnaryOperationFloatImpl() UnaryOperationFloat {
 	return &UnaryOperationFloatImpl{
 		NewEmptyFloatExpression()}
+}
+
+type UnaryOperationStringImpl struct {
+	arg StringExpresion
+}
+
+func (u *UnaryOperationStringImpl) GetArg() StringExpresion {
+	return u.arg
+}
+
+func (u *UnaryOperationStringImpl) SetArg(newExpr StringExpresion) {
+	u.arg = newExpr
+}
+
+func DefaultUnaryOperationStringImpl() UnaryOperationString {
+	return &UnaryOperationStringImpl{
+		NewEmptyStringExpression()}
 }
 
 type BinaryOperationIntImpl struct {

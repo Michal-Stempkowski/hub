@@ -117,7 +117,8 @@ func TestFloatToIntRoundUpConversion(t *testing.T) {
 
 func TestStringToIntConversion(t *testing.T) {
 	stringArg := NewStringConstant(variableName, exampleIntValueAsString)
-	uut := NewStringToIntConversion(variableName, stringArg)
+	uut := NewStringToIntConversion(variableName)
+	uut.SetArg(stringArg)
 
 	grammarElementScenario(t, uut.GrammarElement, sheet_logic_types.StringToIntConversion)
 
@@ -142,7 +143,8 @@ func TestStringToIntConversion(t *testing.T) {
 
 func TestStringToFloatConversion(t *testing.T) {
 	stringArg := NewStringConstant(variableName, stringPiTwoDigitPrecision)
-	uut := NewStringToFloatConversion(variableName, stringArg)
+	uut := NewStringToFloatConversion(variableName)
+	uut.SetArg(stringArg)
 
 	grammarElementScenario(
 		t, uut.GrammarElement, sheet_logic_types.StringToFloatConversion)
@@ -267,8 +269,8 @@ func TestFloatToBoolConversion(t *testing.T) {
 
 func TestStringToBoolConversion(t *testing.T) {
 	stringArg := NewStringConstant(variableName, "true")
-	uut := NewStringToBoolConversion(variableName, stringArg)
-
+	uut := NewStringToBoolConversion(variableName)
+	uut.SetArg(stringArg)
 	grammarElementScenario(t, uut.GrammarElement, sheet_logic_types.StringToBoolConversion)
 
 	assertCalculatesToBool(
