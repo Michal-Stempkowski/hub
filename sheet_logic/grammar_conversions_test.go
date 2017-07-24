@@ -45,14 +45,14 @@ func TestFloatToIntConversion(t *testing.T) {
 		piRoundedDown,
 		"FloatToIntConversion.CalculateInt for pi")
 
-	floatArg.value = floatE
+	floatArg.Value = floatE
 	assertCalculatesToInt(
 		t,
 		uut,
 		eRoundedUp,
 		"FloatToIntConversion.CalculateInt for e")
 
-	floatArg.value = bigNumber
+	floatArg.Value = bigNumber
 	assertCalculatesToIntFails(
 		t,
 		uut,
@@ -73,14 +73,14 @@ func TestFloatToIntRoundDownConversion(t *testing.T) {
 		piRoundedDown,
 		"FloatToIntRoundDownConversion.CalculateInt for pi")
 
-	floatArg.value = floatE
+	floatArg.Value = floatE
 	assertCalculatesToInt(
 		t,
 		uut,
 		eRoundedDown,
 		"FloatToIntRoundDownConversion.CalculateInt for e")
 
-	floatArg.value = bigNumber
+	floatArg.Value = bigNumber
 	assertCalculatesToIntFails(
 		t,
 		uut,
@@ -101,14 +101,14 @@ func TestFloatToIntRoundUpConversion(t *testing.T) {
 		piRoundedUp,
 		"FloatToIntRoundUpConversion.CalculateInt for pi")
 
-	floatArg.value = floatE
+	floatArg.Value = floatE
 	assertCalculatesToInt(
 		t,
 		uut,
 		eRoundedUp,
 		"FloatToIntRoundUpConversion.CalculateInt for e")
 
-	floatArg.value = bigNumber
+	floatArg.Value = bigNumber
 	assertCalculatesToIntFails(
 		t,
 		uut,
@@ -128,13 +128,13 @@ func TestStringToIntConversion(t *testing.T) {
 		exampleIntValue,
 		"StringToIntConversion.CalculateInt some integer")
 
-	stringArg.value = bigNumberAsString
+	stringArg.Value = bigNumberAsString
 	assertCalculatesToIntFails(
 		t,
 		uut,
 		"StringToIntConversion.CalculateInt for big number")
 
-	stringArg.value = stringPi
+	stringArg.Value = stringPi
 	assertCalculatesToIntFails(
 		t,
 		uut,
@@ -155,14 +155,14 @@ func TestStringToFloatConversion(t *testing.T) {
 		piTwoDigitPrecision,
 		"StringToFloatConversion.CalculateFloat for pi")
 
-	stringArg.value = exampleIntValueAsString
+	stringArg.Value = exampleIntValueAsString
 	assertCalculatesToFloat(
 		t,
 		uut,
 		exampleIntValue,
 		"StringToFloatConversion.CalculateFloat for int")
 
-	stringArg.value = exampleStringValue
+	stringArg.Value = exampleStringValue
 	assertCalculatesToFloatFails(
 		t,
 		uut,
@@ -217,7 +217,7 @@ func TestIntToBoolConversion(t *testing.T) {
 		true,
 		"IntToBoolConversion.CalculateBool for non zero number")
 
-	intArg.value = 0
+	intArg.Value = 0
 	assertCalculatesToBool(
 		t,
 		uut,
@@ -238,28 +238,28 @@ func TestFloatToBoolConversion(t *testing.T) {
 		true,
 		"FloatToBoolConversion.CalculateBool for non zero number")
 
-	floatArg.value = 0.
+	floatArg.Value = 0.
 	assertCalculatesToBool(
 		t,
 		uut,
 		false,
 		"FloatToBoolConversion.CalculateBool for zero")
 
-	floatArg.value = math.NaN()
+	floatArg.Value = math.NaN()
 	assertCalculatesToBool(
 		t,
 		uut,
 		true,
 		"FloatToBoolConversion.CalculateBool for zero")
 
-	floatArg.value = math.Inf(1)
+	floatArg.Value = math.Inf(1)
 	assertCalculatesToBool(
 		t,
 		uut,
 		true,
 		"FloatToBoolConversion.CalculateBool for zero")
 
-	floatArg.value = math.Inf(-1)
+	floatArg.Value = math.Inf(-1)
 	assertCalculatesToBool(
 		t,
 		uut,
@@ -279,14 +279,14 @@ func TestStringToBoolConversion(t *testing.T) {
 		true,
 		"StringToBoolConversion.CalculateBool for 'true'")
 
-	stringArg.value = "false"
+	stringArg.Value = "false"
 	assertCalculatesToBool(
 		t,
 		uut,
 		false,
 		"StringToBoolConversion.CalculateBool for 'false'")
 
-	stringArg.value = "Anything else"
+	stringArg.Value = "Anything else"
 	assertCalculatesToBoolFails(
 		t,
 		uut,
@@ -306,7 +306,7 @@ func TestBoolToIntConversion(t *testing.T) {
 		1,
 		"IntToStringConversion.CalculateInt")
 
-	boolArg.value = false
+	boolArg.Value = false
 	assertCalculatesToInt(
 		t,
 		uut,
@@ -327,7 +327,7 @@ func TestBoolToFloatConversion(t *testing.T) {
 		1.,
 		"BoolToFloatConversion.CalculateFloat")
 
-	boolArg.value = false
+	boolArg.Value = false
 	assertCalculatesToFloat(
 		t,
 		uut,
@@ -348,7 +348,7 @@ func TestBoolToStringConversion(t *testing.T) {
 		"true",
 		"BoolToStringConversion.CalculateString")
 
-	boolArg.value = false
+	boolArg.Value = false
 	assertCalculatesToString(
 		t,
 		uut,

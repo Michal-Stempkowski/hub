@@ -4,11 +4,11 @@ import "hub/sheet_logic/sheet_logic_types"
 
 type IntConstant struct {
 	GrammarElement
-	value int64
+	Value int64
 }
 
 func (i *IntConstant) CalculateInt() (int64, error) {
-	return i.value, nil
+	return i.Value, nil
 }
 
 func NewIntConstant(name string, value int64) *IntConstant {
@@ -17,11 +17,11 @@ func NewIntConstant(name string, value int64) *IntConstant {
 
 type StringConstant struct {
 	GrammarElement
-	value string
+	Value string
 }
 
 func (s *StringConstant) CalculateString() (string, error) {
-	return s.value, nil
+	return s.Value, nil
 }
 
 func NewStringConstant(name string, value string) *StringConstant {
@@ -30,11 +30,11 @@ func NewStringConstant(name string, value string) *StringConstant {
 
 type FloatConstant struct {
 	GrammarElement
-	value float64
+	Value float64
 }
 
 func (f *FloatConstant) CalculateFloat() (float64, error) {
-	return f.value, nil
+	return f.Value, nil
 }
 
 func NewFloatConstant(name string, value float64) *FloatConstant {
@@ -43,11 +43,11 @@ func NewFloatConstant(name string, value float64) *FloatConstant {
 
 type BoolConstant struct {
 	GrammarElement
-	value bool
+	Value bool
 }
 
 func (b *BoolConstant) CalculateBool() (bool, error) {
-	return b.value, nil
+	return b.Value, nil
 }
 
 func NewBoolConstant(name string, value bool) *BoolConstant {
