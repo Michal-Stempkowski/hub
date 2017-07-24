@@ -9,7 +9,7 @@ import (
 )
 
 type IntToStringConversion struct {
-	*grammarElementImpl
+	GrammarElement
 	arg IntExpresion
 }
 
@@ -30,7 +30,7 @@ func NewIntToStringConversion(name string, arg IntExpresion) *IntToStringConvers
 }
 
 type IntToFloatConversion struct {
-	*grammarElementImpl
+	GrammarElement
 	arg IntExpresion
 }
 
@@ -71,7 +71,7 @@ func round(val float64) float64 {
 }
 
 type FloatToIntConversion struct {
-	*grammarElementImpl
+	GrammarElement
 	arg FloatExpresion
 }
 
@@ -86,7 +86,7 @@ func NewFloatToIntConversion(name string, arg FloatExpresion) *FloatToIntConvers
 }
 
 type FloatToIntRoundDownConversion struct {
-	*grammarElementImpl
+	GrammarElement
 	arg FloatExpresion
 }
 
@@ -102,7 +102,7 @@ func NewFloatToIntRoundDownConversion(
 }
 
 type FloatToIntRoundUpConversion struct {
-	*grammarElementImpl
+	GrammarElement
 	arg FloatExpresion
 }
 
@@ -118,7 +118,7 @@ func NewFloatToIntRoundUpConversion(
 }
 
 type StringToIntConversion struct {
-	*grammarElementImpl
+	GrammarElement
 	arg StringExpresion
 }
 
@@ -139,7 +139,7 @@ func NewStringToIntConversion(name string, arg StringExpresion) *StringToIntConv
 }
 
 type StringToFloatConversion struct {
-	*grammarElementImpl
+	GrammarElement
 	arg StringExpresion
 }
 
@@ -160,7 +160,7 @@ func NewStringToFloatConversion(name string, arg StringExpresion) *StringToFloat
 }
 
 type FloatToStringConversion struct {
-	*grammarElementImpl
+	GrammarElement
 	arg       FloatExpresion
 	Precision int64
 }
@@ -192,7 +192,7 @@ func NewFloatToStringConversion(
 }
 
 type IntToBoolConversion struct {
-	*grammarElementImpl
+	GrammarElement
 	arg IntExpresion
 }
 
@@ -217,7 +217,7 @@ func NewIntToBoolConversion(name string, arg IntExpresion) *IntToBoolConversion 
 }
 
 type FloatToBoolConversion struct {
-	*grammarElementImpl
+	GrammarElement
 	arg FloatExpresion
 }
 
@@ -241,7 +241,7 @@ func NewFloatToBoolConversion(name string, arg FloatExpresion) *FloatToBoolConve
 }
 
 type StringToBoolConversion struct {
-	*grammarElementImpl
+	GrammarElement
 	arg StringExpresion
 }
 
@@ -271,7 +271,7 @@ func NewStringToBoolConversion(name string, arg StringExpresion) *StringToBoolCo
 }
 
 type BoolToIntConversion struct {
-	*grammarElementImpl
+	GrammarElement
 	arg BoolExpresion
 }
 
@@ -296,7 +296,7 @@ func NewBoolToIntConversion(name string, arg BoolExpresion) *BoolToIntConversion
 }
 
 type BoolToFloatConversion struct {
-	*grammarElementImpl
+	GrammarElement
 	arg BoolExpresion
 }
 
@@ -321,7 +321,7 @@ func NewBoolToFloatConversion(name string, arg BoolExpresion) *BoolToFloatConver
 }
 
 type BoolToStringConversion struct {
-	*grammarElementImpl
+	GrammarElement
 	arg BoolExpresion
 }
 

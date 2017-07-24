@@ -10,7 +10,7 @@ func TestIntToStringConversion(t *testing.T) {
 	intArg := NewIntConstant(variableName, exampleIntValue)
 	uut := NewIntToStringConversion(variableName, intArg)
 
-	grammarElementScenario(t, uut.grammarElementImpl, sheet_logic_types.IntToStringConversion)
+	grammarElementScenario(t, uut.GrammarElement, sheet_logic_types.IntToStringConversion)
 
 	assertCalculatesToString(
 		t,
@@ -23,7 +23,7 @@ func TestIntToFloatConversion(t *testing.T) {
 	intArg := NewIntConstant(variableName, exampleIntValue)
 	uut := NewIntToFloatConversion(variableName, intArg)
 
-	grammarElementScenario(t, uut.grammarElementImpl, sheet_logic_types.IntToFloatConversion)
+	grammarElementScenario(t, uut.GrammarElement, sheet_logic_types.IntToFloatConversion)
 
 	assertCalculatesToFloat(
 		t,
@@ -36,7 +36,7 @@ func TestFloatToIntConversion(t *testing.T) {
 	floatArg := NewFloatConstant(variableName, piTwoDigitPrecision)
 	uut := NewFloatToIntConversion(variableName, floatArg)
 
-	grammarElementScenario(t, uut.grammarElementImpl, sheet_logic_types.FloatToIntConversion)
+	grammarElementScenario(t, uut.GrammarElement, sheet_logic_types.FloatToIntConversion)
 
 	assertCalculatesToInt(
 		t,
@@ -63,7 +63,7 @@ func TestFloatToIntRoundDownConversion(t *testing.T) {
 	uut := NewFloatToIntRoundDownConversion(variableName, floatArg)
 
 	grammarElementScenario(
-		t, uut.grammarElementImpl, sheet_logic_types.FloatToIntRoundDownConversion)
+		t, uut.GrammarElement, sheet_logic_types.FloatToIntRoundDownConversion)
 
 	assertCalculatesToInt(
 		t,
@@ -90,7 +90,7 @@ func TestFloatToIntRoundUpConversion(t *testing.T) {
 	uut := NewFloatToIntRoundUpConversion(variableName, floatArg)
 
 	grammarElementScenario(
-		t, uut.grammarElementImpl, sheet_logic_types.FloatToIntRoundUpConversion)
+		t, uut.GrammarElement, sheet_logic_types.FloatToIntRoundUpConversion)
 
 	assertCalculatesToInt(
 		t,
@@ -116,7 +116,7 @@ func TestStringToIntConversion(t *testing.T) {
 	stringArg := NewStringConstant(variableName, exampleIntValueAsString)
 	uut := NewStringToIntConversion(variableName, stringArg)
 
-	grammarElementScenario(t, uut.grammarElementImpl, sheet_logic_types.StringToIntConversion)
+	grammarElementScenario(t, uut.GrammarElement, sheet_logic_types.StringToIntConversion)
 
 	assertCalculatesToInt(
 		t,
@@ -142,7 +142,7 @@ func TestStringToFloatConversion(t *testing.T) {
 	uut := NewStringToFloatConversion(variableName, stringArg)
 
 	grammarElementScenario(
-		t, uut.grammarElementImpl, sheet_logic_types.StringToFloatConversion)
+		t, uut.GrammarElement, sheet_logic_types.StringToFloatConversion)
 
 	assertCalculatesToFloat(
 		t,
@@ -168,7 +168,7 @@ func TestFloatToStringConversion(t *testing.T) {
 	floatArg := NewFloatConstant(variableName, pi)
 	uut := NewFloatToStringConversion(variableName, floatArg, 4)
 
-	grammarElementScenario(t, uut.grammarElementImpl, sheet_logic_types.FloatToStringConversion)
+	grammarElementScenario(t, uut.GrammarElement, sheet_logic_types.FloatToStringConversion)
 
 	assertCalculatesToString(
 		t,
@@ -201,7 +201,7 @@ func TestIntToBoolConversion(t *testing.T) {
 	intArg := NewIntConstant(variableName, 5)
 	uut := NewIntToBoolConversion(variableName, intArg)
 
-	grammarElementScenario(t, uut.grammarElementImpl, sheet_logic_types.IntToBoolConversion)
+	grammarElementScenario(t, uut.GrammarElement, sheet_logic_types.IntToBoolConversion)
 
 	assertCalculatesToBool(
 		t,
@@ -221,7 +221,7 @@ func TestFloatToBoolConversion(t *testing.T) {
 	floatArg := NewFloatConstant(variableName, 12.)
 	uut := NewFloatToBoolConversion(variableName, floatArg)
 
-	grammarElementScenario(t, uut.grammarElementImpl, sheet_logic_types.FloatToBoolConversion)
+	grammarElementScenario(t, uut.GrammarElement, sheet_logic_types.FloatToBoolConversion)
 
 	assertCalculatesToBool(
 		t,
@@ -262,7 +262,7 @@ func TestStringToBoolConversion(t *testing.T) {
 	stringArg := NewStringConstant(variableName, "true")
 	uut := NewStringToBoolConversion(variableName, stringArg)
 
-	grammarElementScenario(t, uut.grammarElementImpl, sheet_logic_types.StringToBoolConversion)
+	grammarElementScenario(t, uut.GrammarElement, sheet_logic_types.StringToBoolConversion)
 
 	assertCalculatesToBool(
 		t,
@@ -288,7 +288,7 @@ func TestBoolToIntConversion(t *testing.T) {
 	boolArg := NewBoolConstant(variableName, true)
 	uut := NewBoolToIntConversion(variableName, boolArg)
 
-	grammarElementScenario(t, uut.grammarElementImpl, sheet_logic_types.BoolToIntConversion)
+	grammarElementScenario(t, uut.GrammarElement, sheet_logic_types.BoolToIntConversion)
 
 	assertCalculatesToInt(
 		t,
@@ -308,7 +308,7 @@ func TestBoolToFloatConversion(t *testing.T) {
 	boolArg := NewBoolConstant(variableName, true)
 	uut := NewBoolToFloatConversion(variableName, boolArg)
 
-	grammarElementScenario(t, uut.grammarElementImpl, sheet_logic_types.BoolToFloatConversion)
+	grammarElementScenario(t, uut.GrammarElement, sheet_logic_types.BoolToFloatConversion)
 
 	assertCalculatesToFloat(
 		t,
@@ -328,7 +328,7 @@ func TestBoolToStringConversion(t *testing.T) {
 	boolArg := NewBoolConstant(variableName, true)
 	uut := NewBoolToStringConversion(variableName, boolArg)
 
-	grammarElementScenario(t, uut.grammarElementImpl, sheet_logic_types.BoolToStringConversion)
+	grammarElementScenario(t, uut.GrammarElement, sheet_logic_types.BoolToStringConversion)
 
 	assertCalculatesToString(
 		t,

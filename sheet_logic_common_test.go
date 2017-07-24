@@ -111,7 +111,7 @@ func assertCalculatesToBool(t *testing.T, expr BoolExpresion, expected bool, tra
 }
 
 func grammarElementScenario(
-	t *testing.T, uut *grammarElementImpl, expectedType sheet_logic_types.T) {
+	t *testing.T, uut GrammarElement, expectedType sheet_logic_types.T) {
 	assertHasType(t, uut, expectedType)
 
 	assertHasName(t, uut, variableName)
@@ -120,14 +120,38 @@ func grammarElementScenario(
 }
 
 func emptyGrammarElementScenario(
-	t *testing.T, uut *grammarElementImpl, expectedType sheet_logic_types.T) {
+	t *testing.T, uut GrammarElement, expectedType sheet_logic_types.T) {
 	assertHasType(t, uut, expectedType)
-	assertHasName(t, uut, "<none>")
+
+	assertHasName(t, uut, EmptyExpressionName)
+	uut.SetName(anotherVariableName)
+	assertHasName(t, uut, EmptyExpressionName)
 }
 
 func TestEmptyIntExpression(t *testing.T) {
 	uut := NewEmptyIntExpression()
 
-	emptyGrammarElementScenario(t, uut.grammarElementImpl, sheet_logic_types.EmptyIntExpression)
+	emptyGrammarElementScenario(t, uut.GrammarElement, sheet_logic_types.EmptyIntExpression)
 	assertCalculatesToIntFails(t, uut, "EmptyIntExpression.CalculateInt")
+}
+
+func TestEmptyFloatExpression(t *testing.T) {
+	uut := NewEmptyFloatExpression()
+
+	emptyGrammarElementScenario(t, uut.GrammarElement, sheet_logic_types.EmptyFloatExpression)
+	assertCalculatesToFloatFails(t, uut, "EmptyFloatExpression.CalculateFloat")
+}
+
+func TestEmptyStringExpression(t *testing.T) {
+	uut := NewEmptyStringExpression()
+
+	emptyGrammarElementScenario(t, uut.GrammarElement, sheet_logic_types.EmptyStringExpression)
+	assertCalculatesToStringFails(t, uut, "EmptyStringExpression.CalculateString")
+}
+
+func TestEmptyBoolExpression(t *testing.T) {
+	uut := NewEmptyBoolExpression()
+
+	emptyGrammarElementScenario(t, uut.GrammarElement, sheet_logic_types.EmptyBoolExpression)
+	assertCalculatesToBoolFails(t, uut, "EmptyBoolExpression.CalculateBool")
 }

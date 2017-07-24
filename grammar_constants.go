@@ -3,7 +3,7 @@ package sheet_logic
 import "hub/sheet_logic_types"
 
 type IntConstant struct {
-	*grammarElementImpl
+	GrammarElement
 	value int64
 }
 
@@ -16,7 +16,7 @@ func NewIntConstant(name string, value int64) *IntConstant {
 }
 
 type StringConstant struct {
-	*grammarElementImpl
+	GrammarElement
 	value string
 }
 
@@ -29,7 +29,7 @@ func NewStringConstant(name string, value string) *StringConstant {
 }
 
 type FloatConstant struct {
-	*grammarElementImpl
+	GrammarElement
 	value float64
 }
 
@@ -42,7 +42,7 @@ func NewFloatConstant(name string, value float64) *FloatConstant {
 }
 
 type BoolConstant struct {
-	*grammarElementImpl
+	GrammarElement
 	value bool
 }
 

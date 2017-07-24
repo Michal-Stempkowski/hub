@@ -7,6 +7,9 @@ const FloatPrecision = 0.000001
 const (
 	// Empty types
 	EmptyIntExpression T = iota
+	EmptyFloatExpression
+	EmptyStringExpression
+	EmptyBoolExpression
 	// Constants
 	IntConstant
 	StringConstant
