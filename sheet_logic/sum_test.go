@@ -1,7 +1,7 @@
 package sheet_logic
 
 import (
-	"hub/sheet_logic_types"
+	"hub/sheet_logic/sheet_logic_types"
 	"testing"
 )
 

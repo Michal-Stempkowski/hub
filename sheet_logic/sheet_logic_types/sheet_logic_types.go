@@ -2,8 +2,6 @@ package sheet_logic_types
 
 type T int64
 
-const FloatPrecision = 0.000001
-
 const (
 	// Empty types
 	EmptyIntExpression T = iota

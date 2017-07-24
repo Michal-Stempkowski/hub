@@ -1,7 +1,7 @@
 package sheet_logic
 
 import "testing"
-import "hub/sheet_logic_types"
+import "hub/sheet_logic/sheet_logic_types"
 
 func TestShouldBeAbleToCreateIntConstant(t *testing.T) {
 	uut := NewIntConstant(variableName, exampleIntValue)

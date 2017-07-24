@@ -2,7 +2,7 @@ package sheet_logic
 
 import (
 	"fmt"
-	"hub/sheet_logic_types"
+	"hub/sheet_logic/sheet_logic_types"
 )
 
 const EmptyExpressionName string = "<none>"

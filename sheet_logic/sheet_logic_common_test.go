@@ -1,7 +1,8 @@
 package sheet_logic
 
 import (
-	"hub/sheet_logic_types"
+	"hub/framework"
+	"hub/sheet_logic/sheet_logic_types"
 	"math"
 	"testing"
 )
@@ -57,7 +58,7 @@ func assertCalculatesToFloat(t *testing.T, expr FloatExpresion, expected float64
 	if err != nil {
 		t.Errorf("%v: Float calculation has failed: %v", trail, err)
 	}
-	if diff := math.Abs(val - expected); diff >= sheet_logic_types.FloatPrecision {
+	if diff := math.Abs(val - expected); diff >= framework.FloatPrecision {
 		t.Errorf("%v: %v expected, received %v", trail, expected, val)
 	}
 }

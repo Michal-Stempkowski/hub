@@ -1,6 +1,6 @@
 package sheet_logic
 
-import "hub/sheet_logic_types"
+import "hub/sheet_logic/sheet_logic_types"
 
 type IntConstant struct {
 	GrammarElement

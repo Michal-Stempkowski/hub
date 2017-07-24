@@ -2,7 +2,8 @@ package sheet_logic
 
 import (
 	"fmt"
-	"hub/sheet_logic_types"
+	"hub/framework"
+	"hub/sheet_logic/sheet_logic_types"
 	"math"
 	"strconv"
 	"strings"
@@ -228,7 +229,7 @@ func (f *FloatToBoolConversion) CalculateBool() (result bool, err error) {
 		result = math.IsInf(floatVal, 1) ||
 			math.IsInf(floatVal, -1) ||
 			math.IsNaN(floatVal) ||
-			math.Abs(floatVal) >= sheet_logic_types.FloatPrecision
+			math.Abs(floatVal) >= framework.FloatPrecision
 	}
 
 	return
