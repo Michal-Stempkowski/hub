@@ -73,49 +73,47 @@ func round(val float64) float64 {
 
 type FloatToIntConversion struct {
 	GrammarElement
-	arg FloatExpresion
+	UnaryOperationFloat
 }
 
 func (f *FloatToIntConversion) CalculateInt() (int64, error) {
-	return generalizedCalculateFloatAndConvertToInt(f.arg, round)
+	return generalizedCalculateFloatAndConvertToInt(f.GetArg(), round)
 }
 
-func NewFloatToIntConversion(name string, arg FloatExpresion) *FloatToIntConversion {
+func NewFloatToIntConversion(name string) *FloatToIntConversion {
 	return &FloatToIntConversion{
 		&grammarElementImpl{name, sheet_logic_types.FloatToIntConversion},
-		arg}
+		DefaultUnaryOperationFloatImpl()}
 }
 
 type FloatToIntRoundDownConversion struct {
 	GrammarElement
-	arg FloatExpresion
+	UnaryOperationFloat
 }
 
 func (f *FloatToIntRoundDownConversion) CalculateInt() (result int64, err error) {
-	return generalizedCalculateFloatAndConvertToInt(f.arg, math.Floor)
+	return generalizedCalculateFloatAndConvertToInt(f.GetArg(), math.Floor)
 }
 
-func NewFloatToIntRoundDownConversion(
-	name string, arg FloatExpresion) *FloatToIntRoundDownConversion {
+func NewFloatToIntRoundDownConversion(name string) *FloatToIntRoundDownConversion {
 	return &FloatToIntRoundDownConversion{
 		&grammarElementImpl{name, sheet_logic_types.FloatToIntRoundDownConversion},
-		arg}
+		DefaultUnaryOperationFloatImpl()}
 }
 
 type FloatToIntRoundUpConversion struct {
 	GrammarElement
-	arg FloatExpresion
+	UnaryOperationFloat
 }
 
 func (f *FloatToIntRoundUpConversion) CalculateInt() (result int64, err error) {
-	return generalizedCalculateFloatAndConvertToInt(f.arg, math.Ceil)
+	return generalizedCalculateFloatAndConvertToInt(f.GetArg(), math.Ceil)
 }
 
-func NewFloatToIntRoundUpConversion(
-	name string, arg FloatExpresion) *FloatToIntRoundUpConversion {
+func NewFloatToIntRoundUpConversion(name string) *FloatToIntRoundUpConversion {
 	return &FloatToIntRoundUpConversion{
 		&grammarElementImpl{name, sheet_logic_types.FloatToIntRoundUpConversion},
-		arg}
+		DefaultUnaryOperationFloatImpl()}
 }
 
 type StringToIntConversion struct {
@@ -162,13 +160,13 @@ func NewStringToFloatConversion(name string, arg StringExpresion) *StringToFloat
 
 type FloatToStringConversion struct {
 	GrammarElement
-	arg       FloatExpresion
+	UnaryOperationFloat
 	Precision int64
 }
 
 func (f *FloatToStringConversion) CalculateString() (result string, err error) {
 	var floatVal float64
-	floatVal, err = f.arg.CalculateFloat()
+	floatVal, err = f.GetArg().CalculateFloat()
 
 	if f.Precision < 0 {
 		err = fmt.Errorf("Negative precision not supported: %d", f.Precision)
@@ -184,12 +182,11 @@ func (f *FloatToStringConversion) CalculateString() (result string, err error) {
 	return
 }
 
-func NewFloatToStringConversion(
-	name string, arg FloatExpresion, precision int64) *FloatToStringConversion {
+func NewFloatToStringConversion(name string) *FloatToStringConversion {
 	return &FloatToStringConversion{
 		&grammarElementImpl{name, sheet_logic_types.FloatToStringConversion},
-		arg,
-		precision}
+		DefaultUnaryOperationFloatImpl(),
+		-1}
 }
 
 type IntToBoolConversion struct {
@@ -219,13 +216,13 @@ func NewIntToBoolConversion(name string) *IntToBoolConversion {
 
 type FloatToBoolConversion struct {
 	GrammarElement
-	arg FloatExpresion
+	UnaryOperationFloat
 }
 
 func (f *FloatToBoolConversion) CalculateBool() (result bool, err error) {
 	var floatVal float64
 
-	if floatVal, err = f.arg.CalculateFloat(); err == nil {
+	if floatVal, err = f.GetArg().CalculateFloat(); err == nil {
 		result = math.IsInf(floatVal, 1) ||
 			math.IsInf(floatVal, -1) ||
 			math.IsNaN(floatVal) ||
@@ -235,10 +232,10 @@ func (f *FloatToBoolConversion) CalculateBool() (result bool, err error) {
 	return
 }
 
-func NewFloatToBoolConversion(name string, arg FloatExpresion) *FloatToBoolConversion {
+func NewFloatToBoolConversion(name string) *FloatToBoolConversion {
 	return &FloatToBoolConversion{
 		&grammarElementImpl{name, sheet_logic_types.FloatToBoolConversion},
-		arg}
+		DefaultUnaryOperationFloatImpl()}
 }
 
 type StringToBoolConversion struct {

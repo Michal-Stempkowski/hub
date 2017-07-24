@@ -34,7 +34,8 @@ func TestIntToFloatConversion(t *testing.T) {
 
 func TestFloatToIntConversion(t *testing.T) {
 	floatArg := NewFloatConstant(variableName, piTwoDigitPrecision)
-	uut := NewFloatToIntConversion(variableName, floatArg)
+	uut := NewFloatToIntConversion(variableName)
+	uut.SetArg(floatArg)
 
 	grammarElementScenario(t, uut.GrammarElement, sheet_logic_types.FloatToIntConversion)
 
@@ -60,7 +61,8 @@ func TestFloatToIntConversion(t *testing.T) {
 
 func TestFloatToIntRoundDownConversion(t *testing.T) {
 	floatArg := NewFloatConstant(variableName, piTwoDigitPrecision)
-	uut := NewFloatToIntRoundDownConversion(variableName, floatArg)
+	uut := NewFloatToIntRoundDownConversion(variableName)
+	uut.SetArg(floatArg)
 
 	grammarElementScenario(
 		t, uut.GrammarElement, sheet_logic_types.FloatToIntRoundDownConversion)
@@ -87,7 +89,8 @@ func TestFloatToIntRoundDownConversion(t *testing.T) {
 
 func TestFloatToIntRoundUpConversion(t *testing.T) {
 	floatArg := NewFloatConstant(variableName, piTwoDigitPrecision)
-	uut := NewFloatToIntRoundUpConversion(variableName, floatArg)
+	uut := NewFloatToIntRoundUpConversion(variableName)
+	uut.SetArg(floatArg)
 
 	grammarElementScenario(
 		t, uut.GrammarElement, sheet_logic_types.FloatToIntRoundUpConversion)
@@ -166,7 +169,9 @@ func TestStringToFloatConversion(t *testing.T) {
 
 func TestFloatToStringConversion(t *testing.T) {
 	floatArg := NewFloatConstant(variableName, pi)
-	uut := NewFloatToStringConversion(variableName, floatArg, 4)
+	uut := NewFloatToStringConversion(variableName)
+	uut.SetArg(floatArg)
+	uut.Precision = 4
 
 	grammarElementScenario(t, uut.GrammarElement, sheet_logic_types.FloatToStringConversion)
 
@@ -220,7 +225,8 @@ func TestIntToBoolConversion(t *testing.T) {
 
 func TestFloatToBoolConversion(t *testing.T) {
 	floatArg := NewFloatConstant(variableName, 12.)
-	uut := NewFloatToBoolConversion(variableName, floatArg)
+	uut := NewFloatToBoolConversion(variableName)
+	uut.SetArg(floatArg)
 
 	grammarElementScenario(t, uut.GrammarElement, sheet_logic_types.FloatToBoolConversion)
 
