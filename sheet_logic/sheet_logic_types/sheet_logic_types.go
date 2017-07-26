@@ -40,4 +40,8 @@ const (
 	// Difference
 	IntDifference
 	FloatDifference
+
+	// Division
+	IntDivision
+	FloatDivision
 )
