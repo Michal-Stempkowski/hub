@@ -41,6 +41,22 @@ type BinaryOperationInt interface {
 	SetRightArg(IntExpresion)
 }
 
+type BinaryOperationFloat interface {
+	GetLeftArg() FloatExpresion
+	SetLeftArg(FloatExpresion)
+
+	GetRightArg() FloatExpresion
+	SetRightArg(FloatExpresion)
+}
+
+type BinaryOperationString interface {
+	GetLeftArg() StringExpresion
+	SetLeftArg(StringExpresion)
+
+	GetRightArg() StringExpresion
+	SetRightArg(StringExpresion)
+}
+
 // Because there will be also volatile sources (formulas, textfields etc.)
 type IntExpresion interface {
 	CalculateInt() (int64, error)
@@ -220,6 +236,60 @@ func DefaultBinaryOperationIntImpl() BinaryOperationInt {
 	return &BinaryOperationIntImpl{
 		NewEmptyIntExpression(),
 		NewEmptyIntExpression()}
+}
+
+type BinaryOperationFloatImpl struct {
+	argLeft  FloatExpresion
+	argRight FloatExpresion
+}
+
+func (b *BinaryOperationFloatImpl) GetLeftArg() FloatExpresion {
+	return b.argLeft
+}
+
+func (b *BinaryOperationFloatImpl) GetRightArg() FloatExpresion {
+	return b.argRight
+}
+
+func (b *BinaryOperationFloatImpl) SetLeftArg(newExpr FloatExpresion) {
+	b.argLeft = newExpr
+}
+
+func (b *BinaryOperationFloatImpl) SetRightArg(newExpr FloatExpresion) {
+	b.argRight = newExpr
+}
+
+func DefaultBinaryOperationFloatImpl() BinaryOperationFloat {
+	return &BinaryOperationFloatImpl{
+		NewEmptyFloatExpression(),
+		NewEmptyFloatExpression()}
+}
+
+type BinaryOperationStringImpl struct {
+	argLeft  StringExpresion
+	argRight StringExpresion
+}
+
+func (b *BinaryOperationStringImpl) GetLeftArg() StringExpresion {
+	return b.argLeft
+}
+
+func (b *BinaryOperationStringImpl) GetRightArg() StringExpresion {
+	return b.argRight
+}
+
+func (b *BinaryOperationStringImpl) SetLeftArg(newExpr StringExpresion) {
+	b.argLeft = newExpr
+}
+
+func (b *BinaryOperationStringImpl) SetRightArg(newExpr StringExpresion) {
+	b.argRight = newExpr
+}
+
+func DefaultBinaryOperationStringImpl() BinaryOperationString {
+	return &BinaryOperationStringImpl{
+		NewEmptyStringExpression(),
+		NewEmptyStringExpression()}
 }
 
 func getFirstError(errors ...error) error {
