@@ -36,4 +36,8 @@ const (
 	IntSum
 	FloatSum
 	StringSum
+
+	// Difference
+	IntDifference
+	FloatDifference
 )
