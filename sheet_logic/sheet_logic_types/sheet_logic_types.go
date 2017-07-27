@@ -51,4 +51,7 @@ const (
 
 	// Modulo
 	IntModulo
+
+	// Floor
+	FloatFloor
 )
