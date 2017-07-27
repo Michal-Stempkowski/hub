@@ -48,4 +48,7 @@ const (
 	// Multiplication
 	IntMultiplication
 	FloatMultiplication
+
+	// Modulo
+	IntModulo
 )
