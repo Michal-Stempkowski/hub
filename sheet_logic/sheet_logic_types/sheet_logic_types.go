@@ -44,4 +44,8 @@ const (
 	// Division
 	IntDivision
 	FloatDivision
+
+	// Multiplication
+	IntMultiplication
+	FloatMultiplication
 )
