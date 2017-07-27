@@ -54,4 +54,10 @@ const (
 
 	// Floor
 	FloatFloor
+
+	// Ceil
+	FloatCeil
+
+	// Round
+	FloatRound
 )

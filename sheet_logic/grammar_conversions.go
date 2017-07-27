@@ -67,17 +67,13 @@ func generalizedCalculateFloatAndConvertToInt(
 	return
 }
 
-func round(val float64) float64 {
-	return math.Floor(val + 0.5)
-}
-
 type FloatToIntConversion struct {
 	GrammarElement
 	UnaryOperationFloat
 }
 
 func (f *FloatToIntConversion) CalculateInt() (int64, error) {
-	return generalizedCalculateFloatAndConvertToInt(f.GetArg(), round)
+	return generalizedCalculateFloatAndConvertToInt(f.GetArg(), framework.Round)
 }
 
 func NewFloatToIntConversion(name string) *FloatToIntConversion {
