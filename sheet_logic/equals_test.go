@@ -15,14 +15,14 @@ func TestIntEquals(t *testing.T) {
 		t,
 		uut,
 		false,
-		"IntEquals.CalculateBool")
+		"IntEquals.CalculateBool different parameters")
 
 	uut.SetRightArg(NewIntConstant(variableName, 2))
 	assertCalculatesToBool(
 		t,
 		uut,
 		true,
-		"IntEquals.CalculateBool")
+		"IntEquals.CalculateBool same parameters")
 
 	uut.SetLeftArg(NewEmptyIntExpression())
 	assertCalculatesToBoolFails(
@@ -36,4 +36,37 @@ func TestIntEquals(t *testing.T) {
 		t,
 		uut,
 		"IntEquals.CalculateBool fails when argRight missing")
+}
+
+func TestFloatEquals(t *testing.T) {
+	uut := NewFloatEquals(variableName)
+	grammarElementScenario(t, uut.GrammarElement, sheet_logic_types.FloatEquals)
+
+	uut.SetLeftArg(NewFloatConstant(variableName, 2.1))
+	uut.SetRightArg(NewFloatConstant(variableName, 2.0))
+	assertCalculatesToBool(
+		t,
+		uut,
+		false,
+		"FloatEquals.CalculateBool different parameters")
+
+	uut.SetRightArg(NewFloatConstant(variableName, 2.1))
+	assertCalculatesToBool(
+		t,
+		uut,
+		true,
+		"FloatEquals.CalculateBool same parameters")
+
+	uut.SetLeftArg(NewEmptyFloatExpression())
+	assertCalculatesToBoolFails(
+		t,
+		uut,
+		"FloatEquals.CalculateBool fails when argLeft missing")
+
+	uut.SetLeftArg(NewFloatConstant(variableName, 2))
+	uut.SetRightArg(NewEmptyFloatExpression())
+	assertCalculatesToBoolFails(
+		t,
+		uut,
+		"FloatEquals.CalculateBool fails when argRight missing")
 }

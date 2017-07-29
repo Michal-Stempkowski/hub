@@ -63,4 +63,5 @@ const (
 
 	// Equality
 	IntEquals
+	FloatEquals
 )

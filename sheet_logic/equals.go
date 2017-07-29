@@ -24,3 +24,24 @@ func NewIntEquals(name string) *IntEquals {
 		&grammarElementImpl{name, sheet_logic_types.IntEquals},
 		DefaultBinaryOperationIntImpl()}
 }
+
+type FloatEquals struct {
+	GrammarElement
+	BinaryOperationFloat
+}
+
+func (f *FloatEquals) CalculateBool() (result bool, err error) {
+	leftVal, errL := f.GetLeftArg().CalculateFloat()
+	rightVal, errR := f.GetRightArg().CalculateFloat()
+	if err = getFirstError(errL, errR); err == nil {
+		result = leftVal == rightVal
+	}
+
+	return
+}
+
+func NewFloatEquals(name string) *FloatEquals {
+	return &FloatEquals{
+		&grammarElementImpl{name, sheet_logic_types.FloatEquals},
+		DefaultBinaryOperationFloatImpl()}
+}
