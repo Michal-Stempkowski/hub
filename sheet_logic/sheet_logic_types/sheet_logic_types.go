@@ -60,4 +60,7 @@ const (
 
 	// Round
 	FloatRound
+
+	// Equality
+	IntEquals
 )
