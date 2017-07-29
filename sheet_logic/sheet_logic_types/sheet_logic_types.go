@@ -72,4 +72,7 @@ const (
 	FloatNotEquals
 	BoolNotEquals
 	StringNotEquals
+
+	// Boolean expressions specific
+	Negation
 )
