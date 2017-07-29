@@ -66,3 +66,24 @@ func NewBoolEquals(name string) *BoolEquals {
 		&grammarElementImpl{name, sheet_logic_types.BoolEquals},
 		DefaultBinaryOperationBoolImpl()}
 }
+
+type StringEquals struct {
+	GrammarElement
+	BinaryOperationString
+}
+
+func (s *StringEquals) CalculateBool() (result bool, err error) {
+	leftVal, errL := s.GetLeftArg().CalculateString()
+	rightVal, errR := s.GetRightArg().CalculateString()
+	if err = getFirstError(errL, errR); err == nil {
+		result = leftVal == rightVal
+	}
+
+	return
+}
+
+func NewStringEquals(name string) *StringEquals {
+	return &StringEquals{
+		&grammarElementImpl{name, sheet_logic_types.StringEquals},
+		DefaultBinaryOperationStringImpl()}
+}

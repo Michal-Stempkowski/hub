@@ -65,4 +65,5 @@ const (
 	IntEquals
 	FloatEquals
 	BoolEquals
+	StringEquals
 )

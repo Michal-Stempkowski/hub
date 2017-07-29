@@ -103,3 +103,36 @@ func TestBoolEquals(t *testing.T) {
 		uut,
 		"BoolEquals.CalculateBool fails when argRight missing")
 }
+
+func TestStringEquals(t *testing.T) {
+	uut := NewStringEquals(variableName)
+	grammarElementScenario(t, uut.GrammarElement, sheet_logic_types.StringEquals)
+
+	uut.SetLeftArg(NewStringConstant(variableName, "abc"))
+	uut.SetRightArg(NewStringConstant(variableName, "a"))
+	assertCalculatesToBool(
+		t,
+		uut,
+		false,
+		"StringEquals.CalculateBool different parameters")
+
+	uut.SetRightArg(NewStringConstant(variableName, "abc"))
+	assertCalculatesToBool(
+		t,
+		uut,
+		true,
+		"StringEquals.CalculateBool same parameters")
+
+	uut.SetLeftArg(NewEmptyStringExpression())
+	assertCalculatesToBoolFails(
+		t,
+		uut,
+		"StringEquals.CalculateBool fails when argLeft missing")
+
+	uut.SetLeftArg(NewStringConstant(variableName, "abc"))
+	uut.SetRightArg(NewEmptyStringExpression())
+	assertCalculatesToBoolFails(
+		t,
+		uut,
+		"StringEquals.CalculateBool fails when argRight missing")
+}
