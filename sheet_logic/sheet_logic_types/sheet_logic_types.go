@@ -61,9 +61,15 @@ const (
 	// Round
 	FloatRound
 
-	// Equality
+	// Equals
 	IntEquals
 	FloatEquals
 	BoolEquals
 	StringEquals
+
+	// Not equals
+	IntNotEquals
+	FloatNotEquals
+	BoolNotEquals
+	StringNotEquals
 )
