@@ -222,7 +222,7 @@ func (f *FloatToBoolConversion) CalculateBool() (result bool, err error) {
 		result = math.IsInf(floatVal, 1) ||
 			math.IsInf(floatVal, -1) ||
 			math.IsNaN(floatVal) ||
-			math.Abs(floatVal) >= framework.FloatPrecision
+			!framework.FloatEq(floatVal, 0.)
 	}
 
 	return

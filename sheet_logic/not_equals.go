@@ -1,6 +1,7 @@
 package sheet_logic
 
 import (
+	"hub/framework"
 	"hub/sheet_logic/sheet_logic_types"
 )
 
@@ -34,7 +35,7 @@ func (f *FloatNotEquals) CalculateBool() (result bool, err error) {
 	leftVal, errL := f.GetLeftArg().CalculateFloat()
 	rightVal, errR := f.GetRightArg().CalculateFloat()
 	if err = getFirstError(errL, errR); err == nil {
-		result = leftVal != rightVal
+		result = !framework.FloatEq(leftVal, rightVal)
 	}
 
 	return

@@ -2,8 +2,12 @@ package framework
 
 import "math"
 
-const FloatPrecision = 0.000001
+const floatPrecision = 0.000001
 
 func Round(f float64) float64 {
 	return math.Floor(f + .5)
+}
+
+func FloatEq(a, b float64) bool {
+	return math.Abs(a-b) < floatPrecision
 }
