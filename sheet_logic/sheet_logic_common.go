@@ -57,6 +57,14 @@ type BinaryOperationString interface {
 	SetRightArg(StringExpresion)
 }
 
+type BinaryOperationBool interface {
+	GetLeftArg() BoolExpresion
+	SetLeftArg(BoolExpresion)
+
+	GetRightArg() BoolExpresion
+	SetRightArg(BoolExpresion)
+}
+
 // Because there will be also volatile sources (formulas, textfields etc.)
 type IntExpresion interface {
 	CalculateInt() (int64, error)
@@ -290,6 +298,33 @@ func DefaultBinaryOperationStringImpl() BinaryOperationString {
 	return &BinaryOperationStringImpl{
 		NewEmptyStringExpression(),
 		NewEmptyStringExpression()}
+}
+
+type BinaryOperationBoolImpl struct {
+	argLeft  BoolExpresion
+	argRight BoolExpresion
+}
+
+func (b *BinaryOperationBoolImpl) GetLeftArg() BoolExpresion {
+	return b.argLeft
+}
+
+func (b *BinaryOperationBoolImpl) GetRightArg() BoolExpresion {
+	return b.argRight
+}
+
+func (b *BinaryOperationBoolImpl) SetLeftArg(newExpr BoolExpresion) {
+	b.argLeft = newExpr
+}
+
+func (b *BinaryOperationBoolImpl) SetRightArg(newExpr BoolExpresion) {
+	b.argRight = newExpr
+}
+
+func DefaultBinaryOperationBoolImpl() BinaryOperationBool {
+	return &BinaryOperationBoolImpl{
+		NewEmptyBoolExpression(),
+		NewEmptyBoolExpression()}
 }
 
 func getFirstError(errors ...error) error {

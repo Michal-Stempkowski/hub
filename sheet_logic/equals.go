@@ -45,3 +45,24 @@ func NewFloatEquals(name string) *FloatEquals {
 		&grammarElementImpl{name, sheet_logic_types.FloatEquals},
 		DefaultBinaryOperationFloatImpl()}
 }
+
+type BoolEquals struct {
+	GrammarElement
+	BinaryOperationBool
+}
+
+func (b *BoolEquals) CalculateBool() (result bool, err error) {
+	leftVal, errL := b.GetLeftArg().CalculateBool()
+	rightVal, errR := b.GetRightArg().CalculateBool()
+	if err = getFirstError(errL, errR); err == nil {
+		result = leftVal == rightVal
+	}
+
+	return
+}
+
+func NewBoolEquals(name string) *BoolEquals {
+	return &BoolEquals{
+		&grammarElementImpl{name, sheet_logic_types.BoolEquals},
+		DefaultBinaryOperationBoolImpl()}
+}
