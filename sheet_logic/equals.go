@@ -15,25 +15,14 @@ func NewIntEquals(name string) *IntEquals {
 	return (*IntEquals)(tmp)
 }
 
-type FloatEquals struct {
-	GrammarElement
-	BinaryOperationFloat
-}
-
-func (f *FloatEquals) CalculateBool() (result bool, err error) {
-	leftVal, errL := f.GetLeftArg().CalculateFloat()
-	rightVal, errR := f.GetRightArg().CalculateFloat()
-	if err = getFirstError(errL, errR); err == nil {
-		result = framework.FloatEq(leftVal, rightVal)
-	}
-
-	return
-}
+type FloatEquals FloatComparator
 
 func NewFloatEquals(name string) *FloatEquals {
-	return &FloatEquals{
-		&grammarElementImpl{name, sheet_logic_types.FloatEquals},
-		DefaultBinaryOperationFloatImpl()}
+	tmp := NewFloatComparator(
+		name,
+		sheet_logic_types.FloatEquals,
+		framework.FloatEq)
+	return (*FloatEquals)(tmp)
 }
 
 type BoolEquals struct {

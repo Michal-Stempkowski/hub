@@ -25,3 +25,27 @@ func NewIntComparator(
 		DefaultBinaryOperationIntImpl(),
 		cmp}
 }
+
+type FloatComparator struct {
+	GrammarElement
+	BinaryOperationFloat
+	comparatorFunc func(float64, float64) bool
+}
+
+func (f *FloatComparator) CalculateBool() (result bool, err error) {
+	leftVal, errL := f.GetLeftArg().CalculateFloat()
+	rightVal, errR := f.GetRightArg().CalculateFloat()
+	if err = getFirstError(errL, errR); err == nil {
+		result = f.comparatorFunc(leftVal, rightVal)
+	}
+
+	return
+}
+
+func NewFloatComparator(
+	name string, t sheet_logic_types.T, cmp func(float64, float64) bool) *FloatComparator {
+	return &FloatComparator{
+		&grammarElementImpl{name, t},
+		DefaultBinaryOperationFloatImpl(),
+		cmp}
+}

@@ -15,34 +15,8 @@ func TestIntNotEquals(t *testing.T) {
 func TestFloatNotEquals(t *testing.T) {
 	uut := NewFloatNotEquals(variableName)
 	grammarElementScenario(t, uut.GrammarElement, sheet_logic_types.FloatNotEquals)
-
-	uut.SetLeftArg(NewFloatConstant(variableName, 2.1))
-	uut.SetRightArg(NewFloatConstant(variableName, 2.0))
-	assertCalculatesToBool(
-		t,
-		uut,
-		true,
-		"FloatNotEquals.CalculateBool different parameters")
-
-	uut.SetRightArg(NewFloatConstant(variableName, 2.1))
-	assertCalculatesToBool(
-		t,
-		uut,
-		false,
-		"FloatNotEquals.CalculateBool same parameters")
-
-	uut.SetLeftArg(NewEmptyFloatExpression())
-	assertCalculatesToBoolFails(
-		t,
-		uut,
-		"FloatNotEquals.CalculateBool fails when argLeft missing")
-
-	uut.SetLeftArg(NewFloatConstant(variableName, 2))
-	uut.SetRightArg(NewEmptyFloatExpression())
-	assertCalculatesToBoolFails(
-		t,
-		uut,
-		"FloatNotEquals.CalculateBool fails when argRight missing")
+	lesser, equal, greater := true, false, true
+	FloatComparatorScenario(t, (*FloatComparator)(uut), "FloatNotEquals", lesser, equal, greater)
 }
 
 func TestBoolNotEquals(t *testing.T) {
