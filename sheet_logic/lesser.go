@@ -1,6 +1,7 @@
 package sheet_logic
 
 import (
+	"hub/framework"
 	"hub/sheet_logic/sheet_logic_types"
 )
 
@@ -12,4 +13,14 @@ func NewIntLesser(name string) *IntLesser {
 		sheet_logic_types.IntLesser,
 		func(a int64, b int64) bool { return a < b })
 	return (*IntLesser)(tmp)
+}
+
+type FloatLesser FloatComparator
+
+func NewFloatLesser(name string) *FloatLesser {
+	tmp := NewFloatComparator(
+		name,
+		sheet_logic_types.FloatLesser,
+		framework.FloatLs)
+	return (*FloatLesser)(tmp)
 }

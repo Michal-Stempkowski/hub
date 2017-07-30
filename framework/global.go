@@ -11,3 +11,7 @@ func Round(f float64) float64 {
 func FloatEq(a, b float64) bool {
 	return math.Abs(a-b) < floatPrecision
 }
+
+func FloatLs(a, b float64) bool {
+	return a+floatPrecision <= b
+}

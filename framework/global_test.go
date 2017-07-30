@@ -27,3 +27,13 @@ func TestFloatEq(t *testing.T) {
 		t.Errorf("framework.FloatEq should say true")
 	}
 }
+
+func TestFloatLs(t *testing.T) {
+	if FloatLs(0.5, 0.5) {
+		t.Errorf("framework.FloatLs should say false")
+	}
+
+	if !FloatLs(0.5, 0.51) {
+		t.Errorf("framework.FloatLs should say true")
+	}
+}
