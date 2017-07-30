@@ -77,3 +77,55 @@ func FloatComparatorScenario(
 		uut,
 		uutTypeName+".CalculateBool fails when argRight missing")
 }
+
+func BoolComparatorScenario(
+	t *testing.T, uut *BoolComparator, uutTypeName string, expectedResults []bool) {
+	if len(expectedResults) != 4 {
+		t.Errorf("%s: BoolComparatorScenario - expectedResults should have 4 entries!")
+	}
+
+	uut.SetLeftArg(NewBoolConstant(variableName, false))
+	uut.SetRightArg(NewBoolConstant(variableName, false))
+	assertCalculatesToBool(
+		t,
+		uut,
+		expectedResults[0],
+		uutTypeName+".CalculateBool for false - false")
+
+	uut.SetLeftArg(NewBoolConstant(variableName, false))
+	uut.SetRightArg(NewBoolConstant(variableName, true))
+	assertCalculatesToBool(
+		t,
+		uut,
+		expectedResults[1],
+		uutTypeName+".CalculateBool for false - true")
+
+	uut.SetLeftArg(NewBoolConstant(variableName, true))
+	uut.SetRightArg(NewBoolConstant(variableName, false))
+	assertCalculatesToBool(
+		t,
+		uut,
+		expectedResults[2],
+		uutTypeName+".CalculateBool for true - false")
+
+	uut.SetLeftArg(NewBoolConstant(variableName, true))
+	uut.SetRightArg(NewBoolConstant(variableName, true))
+	assertCalculatesToBool(
+		t,
+		uut,
+		expectedResults[3],
+		uutTypeName+".CalculateBool for true - true")
+
+	uut.SetLeftArg(NewEmptyBoolExpression())
+	assertCalculatesToBoolFails(
+		t,
+		uut,
+		uutTypeName+".CalculateBool fails when argLeft missing")
+
+	uut.SetLeftArg(NewBoolConstant(variableName, true))
+	uut.SetRightArg(NewEmptyBoolExpression())
+	assertCalculatesToBoolFails(
+		t,
+		uut,
+		uutTypeName+".CalculateBool fails when argRight missing")
+}

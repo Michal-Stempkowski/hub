@@ -49,3 +49,27 @@ func NewFloatComparator(
 		DefaultBinaryOperationFloatImpl(),
 		cmp}
 }
+
+type BoolComparator struct {
+	GrammarElement
+	BinaryOperationBool
+	comparatorFunc func(bool, bool) bool
+}
+
+func (b *BoolComparator) CalculateBool() (result bool, err error) {
+	leftVal, errL := b.GetLeftArg().CalculateBool()
+	rightVal, errR := b.GetRightArg().CalculateBool()
+	if err = getFirstError(errL, errR); err == nil {
+		result = b.comparatorFunc(leftVal, rightVal)
+	}
+
+	return
+}
+
+func NewBoolComparator(
+	name string, t sheet_logic_types.T, cmp func(bool, bool) bool) *BoolComparator {
+	return &BoolComparator{
+		&grammarElementImpl{name, t},
+		DefaultBinaryOperationBoolImpl(),
+		cmp}
+}

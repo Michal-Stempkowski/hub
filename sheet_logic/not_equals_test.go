@@ -23,33 +23,11 @@ func TestBoolNotEquals(t *testing.T) {
 	uut := NewBoolNotEquals(variableName)
 	grammarElementScenario(t, uut.GrammarElement, sheet_logic_types.BoolNotEquals)
 
-	uut.SetLeftArg(NewBoolConstant(variableName, true))
-	uut.SetRightArg(NewBoolConstant(variableName, false))
-	assertCalculatesToBool(
+	BoolComparatorScenario(
 		t,
-		uut,
-		true,
-		"BoolNotEquals.CalculateBool different parameters")
-
-	uut.SetRightArg(NewBoolConstant(variableName, true))
-	assertCalculatesToBool(
-		t,
-		uut,
-		false,
-		"BoolNotEquals.CalculateBool same parameters")
-
-	uut.SetLeftArg(NewEmptyBoolExpression())
-	assertCalculatesToBoolFails(
-		t,
-		uut,
-		"BoolNotEquals.CalculateBool fails when argLeft missing")
-
-	uut.SetLeftArg(NewBoolConstant(variableName, true))
-	uut.SetRightArg(NewEmptyBoolExpression())
-	assertCalculatesToBoolFails(
-		t,
-		uut,
-		"BoolNotEquals.CalculateBool fails when argRight missing")
+		(*BoolComparator)(uut),
+		"BoolNotEquals",
+		[]bool{false, true, true, false})
 }
 
 func TestStringNotEquals(t *testing.T) {

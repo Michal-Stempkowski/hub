@@ -25,25 +25,14 @@ func NewFloatEquals(name string) *FloatEquals {
 	return (*FloatEquals)(tmp)
 }
 
-type BoolEquals struct {
-	GrammarElement
-	BinaryOperationBool
-}
-
-func (b *BoolEquals) CalculateBool() (result bool, err error) {
-	leftVal, errL := b.GetLeftArg().CalculateBool()
-	rightVal, errR := b.GetRightArg().CalculateBool()
-	if err = getFirstError(errL, errR); err == nil {
-		result = leftVal == rightVal
-	}
-
-	return
-}
+type BoolEquals BoolComparator
 
 func NewBoolEquals(name string) *BoolEquals {
-	return &BoolEquals{
-		&grammarElementImpl{name, sheet_logic_types.BoolEquals},
-		DefaultBinaryOperationBoolImpl()}
+	tmp := NewBoolComparator(
+		name,
+		sheet_logic_types.BoolEquals,
+		func(a bool, b bool) bool { return a == b })
+	return (*BoolEquals)(tmp)
 }
 
 type StringEquals struct {
