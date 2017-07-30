@@ -79,4 +79,5 @@ const (
 	// Lesser
 	IntLesser
 	FloatLesser
+	StringLesser
 )

@@ -24,3 +24,13 @@ func NewFloatLesser(name string) *FloatLesser {
 		framework.FloatLs)
 	return (*FloatLesser)(tmp)
 }
+
+type StringLesser StringComparator
+
+func NewStringLesser(name string) *StringLesser {
+	tmp := NewStringComparator(
+		name,
+		sheet_logic_types.StringLesser,
+		func(a string, b string) bool { return a < b })
+	return (*StringLesser)(tmp)
+}

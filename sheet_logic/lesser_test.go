@@ -32,3 +32,17 @@ func TestFloatLesser(t *testing.T) {
 		equal,
 		greater)
 }
+
+func TestStringLesser(t *testing.T) {
+	uut := NewStringLesser(variableName)
+	grammarElementScenario(t, uut.GrammarElement, sheet_logic_types.StringLesser)
+
+	lesser, equal, greater := true, false, false
+	StringComparatorScenario(
+		t,
+		(*StringComparator)(uut),
+		"StringLesser",
+		lesser,
+		equal,
+		greater)
+}
