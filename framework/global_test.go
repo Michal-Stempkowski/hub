@@ -54,3 +54,16 @@ func TestFloatLe(t *testing.T) {
 		t.Errorf("framework.FloatLe should say false")
 	}
 }
+
+func TestFloatGt(t *testing.T) {
+	if FloatGt(0.5, 0.5) {
+		t.Errorf("framework.FloatGt should say false")
+	}
+
+	if FloatGt(0.5, 0.51) {
+		t.Errorf("framework.FloatGt should say false")
+	}
+	if !FloatGt(0.51, 0.5) {
+		t.Errorf("framework.FloatGt should say true")
+	}
+}
