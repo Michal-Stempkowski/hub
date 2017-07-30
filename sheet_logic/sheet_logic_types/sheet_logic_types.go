@@ -95,4 +95,8 @@ const (
 	IntGreaterEqual
 	FloatGreaterEqual
 	StringGreaterEqual
+
+	// Logical
+	And
+	Or
 )
