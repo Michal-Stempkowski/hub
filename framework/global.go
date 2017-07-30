@@ -15,3 +15,7 @@ func FloatEq(a, b float64) bool {
 func FloatLs(a, b float64) bool {
 	return a+floatPrecision <= b
 }
+
+func FloatLe(a, b float64) bool {
+	return FloatLs(a, b) || FloatEq(a, b)
+}

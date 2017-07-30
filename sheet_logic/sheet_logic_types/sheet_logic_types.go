@@ -80,4 +80,9 @@ const (
 	IntLesser
 	FloatLesser
 	StringLesser
+
+	// Lesser
+	IntLesserEqual
+	FloatLesserEqual
+	StringLesserEqual
 )
