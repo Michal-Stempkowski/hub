@@ -86,8 +86,13 @@ const (
 	FloatLesserEqual
 	StringLesserEqual
 
-	// Lesser
+	// Greater
 	IntGreater
 	FloatGreater
 	StringGreater
+
+	// Greater or Equal
+	IntGreaterEqual
+	FloatGreaterEqual
+	StringGreaterEqual
 )

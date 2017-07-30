@@ -23,3 +23,7 @@ func FloatLe(a, b float64) bool {
 func FloatGt(a, b float64) bool {
 	return a >= b+floatPrecision
 }
+
+func FloatGe(a, b float64) bool {
+	return FloatGt(a, b) || FloatEq(a, b)
+}
