@@ -73,3 +73,27 @@ func NewBoolComparator(
 		DefaultBinaryOperationBoolImpl(),
 		cmp}
 }
+
+type StringComparator struct {
+	GrammarElement
+	BinaryOperationString
+	comparatorFunc func(string, string) bool
+}
+
+func (s *StringComparator) CalculateBool() (result bool, err error) {
+	leftVal, errL := s.GetLeftArg().CalculateString()
+	rightVal, errR := s.GetRightArg().CalculateString()
+	if err = getFirstError(errL, errR); err == nil {
+		result = s.comparatorFunc(leftVal, rightVal)
+	}
+
+	return
+}
+
+func NewStringComparator(
+	name string, t sheet_logic_types.T, cmp func(string, string) bool) *StringComparator {
+	return &StringComparator{
+		&grammarElementImpl{name, t},
+		DefaultBinaryOperationStringImpl(),
+		cmp}
+}

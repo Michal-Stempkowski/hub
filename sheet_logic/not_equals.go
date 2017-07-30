@@ -35,23 +35,12 @@ func NewBoolNotEquals(name string) *BoolNotEquals {
 	return (*BoolNotEquals)(tmp)
 }
 
-type StringNotEquals struct {
-	GrammarElement
-	BinaryOperationString
-}
-
-func (s *StringNotEquals) CalculateBool() (result bool, err error) {
-	leftVal, errL := s.GetLeftArg().CalculateString()
-	rightVal, errR := s.GetRightArg().CalculateString()
-	if err = getFirstError(errL, errR); err == nil {
-		result = leftVal != rightVal
-	}
-
-	return
-}
+type StringNotEquals StringComparator
 
 func NewStringNotEquals(name string) *StringNotEquals {
-	return &StringNotEquals{
-		&grammarElementImpl{name, sheet_logic_types.StringNotEquals},
-		DefaultBinaryOperationStringImpl()}
+	tmp := NewStringComparator(
+		name,
+		sheet_logic_types.StringNotEquals,
+		func(a string, b string) bool { return a != b })
+	return (*StringNotEquals)(tmp)
 }

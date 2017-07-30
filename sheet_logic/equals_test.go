@@ -8,6 +8,7 @@ import (
 func TestIntEquals(t *testing.T) {
 	uut := NewIntEquals(variableName)
 	grammarElementScenario(t, uut.GrammarElement, sheet_logic_types.IntEquals)
+
 	lesser, equal, greater := false, true, false
 	IntComparatorScenario(
 		t,
@@ -21,6 +22,7 @@ func TestIntEquals(t *testing.T) {
 func TestFloatEquals(t *testing.T) {
 	uut := NewFloatEquals(variableName)
 	grammarElementScenario(t, uut.GrammarElement, sheet_logic_types.FloatEquals)
+
 	lesser, equal, greater := false, true, false
 	FloatComparatorScenario(
 		t,
@@ -46,31 +48,12 @@ func TestStringEquals(t *testing.T) {
 	uut := NewStringEquals(variableName)
 	grammarElementScenario(t, uut.GrammarElement, sheet_logic_types.StringEquals)
 
-	uut.SetLeftArg(NewStringConstant(variableName, "abc"))
-	uut.SetRightArg(NewStringConstant(variableName, "a"))
-	assertCalculatesToBool(
+	lesser, equal, greater := false, true, false
+	StringComparatorScenario(
 		t,
-		uut,
-		false,
-		"StringEquals.CalculateBool different parameters")
-
-	uut.SetRightArg(NewStringConstant(variableName, "abc"))
-	assertCalculatesToBool(
-		t,
-		uut,
-		true,
-		"StringEquals.CalculateBool same parameters")
-
-	uut.SetLeftArg(NewEmptyStringExpression())
-	assertCalculatesToBoolFails(
-		t,
-		uut,
-		"StringEquals.CalculateBool fails when argLeft missing")
-
-	uut.SetLeftArg(NewStringConstant(variableName, "abc"))
-	uut.SetRightArg(NewEmptyStringExpression())
-	assertCalculatesToBoolFails(
-		t,
-		uut,
-		"StringEquals.CalculateBool fails when argRight missing")
+		(*StringComparator)(uut),
+		"StringEquals",
+		lesser,
+		equal,
+		greater)
 }

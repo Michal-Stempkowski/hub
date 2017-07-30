@@ -129,3 +129,42 @@ func BoolComparatorScenario(
 		uut,
 		uutTypeName+".CalculateBool fails when argRight missing")
 }
+
+func StringComparatorScenario(
+	t *testing.T, uut *StringComparator, uutTypeName string, forLesser, forEqual, forGreater bool) {
+
+	uut.SetLeftArg(NewStringConstant(variableName, "abc"))
+	uut.SetRightArg(NewStringConstant(variableName, "abd"))
+	assertCalculatesToBool(
+		t,
+		uut,
+		forLesser,
+		uutTypeName+".CalculateBool for lesser")
+
+	uut.SetRightArg(NewStringConstant(variableName, "abc"))
+	assertCalculatesToBool(
+		t,
+		uut,
+		forEqual,
+		uutTypeName+".CalculateBool same parameters")
+
+	uut.SetRightArg(NewStringConstant(variableName, "abb"))
+	assertCalculatesToBool(
+		t,
+		uut,
+		forGreater,
+		uutTypeName+".CalculateBool greater")
+
+	uut.SetLeftArg(NewEmptyStringExpression())
+	assertCalculatesToBoolFails(
+		t,
+		uut,
+		uutTypeName+".CalculateBool fails when argLeft missing")
+
+	uut.SetLeftArg(NewStringConstant(variableName, "abc"))
+	uut.SetRightArg(NewEmptyStringExpression())
+	assertCalculatesToBoolFails(
+		t,
+		uut,
+		uutTypeName+".CalculateBool fails when argRight missing")
+}

@@ -34,31 +34,12 @@ func TestStringNotEquals(t *testing.T) {
 	uut := NewStringNotEquals(variableName)
 	grammarElementScenario(t, uut.GrammarElement, sheet_logic_types.StringNotEquals)
 
-	uut.SetLeftArg(NewStringConstant(variableName, "abc"))
-	uut.SetRightArg(NewStringConstant(variableName, "a"))
-	assertCalculatesToBool(
+	lesser, equal, greater := true, false, true
+	StringComparatorScenario(
 		t,
-		uut,
-		true,
-		"StringNotEquals.CalculateBool different parameters")
-
-	uut.SetRightArg(NewStringConstant(variableName, "abc"))
-	assertCalculatesToBool(
-		t,
-		uut,
-		false,
-		"StringNotEquals.CalculateBool same parameters")
-
-	uut.SetLeftArg(NewEmptyStringExpression())
-	assertCalculatesToBoolFails(
-		t,
-		uut,
-		"StringNotEquals.CalculateBool fails when argLeft missing")
-
-	uut.SetLeftArg(NewStringConstant(variableName, "abc"))
-	uut.SetRightArg(NewEmptyStringExpression())
-	assertCalculatesToBoolFails(
-		t,
-		uut,
-		"StringNotEquals.CalculateBool fails when argRight missing")
+		(*StringComparator)(uut),
+		"StringNotEquals",
+		lesser,
+		equal,
+		greater)
 }

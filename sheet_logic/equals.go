@@ -35,23 +35,12 @@ func NewBoolEquals(name string) *BoolEquals {
 	return (*BoolEquals)(tmp)
 }
 
-type StringEquals struct {
-	GrammarElement
-	BinaryOperationString
-}
-
-func (s *StringEquals) CalculateBool() (result bool, err error) {
-	leftVal, errL := s.GetLeftArg().CalculateString()
-	rightVal, errR := s.GetRightArg().CalculateString()
-	if err = getFirstError(errL, errR); err == nil {
-		result = leftVal == rightVal
-	}
-
-	return
-}
+type StringEquals StringComparator
 
 func NewStringEquals(name string) *StringEquals {
-	return &StringEquals{
-		&grammarElementImpl{name, sheet_logic_types.StringEquals},
-		DefaultBinaryOperationStringImpl()}
+	tmp := NewStringComparator(
+		name,
+		sheet_logic_types.StringEquals,
+		func(a string, b string) bool { return a == b })
+	return (*StringEquals)(tmp)
 }
