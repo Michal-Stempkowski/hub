@@ -5,25 +5,14 @@ import (
 	"hub/sheet_logic/sheet_logic_types"
 )
 
-type IntEquals struct {
-	GrammarElement
-	BinaryOperationInt
-}
-
-func (i *IntEquals) CalculateBool() (result bool, err error) {
-	leftVal, errL := i.GetLeftArg().CalculateInt()
-	rightVal, errR := i.GetRightArg().CalculateInt()
-	if err = getFirstError(errL, errR); err == nil {
-		result = leftVal == rightVal
-	}
-
-	return
-}
+type IntEquals IntComparator
 
 func NewIntEquals(name string) *IntEquals {
-	return &IntEquals{
-		&grammarElementImpl{name, sheet_logic_types.IntEquals},
-		DefaultBinaryOperationIntImpl()}
+	tmp := NewIntComparator(
+		name,
+		sheet_logic_types.IntEquals,
+		func(a int64, b int64) bool { return a == b })
+	return (*IntEquals)(tmp)
 }
 
 type FloatEquals struct {

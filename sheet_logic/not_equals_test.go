@@ -8,34 +8,8 @@ import (
 func TestIntNotEquals(t *testing.T) {
 	uut := NewIntNotEquals(variableName)
 	grammarElementScenario(t, uut.GrammarElement, sheet_logic_types.IntNotEquals)
-
-	uut.SetLeftArg(NewIntConstant(variableName, 2))
-	uut.SetRightArg(NewIntConstant(variableName, 3))
-	assertCalculatesToBool(
-		t,
-		uut,
-		true,
-		"IntNotEquals.CalculateBool different parameters")
-
-	uut.SetRightArg(NewIntConstant(variableName, 2))
-	assertCalculatesToBool(
-		t,
-		uut,
-		false,
-		"IntNotEquals.CalculateBool same parameters")
-
-	uut.SetLeftArg(NewEmptyIntExpression())
-	assertCalculatesToBoolFails(
-		t,
-		uut,
-		"IntNotEquals.CalculateBool fails when argLeft missing")
-
-	uut.SetLeftArg(NewIntConstant(variableName, 2))
-	uut.SetRightArg(NewEmptyIntExpression())
-	assertCalculatesToBoolFails(
-		t,
-		uut,
-		"IntNotEquals.CalculateBool fails when argRight missing")
+	lesser, equal, greater := true, false, true
+	IntComparatorScenario(t, (*IntComparator)(uut), "IntNotEquals", lesser, equal, greater)
 }
 
 func TestFloatNotEquals(t *testing.T) {

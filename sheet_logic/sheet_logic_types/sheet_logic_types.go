@@ -75,4 +75,7 @@ const (
 
 	// Boolean expressions specific
 	Negation
+
+	// Lesser
+	IntLesser
 )
