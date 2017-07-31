@@ -1,6 +1,10 @@
 package framework
 
-import "math"
+import (
+	"math"
+	"os"
+	"path/filepath"
+)
 
 const floatPrecision = 0.000001
 
@@ -26,4 +30,20 @@ func FloatGt(a, b float64) bool {
 
 func FloatGe(a, b float64) bool {
 	return FloatGt(a, b) || FloatEq(a, b)
+}
+
+func GetBinaryPath() string {
+	ex, err := os.Executable()
+	if err != nil {
+		panic(err)
+	}
+	return filepath.Dir(ex)
+}
+
+func GetRootPath() string {
+	return filepath.Dir(GetBinaryPath())
+}
+
+func GetHtmlTemplatePath(name string) string {
+	return filepath.Join(GetRootPath(), "html", name)
 }

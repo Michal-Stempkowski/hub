@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>CharacterHub - LogicDesigner - choose your file</title>
+	</head>
+	<body>
+		<h1>Choose your rule file or create new:</h1>
+		<div><h3 style="color: red;">{{.ErrorMessage}}</h3></div>
+
+		<form action="/logic_designer" method="POST">
+			<input type="text" name="new_name">
+			<div>
+				<input type="submit" value="Create new">
+			</div>
+		</form>
+	</body>
+</html>

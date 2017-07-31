@@ -2,6 +2,7 @@ package framework
 
 import (
 	"math"
+	"strings"
 	"testing"
 )
 
@@ -78,5 +79,28 @@ func TestFloatGe(t *testing.T) {
 	}
 	if !FloatGe(0.51, 0.5) {
 		t.Errorf("framework.FloatGe should say true")
+	}
+}
+
+func TestGetBinaryPath(t *testing.T) {
+	path := GetBinaryPath()
+	if !strings.Contains(path, "hub") {
+		t.Errorf("TestGetBinaryPath: Something went wrong during path calculation: %v", path)
+	}
+}
+
+func TestGetRootPath(t *testing.T) {
+	path := GetRootPath()
+	if !strings.Contains(path, "hub") {
+		t.Errorf("TestGetRootPath: Something went wrong during path calculation: %v", path)
+	}
+}
+
+func TestGetHtmlTemplatePath(t *testing.T) {
+	path := GetHtmlTemplatePath("test.html")
+	if !strings.Contains(path, "hub") ||
+		!strings.Contains(path, "html") ||
+		!strings.HasSuffix(path, "test.html") {
+		t.Errorf("TestGetHtmlTemplatePath: Something went wrong during path calculation: %v", path)
 	}
 }
