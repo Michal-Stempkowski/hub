@@ -104,3 +104,12 @@ func TestGetHtmlTemplatePath(t *testing.T) {
 		t.Errorf("TestGetHtmlTemplatePath: Something went wrong during path calculation: %v", path)
 	}
 }
+
+func TestGetUserDataPath(t *testing.T) {
+	path := GetUserDataPath("test.html")
+	if !strings.Contains(path, "hub") ||
+		!strings.Contains(path, "user_data") ||
+		!strings.HasSuffix(path, "test.html") {
+		t.Errorf("TestGetUserDataPath: Something went wrong during path calculation: %v", path)
+	}
+}
