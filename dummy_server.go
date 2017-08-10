@@ -4,11 +4,13 @@ import (
 	"fmt"
 	"html/template"
 	"hub/framework"
+	"hub/persistent_storage"
 	"net/http"
 )
 
 type LogicDesignerChooserModel struct {
 	ErrorMessage string
+	RuleFiles    []string
 }
 
 func composeWeb(templateName string, data interface{}, w http.ResponseWriter) {
@@ -21,8 +23,24 @@ func composeWeb(templateName string, data interface{}, w http.ResponseWriter) {
 	}
 }
 
-func handlePostData(data *LogicDesignerChooserModel) {
+func handleCommonData(data *LogicDesignerChooserModel) (err error) {
+	data.RuleFiles, err = persistent_storage.FilterFiles(
+		framework.GetUserDataPath(""),
+		persistent_storage.GetExtensionFileInfoMatcher(
+			persistent_storage.RuleSetExtension))
+
+	return
+}
+
+func handleGetData(data *LogicDesignerChooserModel) (err error) {
+	err = handleCommonData(data)
+	return
+}
+
+func handlePostData(data *LogicDesignerChooserModel) (err error) {
+	err = handleCommonData(data)
 	data.ErrorMessage = "POST received"
+	return
 }
 
 func handleUnsupportedHttpMethod(method string, w http.ResponseWriter) {
@@ -30,16 +48,22 @@ func handleUnsupportedHttpMethod(method string, w http.ResponseWriter) {
 }
 
 func helloWeb(w http.ResponseWriter, r *http.Request) {
-	data := &LogicDesignerChooserModel{""}
+	data := &LogicDesignerChooserModel{"", []string{}}
+	var dataHandlingError error
 	switch r.Method {
 	case "GET":
-		break
+		dataHandlingError = handleGetData(data)
 	case "POST":
-		handlePostData(data)
+		dataHandlingError = handlePostData(data)
 	default:
 		handleUnsupportedHttpMethod(r.Method, w)
 	}
-	composeWeb("logic_designer_chooser.html", data, w)
+
+	if dataHandlingError == nil {
+		composeWeb("logic_designer_chooser.html", data, w)
+	} else {
+		fmt.Fprintf(w, "very nope")
+	}
 }
 
 func main() {

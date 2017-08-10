@@ -9,9 +9,17 @@
 		<div><h3 style="color: red;">{{.ErrorMessage}}</h3></div>
 
 		<form action="/logic_designer" method="POST">
+			{{ range $index, $element := .RuleFiles}}
+			<div><h3 style="color: grey;">
+				{{.}}
+				<input type="submit" name="action" value="Rename">
+				<input type="submit" name="action" value="Update">
+				<input type="submit" name="action" value="Delete">
+			</h3></div>
+			{{end}}
 			<input type="text" name="new_name">
 			<div>
-				<input type="submit" value="Create new">
+				<input type="submit" name="action" value="Create">
 			</div>
 		</form>
 	</body>
