@@ -1,13 +1,33 @@
 package persistent_storage
 
 import (
+	"fmt"
 	"hub/framework"
+	"hub/persistent_storage/file_operation_status"
 	"io/ioutil"
 	"os"
 	"strings"
 )
 
 const RuleSetExtension = ".ruleset"
+
+func DoesFileExist(path string) bool {
+	_, err := os.Stat(path)
+	return !os.IsNotExist(err)
+}
+
+func SafeRename(path, newPath string) error {
+	switch {
+	case !DoesFileExist(path):
+		return fmt.Errorf(file_operation_status.DoesNotExist)
+	case path == newPath:
+		return fmt.Errorf(file_operation_status.NameIsTheSame)
+	case DoesFileExist(newPath):
+		return fmt.Errorf(file_operation_status.AlreadyExists)
+	default:
+		return os.Rename(path, newPath)
+	}
+}
 
 func ReadUserFile(name string) (res string, err error) {
 	var data []byte

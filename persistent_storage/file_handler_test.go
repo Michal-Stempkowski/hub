@@ -2,17 +2,21 @@ package persistent_storage
 
 import (
 	"hub/framework"
+	"hub/persistent_storage/file_operation_status"
 	"io/ioutil"
 	"os"
 	"testing"
 )
 
 const (
-	readme       = "README"
-	file1        = "dummy_file.ext"
-	file2        = "dummy_file.ext2"
-	file1Content = "Content of file 1"
-	file2Content = "Content of file 2"
+	readme           = "README"
+	dummyRuleset     = "dummy_ruleset.ruleset"
+	file1            = "dummy_file.ext"
+	file2            = "dummy_file.ext2"
+	notExistingFile  = "not_existing_file.ext"
+	notExistingFile2 = "not_existing_file2.ext"
+	file1Content     = "Content of file 1"
+	file2Content     = "Content of file 2"
 )
 
 func runInFileHandlingTestContext(scenario func()) {
@@ -29,6 +33,72 @@ func runInFileHandlingTestContext(scenario func()) {
 	defer os.Remove(filePath2)
 
 	scenario()
+}
+
+func TestDoesFileExist(t *testing.T) {
+	runInFileHandlingTestContext(func() {
+		assertFileExists(t, file1, "TestDoesFileExist")
+		assertFileDoesNotExists(t, notExistingFile, "TestDoesFileExist")
+	})
+}
+
+func TestSafeRename(t *testing.T) {
+	runInFileHandlingTestContext(func() {
+		filePath1 := framework.GetUserDataPath(file1)
+		filePath2 := framework.GetUserDataPath(file2)
+		filePathNew := framework.GetUserDataPath(notExistingFile)
+		filePathNew2 := framework.GetUserDataPath(notExistingFile2)
+
+		err := SafeRename(filePathNew, filePathNew2)
+		assertFileOperationStatus(
+			t, err, file_operation_status.DoesNotExist,
+			"TestSafeRename: should be impossible to rename not existing file!")
+
+		err = SafeRename(filePath1, filePath1)
+		assertFileOperationStatus(
+			t, err, file_operation_status.NameIsTheSame,
+			"TestSafeRename: renaming to the same name should not be possible!")
+
+		err = SafeRename(filePath1, filePath2)
+		assertFileOperationStatus(
+			t, err, file_operation_status.AlreadyExists,
+			"TestSafeRename: should not rename if file already exists!")
+
+		// Given:
+		assertFileExists(t, file1, "TestSafeRename(Given)")
+		assertFileDoesNotExists(t, notExistingFile, "TestSafeRename(Given)")
+		// When:
+		err = SafeRename(filePath1, filePathNew)
+		if err != nil {
+			t.Errorf("TestSafeRename(When): Rename should work!")
+		} else {
+			// Important so runInFileHandlingTestContext cleans proper resources!
+			defer SafeRename(filePathNew, filePath1)
+
+			// Then:
+			assertFileDoesNotExists(t, file1, "TestSafeRename(Then)")
+			assertFileExists(t, notExistingFile, "TestSafeRename(Then)")
+		}
+
+	})
+}
+
+func assertFileExists(t *testing.T, file, testcaseName string) {
+	if !DoesFileExist(framework.GetUserDataPath(file)) {
+		t.Errorf("%v: %v should exist", testcaseName, file)
+	}
+}
+
+func assertFileDoesNotExists(t *testing.T, file, testcaseName string) {
+	if DoesFileExist(framework.GetUserDataPath(file)) {
+		t.Errorf("%v: %v should not exist", testcaseName, file)
+	}
+}
+
+func assertFileOperationStatus(t *testing.T, err error, expectedStatus, message string) {
+	if err == nil || err.Error() != expectedStatus {
+		t.Errorf(message)
+	}
 }
 
 func TestReadUserFile(t *testing.T) {
@@ -86,10 +156,10 @@ func TestFilterFiles(t *testing.T) {
 
 		user_data_path := framework.GetUserDataPath("")
 		files, err = FilterFiles(user_data_path, nil)
-		expectFiles(t, []string{readme, file1, file2}, files, err)
+		expectFiles(t, []string{readme, file1, file2, dummyRuleset}, files, err)
 
 		files, err = FilterFiles(user_data_path, matchAllFiles)
-		expectFiles(t, []string{readme, file1, file2}, files, err)
+		expectFiles(t, []string{readme, file1, file2, dummyRuleset}, files, err)
 
 		files, err = FilterFiles(user_data_path, matchNoFiles)
 		expectFiles(t, []string{}, files, err)

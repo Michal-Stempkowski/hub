@@ -43,8 +43,9 @@ func handlePostData(data *LogicDesignerChooserModel) (err error) {
 	return
 }
 
-func handleUnsupportedHttpMethod(method string, w http.ResponseWriter) {
-	fmt.Fprintf(w, "nope")
+func handleUnsupportedHttpMethod(method string, w http.ResponseWriter) error {
+	fmt.Fprintf(w, "nope\n")
+	return fmt.Errorf("This http method is unsupported %s", method)
 }
 
 func helloWeb(w http.ResponseWriter, r *http.Request) {
@@ -56,13 +57,14 @@ func helloWeb(w http.ResponseWriter, r *http.Request) {
 	case "POST":
 		dataHandlingError = handlePostData(data)
 	default:
-		handleUnsupportedHttpMethod(r.Method, w)
+		dataHandlingError = handleUnsupportedHttpMethod(r.Method, w)
 	}
 
 	if dataHandlingError == nil {
 		composeWeb("logic_designer_chooser.html", data, w)
 	} else {
-		fmt.Fprintf(w, "very nope")
+		fmt.Fprintf(w, "very nope\n")
+		fmt.Fprintf(w, dataHandlingError.Error())
 	}
 }
 
