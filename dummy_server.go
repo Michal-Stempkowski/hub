@@ -14,6 +14,10 @@ type LogicDesignerChooserModel struct {
 	RuleFiles    []string
 }
 
+func NewLogicDesignerChooserModel() *LogicDesignerChooserModel {
+	return &LogicDesignerChooserModel{"", []string{}}
+}
+
 func composeWeb(templateName string, data interface{}, w http.ResponseWriter) {
 	t, err := template.ParseFiles(
 		framework.GetHtmlTemplatePath(templateName))
@@ -33,35 +37,34 @@ func prepareRulesetList(data *LogicDesignerChooserModel) (err error) {
 	return
 }
 
-func handleGetData(data *LogicDesignerChooserModel) (err error) {
-	err = prepareRulesetList(data)
+func handleGet(w http.ResponseWriter, r *http.Request) (accepted bool) {
+	accepted = true
+
+	data := NewLogicDesignerChooserModel()
+	err := prepareRulesetList(data)
+
+	renderLogicDesignerMainView(data, err, w)
 	return
 }
 
-func handlePostData(data *LogicDesignerChooserModel) (err error) {
-	err = prepareRulesetList(data)
+func handlePost(w http.ResponseWriter, r *http.Request) (accepted bool) {
+	accepted = true
+
+	data := NewLogicDesignerChooserModel()
 	data.ErrorMessage = "POST received"
+	err := prepareRulesetList(data)
+
+	renderLogicDesignerMainView(data, err, w)
 	return
 }
 
-func handleUnsupportedHttpMethod(method string, w http.ResponseWriter) error {
-	fmt.Fprintf(w, "nope\n")
-	return fmt.Errorf("This http method is unsupported %s", method)
-}
-
-func logicDesignerFlow(
-	data_filler func(*LogicDesignerChooserModel) error) server.RequestHandler {
-	return func(w http.ResponseWriter, r *http.Request) bool {
-		data := &LogicDesignerChooserModel{"", []string{}}
-		dataHandlingError := data_filler(data)
-
-		if dataHandlingError == nil {
-			composeWeb("logic_designer_chooser.html", data, w)
-		} else {
-			fmt.Fprintf(w, "very nope\n")
-			fmt.Fprintf(w, dataHandlingError.Error())
-		}
-		return true
+func renderLogicDesignerMainView(
+	data *LogicDesignerChooserModel, dataHandlingError error, w http.ResponseWriter) {
+	if dataHandlingError == nil {
+		composeWeb("logic_designer_chooser.html", data, w)
+	} else {
+		fmt.Fprintf(w, "very nope\n")
+		fmt.Fprintf(w, dataHandlingError.Error())
 	}
 }
 
@@ -69,10 +72,10 @@ func helloWeb(w http.ResponseWriter, r *http.Request) {
 	handler := server.NewRequestBroker(
 		map[string][]server.RequestHandler{
 			"GET": []server.RequestHandler{
-				logicDesignerFlow(handleGetData),
+				handleGet,
 			},
 			"POST": []server.RequestHandler{
-				logicDesignerFlow(handlePostData),
+				handlePost,
 			},
 		})
 
