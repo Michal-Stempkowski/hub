@@ -10,7 +10,6 @@ import (
 
 const (
 	readme           = "README"
-	dummyRuleset     = "dummy_ruleset.ruleset"
 	file1            = "dummy_file.ext"
 	file2            = "dummy_file.ext2"
 	notExistingFile  = "not_existing_file.ext"
@@ -103,7 +102,7 @@ func assertFileOperationStatus(t *testing.T, err error, expectedStatus, message 
 
 func TestReadUserFile(t *testing.T) {
 	runInFileHandlingTestContext(func() {
-		data, err := ReadUserFile("README")
+		data, err := ReadUserFile(readme)
 		if err != nil || data != "This is where application stores its files" {
 			t.Errorf("TestReadUserFile: improper data: '%v' or error: %v", data, err)
 		}
@@ -115,18 +114,21 @@ func TestReadUserFile(t *testing.T) {
 	})
 }
 
-func expectFiles(t *testing.T, filesExpected, filesReceived []string, err error) {
+func expectFiles(
+	t *testing.T, filesExpected, filesReceived []string, err error, testcaseName string) {
 	if err != nil {
 		t.Errorf("TestFilterFiles: On valid path error has occurred: %v", err)
 	}
-	if len(filesReceived) != len(filesExpected) {
-		t.Errorf(
-			"TestFilterFiles: argument number differs (expected=%v, received=%v)",
-			filesExpected,
-			filesReceived)
+
+	receivedSet := make(map[string]bool)
+	for _, file := range filesReceived {
+		receivedSet[file] = true
 	}
-	for i := 0; i < len(filesExpected); i++ {
-		expectFile(t, filesExpected[i], filesReceived[i])
+
+	for _, file := range filesExpected {
+		if _, ok := receivedSet[file]; !ok {
+			t.Errorf("%v: file %v not found while expected!", testcaseName, file)
+		}
 	}
 }
 
@@ -156,15 +158,35 @@ func TestFilterFiles(t *testing.T) {
 
 		user_data_path := framework.GetUserDataPath("")
 		files, err = FilterFiles(user_data_path, nil)
-		expectFiles(t, []string{readme, file1, file2, dummyRuleset}, files, err)
+		expectFiles(
+			t,
+			[]string{file1, file2},
+			files,
+			err,
+			"TestFilterFiles(no fillter)")
 
 		files, err = FilterFiles(user_data_path, matchAllFiles)
-		expectFiles(t, []string{readme, file1, file2, dummyRuleset}, files, err)
+		expectFiles(
+			t,
+			[]string{file1, file2},
+			files,
+			err,
+			"TestFilterFiles(match all files)")
 
 		files, err = FilterFiles(user_data_path, matchNoFiles)
-		expectFiles(t, []string{}, files, err)
+		expectFiles(
+			t,
+			[]string{},
+			files,
+			err,
+			"TestFilterFiles(match no files)")
 
 		files, err = FilterFiles(user_data_path, GetExtensionFileInfoMatcher(".ext"))
-		expectFiles(t, []string{file1}, files, err)
+		expectFiles(
+			t,
+			[]string{file1},
+			files,
+			err,
+			"TestFilterFiles(match *.ext files)")
 	})
 }

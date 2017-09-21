@@ -5,6 +5,7 @@ import (
 	"html/template"
 	"hub/framework"
 	"hub/persistent_storage"
+	"hub/server"
 	"net/http"
 )
 
@@ -23,7 +24,7 @@ func composeWeb(templateName string, data interface{}, w http.ResponseWriter) {
 	}
 }
 
-func handleCommonData(data *LogicDesignerChooserModel) (err error) {
+func prepareRulesetList(data *LogicDesignerChooserModel) (err error) {
 	data.RuleFiles, err = persistent_storage.FilterFiles(
 		framework.GetUserDataPath(""),
 		persistent_storage.GetExtensionFileInfoMatcher(
@@ -33,12 +34,12 @@ func handleCommonData(data *LogicDesignerChooserModel) (err error) {
 }
 
 func handleGetData(data *LogicDesignerChooserModel) (err error) {
-	err = handleCommonData(data)
+	err = prepareRulesetList(data)
 	return
 }
 
 func handlePostData(data *LogicDesignerChooserModel) (err error) {
-	err = handleCommonData(data)
+	err = prepareRulesetList(data)
 	data.ErrorMessage = "POST received"
 	return
 }
@@ -48,27 +49,39 @@ func handleUnsupportedHttpMethod(method string, w http.ResponseWriter) error {
 	return fmt.Errorf("This http method is unsupported %s", method)
 }
 
-func helloWeb(w http.ResponseWriter, r *http.Request) {
-	data := &LogicDesignerChooserModel{"", []string{}}
-	var dataHandlingError error
-	switch r.Method {
-	case "GET":
-		dataHandlingError = handleGetData(data)
-	case "POST":
-		dataHandlingError = handlePostData(data)
-	default:
-		dataHandlingError = handleUnsupportedHttpMethod(r.Method, w)
-	}
+func logicDesignerFlow(
+	data_filler func(*LogicDesignerChooserModel) error) server.RequestHandler {
+	return func(w http.ResponseWriter, r *http.Request) bool {
+		data := &LogicDesignerChooserModel{"", []string{}}
+		dataHandlingError := data_filler(data)
 
-	if dataHandlingError == nil {
-		composeWeb("logic_designer_chooser.html", data, w)
-	} else {
-		fmt.Fprintf(w, "very nope\n")
-		fmt.Fprintf(w, dataHandlingError.Error())
+		if dataHandlingError == nil {
+			composeWeb("logic_designer_chooser.html", data, w)
+		} else {
+			fmt.Fprintf(w, "very nope\n")
+			fmt.Fprintf(w, dataHandlingError.Error())
+		}
+		return true
 	}
 }
 
+func helloWeb(w http.ResponseWriter, r *http.Request) {
+	handler := server.NewRequestBroker(
+		map[string][]server.RequestHandler{
+			"GET": []server.RequestHandler{
+				logicDesignerFlow(handleGetData),
+			},
+			"POST": []server.RequestHandler{
+				logicDesignerFlow(handlePostData),
+			},
+		})
+
+	handler.Resolve(w, r)
+}
+
 func main() {
+	r := &server.RequestBroker{}
 	http.HandleFunc("/logic_designer", helloWeb)
+	http.HandleFunc("/logic_designer2", r.Resolve)
 	http.ListenAndServe(":8080", nil)
 }
