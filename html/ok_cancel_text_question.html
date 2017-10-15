@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>{{.Title}}</title>
+	</head>
+	<body>
+		<div><h3 style="color: red;">{{.ErrorMessage}}</h3></div>
+
+		<form action="{{.Destination}}" method="POST">
+			<input type="text" name="question" value="{{.Question}}" disabled="true" size={{len .Question}}><br>
+			<input type="text" name="Value">
+			<button name="action" value="{{.Ok}}">{{.OkLabel}}</button>
+			<button name="action" value="{{.Cancel}}">{{.CancelLabel}}</button>
+		</form>
+	</body>
+</html>

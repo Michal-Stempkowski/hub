@@ -12,9 +12,9 @@
 			{{ range $index, $element := .RuleFiles}}
 			<div><h3 style="color: grey;">
 				{{.}}
-				<input type="submit" name="action" value="Rename">
-				<input type="submit" name="action" value="Update">
-				<input type="submit" name="action" value="Delete">
+				<button name="action" value="RequestRename:{{$element}}">Rename</button>
+				<input type="submit" name="action" value="RequestUpdate">
+				<input type="submit" name="action" value="RequestDelete">
 			</h3></div>
 			{{end}}
 			<input type="text" name="new_name">

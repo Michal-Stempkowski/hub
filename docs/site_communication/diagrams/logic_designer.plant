@@ -1,0 +1,55 @@
+@startuml
+
+state logic_designer {
+	state GET
+}
+
+state logic_designer__rename {
+	state RequestRename
+	state VetoableRename
+}
+
+state logic_designer__delete {
+	state RequestDelete
+	state VetoableDelete
+}
+
+state logic_designer__create {
+	state RequestCreate
+	state VetoableCreate
+}
+
+state logic_designer__update {
+	state RequestUpdate
+	state VetoableUpdate
+}
+
+state logic_editor {
+	state LogicEditorStart
+}
+
+GET --> RequestRename
+RequestRename --> VetoableRename
+RequestRename --> GET
+VetoableRename --> RequestRename
+VetoableRename --> GET
+
+GET --> RequestDelete
+RequestDelete --> VetoableDelete
+RequestDelete --> GET
+VetoableDelete --> RequestDelete
+VetoableDelete --> GET
+
+GET --> RequestUpdate
+RequestUpdate --> VetoableUpdate
+RequestUpdate --> GET
+VetoableUpdate --> RequestUpdate
+VetoableUpdate --> LogicEditorStart
+
+GET --> RequestCreate
+RequestCreate --> VetoableCreate
+RequestCreate --> GET
+VetoableCreate --> RequestCreate
+VetoableCreate --> GET
+
+@enduml
