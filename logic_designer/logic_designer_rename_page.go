@@ -2,6 +2,9 @@ package logic_designer
 
 import (
 	"fmt"
+	"hub/framework"
+	"hub/persistent_storage"
+	"hub/persistent_storage/file_operation_status"
 	"hub/server"
 	"net/http"
 	"strings"
@@ -46,11 +49,26 @@ func handleVetoableRename(w http.ResponseWriter, r *http.Request) bool {
 	}
 
 	oldName := getOldNameFromRequest(r)
+	newName := r.FormValue("value")
 
-	data := defaultRenameModel(oldName)
-	data.ErrorMessage = "Rename rejected"
+	var err error
+	if newName == "" {
+		err = fmt.Errorf(file_operation_status.EmptyName)
+	} else {
+		err = persistent_storage.SafeRenameForExtension(
+			framework.GetUserDataPath(oldName),
+			framework.GetUserDataPath(r.FormValue("value")),
+			persistent_storage.RuleSetExtension)
+	}
 
-	server.RenderSimpleView(data, "ok_cancel_text_question.html", nil, w)
+	if err == nil {
+		http.Redirect(w, r, "/logic_designer", http.StatusSeeOther)
+	} else {
+		data := defaultRenameModel(oldName)
+		data.ErrorMessage = err.Error()
+
+		server.RenderSimpleView(data, "ok_cancel_text_question.html", nil, w)
+	}
 
 	return true
 }
