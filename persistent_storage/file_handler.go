@@ -9,7 +9,7 @@ import (
 	"strings"
 )
 
-const RuleSetExtension = ".ruleset"
+const RuleSetExtension = "ruleset"
 
 func DoesFileExist(path string) bool {
 	_, err := os.Stat(path)
@@ -51,8 +51,12 @@ func FilterFiles(path string, filter func(os.FileInfo) bool) (result []string, e
 	return
 }
 
+func HasExtension(name, ext string) bool {
+	return strings.HasSuffix(name, "."+ext)
+}
+
 func GetExtensionFileInfoMatcher(ext string) func(f os.FileInfo) bool {
 	return func(f os.FileInfo) bool {
-		return strings.HasSuffix(f.Name(), ext)
+		return HasExtension(f.Name(), ext)
 	}
 }

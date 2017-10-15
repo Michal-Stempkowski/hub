@@ -181,7 +181,7 @@ func TestFilterFiles(t *testing.T) {
 			err,
 			"TestFilterFiles(match no files)")
 
-		files, err = FilterFiles(user_data_path, GetExtensionFileInfoMatcher(".ext"))
+		files, err = FilterFiles(user_data_path, GetExtensionFileInfoMatcher("ext"))
 		expectFiles(
 			t,
 			[]string{file1},
@@ -189,4 +189,14 @@ func TestFilterFiles(t *testing.T) {
 			err,
 			"TestFilterFiles(match *.ext files)")
 	})
+}
+
+func TestHasExtension(t *testing.T) {
+	if !HasExtension(file1, "ext") {
+		t.Errorf("TestHasExtension: should have that extension!")
+	}
+
+	if HasExtension(file1, "xt") {
+		t.Errorf("TestHasExtension: should not have that extension!")
+	}
 }
