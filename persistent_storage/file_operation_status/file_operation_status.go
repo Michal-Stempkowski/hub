@@ -5,4 +5,5 @@ const (
 	DoesNotExist              = fileOperationStatusHeader + "File does not exist"
 	NameIsTheSame             = fileOperationStatusHeader + "Name is the same"
 	AlreadyExists             = fileOperationStatusHeader + "File already exists"
+	EmptyName                 = fileOperationStatusHeader + "File name must not be empty"
 )

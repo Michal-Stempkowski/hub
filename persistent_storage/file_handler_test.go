@@ -9,13 +9,15 @@ import (
 )
 
 const (
-	readme           = "README"
-	file1            = "dummy_file.ext"
-	file2            = "dummy_file.ext2"
-	notExistingFile  = "not_existing_file.ext"
-	notExistingFile2 = "not_existing_file2.ext"
-	file1Content     = "Content of file 1"
-	file2Content     = "Content of file 2"
+	readme              = "README"
+	file1               = "dummy_file.ext"
+	file2               = "dummy_file.ext2"
+	notExistingFile     = "not_existing_file.ext"
+	notExistingFile2    = "not_existing_file2.ext"
+	notExistingFileExt2 = "not_existing_file2.ext2"
+	file1Content        = "Content of file 1"
+	file2Content        = "Content of file 2"
+	ext1                = "ext"
 )
 
 func runInFileHandlingTestContext(scenario func()) {
@@ -48,7 +50,12 @@ func TestSafeRename(t *testing.T) {
 		filePathNew := framework.GetUserDataPath(notExistingFile)
 		filePathNew2 := framework.GetUserDataPath(notExistingFile2)
 
-		err := SafeRename(filePathNew, filePathNew2)
+		err := SafeRename(filePath1, "")
+		assertFileOperationStatus(
+			t, err, file_operation_status.EmptyName,
+			"TestSafeRename: should be impossible to rename to empty file!")
+
+		err = SafeRename(filePathNew, filePathNew2)
 		assertFileOperationStatus(
 			t, err, file_operation_status.DoesNotExist,
 			"TestSafeRename: should be impossible to rename not existing file!")
@@ -79,6 +86,40 @@ func TestSafeRename(t *testing.T) {
 			assertFileExists(t, notExistingFile, "TestSafeRename(Then)")
 		}
 
+	})
+}
+
+func TestSafeRenameWithinExtension(t *testing.T) {
+	runInFileHandlingTestContext(func() {
+		filePath2 := framework.GetUserDataPath(file2)
+		filePathNew := framework.GetUserDataPath(notExistingFile)
+		filePathNew2 := framework.GetUserDataPath(notExistingFile2)
+		filePathOtherExtension := framework.GetUserDataPath(notExistingFileExt2)
+
+		err := SafeRenameForExtension(filePathNew, filePathNew2, ext1)
+		assertFileOperationStatus(
+			t, err, file_operation_status.DoesNotExist,
+			"TestSafeRenameWithinExtension: should reject all cases "+
+				"rejected by SafeRename!")
+
+		err = SafeRenameForExtension(filePath2, filePathOtherExtension, ext1)
+		if err != nil {
+			t.Errorf("TestSafeRenameWithinExtension: Rename should work!")
+		} else {
+			expectedNewPath := filePathOtherExtension + "." + ext1
+			if !DoesFileExist(expectedNewPath) {
+				t.Errorf("TestSafeRenameWithinExtension: No rename occurred")
+			} else {
+				// Important so runInFileHandlingTestContext cleans proper resources!
+				defer SafeRename(expectedNewPath, filePath2)
+				assertFileExists(
+					t,
+					notExistingFileExt2+"."+ext1,
+					"TestSafeRenameWithinExtension")
+				assertFileDoesNotExists(
+					t, file2, "TestSafeRenameWithinExtension")
+			}
+		}
 	})
 }
 

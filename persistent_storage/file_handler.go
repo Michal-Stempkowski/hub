@@ -17,7 +17,13 @@ func DoesFileExist(path string) bool {
 }
 
 func SafeRename(path, newPath string) error {
+	extIndex := strings.LastIndex(newPath, ".")
+	if extIndex < 0 {
+		extIndex = len(newPath)
+	}
 	switch {
+	case extIndex < 1:
+		return fmt.Errorf(file_operation_status.EmptyName)
 	case !DoesFileExist(path):
 		return fmt.Errorf(file_operation_status.DoesNotExist)
 	case path == newPath:
@@ -27,6 +33,13 @@ func SafeRename(path, newPath string) error {
 	default:
 		return os.Rename(path, newPath)
 	}
+}
+
+func SafeRenameForExtension(path, newPath, ext string) error {
+	if !HasExtension(newPath, ext) {
+		newPath = fmt.Sprintf("%s.%s", newPath, ext)
+	}
+	return SafeRename(path, newPath)
 }
 
 func ReadUserFile(name string) (res string, err error) {
