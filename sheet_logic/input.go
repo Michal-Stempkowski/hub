@@ -22,3 +22,21 @@ func NewIntInput(name string) *IntInput {
 		&grammarElementImpl{name, sheet_logic_types.IntInput},
 		""}
 }
+
+type FloatInput struct {
+	GrammarElement
+	Identifier string
+}
+
+func (f *FloatInput) CalculateFloat(g GrammarContext) (float64, error) {
+	if f.Identifier == "" {
+		return 0, fmt.Errorf("FloatInput: Empty identifier not allowed!")
+	}
+	return g.GetFloatValue(f.Identifier)
+}
+
+func NewFloatInput(name string) *FloatInput {
+	return &FloatInput{
+		&grammarElementImpl{name, sheet_logic_types.FloatInput},
+		""}
+}
