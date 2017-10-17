@@ -9,9 +9,9 @@ type IntSum struct {
 	BinaryOperationInt
 }
 
-func (i *IntSum) CalculateInt() (result int64, err error) {
-	leftVal, errL := i.GetLeftArg().CalculateInt()
-	rightVal, errR := i.GetRightArg().CalculateInt()
+func (i *IntSum) CalculateInt(g GrammarContext) (result int64, err error) {
+	leftVal, errL := i.GetLeftArg().CalculateInt(g)
+	rightVal, errR := i.GetRightArg().CalculateInt(g)
 	if err = getFirstError(errL, errR); err == nil {
 		result = leftVal + rightVal
 	}
@@ -30,9 +30,9 @@ type FloatSum struct {
 	BinaryOperationFloat
 }
 
-func (f *FloatSum) CalculateFloat() (result float64, err error) {
-	leftVal, errL := f.GetLeftArg().CalculateFloat()
-	rightVal, errR := f.GetRightArg().CalculateFloat()
+func (f *FloatSum) CalculateFloat(g GrammarContext) (result float64, err error) {
+	leftVal, errL := f.GetLeftArg().CalculateFloat(g)
+	rightVal, errR := f.GetRightArg().CalculateFloat(g)
 	if err = getFirstError(errL, errR); err == nil {
 		result = leftVal + rightVal
 	}
@@ -51,9 +51,9 @@ type StringSum struct {
 	BinaryOperationString
 }
 
-func (s *StringSum) CalculateString() (result string, err error) {
-	leftVal, errL := s.GetLeftArg().CalculateString()
-	rightVal, errR := s.GetRightArg().CalculateString()
+func (s *StringSum) CalculateString(g GrammarContext) (result string, err error) {
+	leftVal, errL := s.GetLeftArg().CalculateString(g)
+	rightVal, errR := s.GetRightArg().CalculateString(g)
 	if err = getFirstError(errL, errR); err == nil {
 		result = leftVal + rightVal
 	}

@@ -9,10 +9,10 @@ type Negation struct {
 	UnaryOperationBool
 }
 
-func (n *Negation) CalculateBool() (result bool, err error) {
+func (n *Negation) CalculateBool(g GrammarContext) (result bool, err error) {
 	var boolVal bool
 
-	if boolVal, err = n.GetArg().CalculateBool(); err == nil {
+	if boolVal, err = n.GetArg().CalculateBool(g); err == nil {
 		result = !boolVal
 	}
 

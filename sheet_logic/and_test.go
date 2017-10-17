@@ -12,6 +12,7 @@ func TestAnd(t *testing.T) {
 	BoolComparatorScenario(
 		t,
 		(*BoolComparator)(uut),
+		noGrammarContext,
 		"And",
 		[]bool{false, false, false, true})
 }

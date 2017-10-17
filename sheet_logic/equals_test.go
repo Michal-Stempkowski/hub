@@ -13,6 +13,7 @@ func TestIntEquals(t *testing.T) {
 	IntComparatorScenario(
 		t,
 		(*IntComparator)(uut),
+		noGrammarContext,
 		"IntEquals",
 		lesser,
 		equal,
@@ -27,6 +28,7 @@ func TestFloatEquals(t *testing.T) {
 	FloatComparatorScenario(
 		t,
 		(*FloatComparator)(uut),
+		noGrammarContext,
 		"FloatEquals",
 		lesser,
 		equal,
@@ -40,6 +42,7 @@ func TestBoolEquals(t *testing.T) {
 	BoolComparatorScenario(
 		t,
 		(*BoolComparator)(uut),
+		noGrammarContext,
 		"BoolEquals",
 		[]bool{true, false, false, true})
 }
@@ -52,6 +55,7 @@ func TestStringEquals(t *testing.T) {
 	StringComparatorScenario(
 		t,
 		(*StringComparator)(uut),
+		noGrammarContext,
 		"StringEquals",
 		lesser,
 		equal,

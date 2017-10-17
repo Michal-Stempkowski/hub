@@ -12,6 +12,7 @@ func TestFloatCeil(t *testing.T) {
 	assertCalculatesToFloatFails(
 		t,
 		uut,
+		noGrammarContext,
 		"FloatCeil.CalculateFloat fails on uninitialized")
 
 	uut.SetArg(NewFloatConstant(variableName, 3.6))
@@ -19,6 +20,7 @@ func TestFloatCeil(t *testing.T) {
 		t,
 		uut,
 		4.0,
+		noGrammarContext,
 		"FloatCeil.CalculateFloat")
 
 	uut.SetArg(NewFloatConstant(variableName, 3.1))
@@ -26,5 +28,6 @@ func TestFloatCeil(t *testing.T) {
 		t,
 		uut,
 		4.0,
+		noGrammarContext,
 		"FloatCeil.CalculateFloat")
 }

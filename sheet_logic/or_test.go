@@ -12,6 +12,7 @@ func TestOr(t *testing.T) {
 	BoolComparatorScenario(
 		t,
 		(*BoolComparator)(uut),
+		noGrammarContext,
 		"Or",
 		[]bool{false, true, true, true})
 }

@@ -13,6 +13,7 @@ func TestNegation(t *testing.T) {
 	assertCalculatesToBoolFails(
 		t,
 		uut,
+		noGrammarContext,
 		"Negation.CalculateBool fails on uninitialized")
 
 	uut.SetArg(boolArg)
@@ -20,6 +21,7 @@ func TestNegation(t *testing.T) {
 		t,
 		uut,
 		false,
+		noGrammarContext,
 		"Negation.CalculateBool")
 
 	boolArg.Value = false
@@ -27,5 +29,6 @@ func TestNegation(t *testing.T) {
 		t,
 		uut,
 		true,
+		noGrammarContext,
 		"Negation.CalculateBool")
 }

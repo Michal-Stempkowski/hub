@@ -12,6 +12,7 @@ func TestFloatRound(t *testing.T) {
 	assertCalculatesToFloatFails(
 		t,
 		uut,
+		noGrammarContext,
 		"FloatRound.CalculateFloat fails on uninitialized")
 
 	uut.SetArg(NewFloatConstant(variableName, 3.6))
@@ -19,6 +20,7 @@ func TestFloatRound(t *testing.T) {
 		t,
 		uut,
 		4.0,
+		noGrammarContext,
 		"FloatRound.CalculateFloat")
 
 	uut.SetArg(NewFloatConstant(variableName, 3.1))
@@ -26,5 +28,6 @@ func TestFloatRound(t *testing.T) {
 		t,
 		uut,
 		3.0,
+		noGrammarContext,
 		"FloatRound.CalculateFloat")
 }

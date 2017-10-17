@@ -13,6 +13,7 @@ func TestIntToStringConversion(t *testing.T) {
 	assertCalculatesToStringFails(
 		t,
 		uut,
+		noGrammarContext,
 		"IntToStringConversion.CalculateString fails on uninitialized")
 
 	uut.SetArg(NewIntConstant(variableName, exampleIntValue))
@@ -20,6 +21,7 @@ func TestIntToStringConversion(t *testing.T) {
 		t,
 		uut,
 		exampleIntValueAsString,
+		noGrammarContext,
 		"IntToStringConversion.CalculateString")
 }
 
@@ -30,6 +32,7 @@ func TestIntToFloatConversion(t *testing.T) {
 	assertCalculatesToFloatFails(
 		t,
 		uut,
+		noGrammarContext,
 		"IntToFloatConversion.CalculateFloat fails on uninitialized")
 
 	uut.SetArg(NewIntConstant(variableName, exampleIntValue))
@@ -37,6 +40,7 @@ func TestIntToFloatConversion(t *testing.T) {
 		t,
 		uut,
 		exampleIntValue,
+		noGrammarContext,
 		"IntToFloatConversion.CalculateFloat")
 }
 
@@ -48,6 +52,7 @@ func TestFloatToIntConversion(t *testing.T) {
 	assertCalculatesToIntFails(
 		t,
 		uut,
+		noGrammarContext,
 		"FloatToIntConversion.CalculateInt fails on uninitialized")
 
 	uut.SetArg(floatArg)
@@ -55,6 +60,7 @@ func TestFloatToIntConversion(t *testing.T) {
 		t,
 		uut,
 		piRoundedDown,
+		noGrammarContext,
 		"FloatToIntConversion.CalculateInt for pi")
 
 	floatArg.Value = floatE
@@ -62,12 +68,14 @@ func TestFloatToIntConversion(t *testing.T) {
 		t,
 		uut,
 		eRoundedUp,
+		noGrammarContext,
 		"FloatToIntConversion.CalculateInt for e")
 
 	floatArg.Value = bigNumber
 	assertCalculatesToIntFails(
 		t,
 		uut,
+		noGrammarContext,
 		"FloatToIntConversion.CalculateInt for big number")
 }
 
@@ -79,6 +87,7 @@ func TestFloatToIntRoundDownConversion(t *testing.T) {
 	assertCalculatesToIntFails(
 		t,
 		uut,
+		noGrammarContext,
 		"FloatToIntRoundDownConversion.CalculateInt fails on uninitialized")
 
 	uut.SetArg(floatArg)
@@ -86,6 +95,7 @@ func TestFloatToIntRoundDownConversion(t *testing.T) {
 		t,
 		uut,
 		piRoundedDown,
+		noGrammarContext,
 		"FloatToIntRoundDownConversion.CalculateInt for pi")
 
 	floatArg.Value = floatE
@@ -93,12 +103,14 @@ func TestFloatToIntRoundDownConversion(t *testing.T) {
 		t,
 		uut,
 		eRoundedDown,
+		noGrammarContext,
 		"FloatToIntRoundDownConversion.CalculateInt for e")
 
 	floatArg.Value = bigNumber
 	assertCalculatesToIntFails(
 		t,
 		uut,
+		noGrammarContext,
 		"FloatToIntRoundDownConversion.CalculateInt for big number")
 }
 
@@ -110,6 +122,7 @@ func TestFloatToIntRoundUpConversion(t *testing.T) {
 	assertCalculatesToIntFails(
 		t,
 		uut,
+		noGrammarContext,
 		"FloatToIntRoundUpConversion.CalculateInt fails on uninitialized")
 
 	uut.SetArg(floatArg)
@@ -117,6 +130,7 @@ func TestFloatToIntRoundUpConversion(t *testing.T) {
 		t,
 		uut,
 		piRoundedUp,
+		noGrammarContext,
 		"FloatToIntRoundUpConversion.CalculateInt for pi")
 
 	floatArg.Value = floatE
@@ -124,12 +138,14 @@ func TestFloatToIntRoundUpConversion(t *testing.T) {
 		t,
 		uut,
 		eRoundedUp,
+		noGrammarContext,
 		"FloatToIntRoundUpConversion.CalculateInt for e")
 
 	floatArg.Value = bigNumber
 	assertCalculatesToIntFails(
 		t,
 		uut,
+		noGrammarContext,
 		"FloatToIntRoundUpConversion.CalculateInt for big number")
 }
 
@@ -141,6 +157,7 @@ func TestStringToIntConversion(t *testing.T) {
 	assertCalculatesToIntFails(
 		t,
 		uut,
+		noGrammarContext,
 		"StringToIntConversion.CalculateInt fails on uninitialized")
 
 	uut.SetArg(stringArg)
@@ -148,18 +165,21 @@ func TestStringToIntConversion(t *testing.T) {
 		t,
 		uut,
 		exampleIntValue,
+		noGrammarContext,
 		"StringToIntConversion.CalculateInt some integer")
 
 	stringArg.Value = bigNumberAsString
 	assertCalculatesToIntFails(
 		t,
 		uut,
+		noGrammarContext,
 		"StringToIntConversion.CalculateInt for big number")
 
 	stringArg.Value = stringPi
 	assertCalculatesToIntFails(
 		t,
 		uut,
+		noGrammarContext,
 		"StringToIntConversion.CalculateInt for float number")
 }
 
@@ -171,6 +191,7 @@ func TestStringToFloatConversion(t *testing.T) {
 	assertCalculatesToFloatFails(
 		t,
 		uut,
+		noGrammarContext,
 		"StringToFloatConversion.CalculateFloat fails on uninitialized")
 
 	uut.SetArg(stringArg)
@@ -178,6 +199,7 @@ func TestStringToFloatConversion(t *testing.T) {
 		t,
 		uut,
 		piTwoDigitPrecision,
+		noGrammarContext,
 		"StringToFloatConversion.CalculateFloat for pi")
 
 	stringArg.Value = exampleIntValueAsString
@@ -185,12 +207,14 @@ func TestStringToFloatConversion(t *testing.T) {
 		t,
 		uut,
 		exampleIntValue,
+		noGrammarContext,
 		"StringToFloatConversion.CalculateFloat for int")
 
 	stringArg.Value = exampleStringValue
 	assertCalculatesToFloatFails(
 		t,
 		uut,
+		noGrammarContext,
 		"StringToFloatConversion.CalculateFloat for no number")
 }
 
@@ -202,6 +226,7 @@ func TestFloatToStringConversion(t *testing.T) {
 	assertCalculatesToStringFails(
 		t,
 		uut,
+		noGrammarContext,
 		"FloatToStringConversion.CalculateInt fails on uninitialized")
 
 	uut.SetArg(floatArg)
@@ -210,6 +235,7 @@ func TestFloatToStringConversion(t *testing.T) {
 		t,
 		uut,
 		stringPi,
+		noGrammarContext,
 		"FloatToStringConversion.CalculateInt for pi")
 
 	uut.Precision = 2
@@ -217,6 +243,7 @@ func TestFloatToStringConversion(t *testing.T) {
 		t,
 		uut,
 		stringPiTwoDigitPrecision,
+		noGrammarContext,
 		"FloatToStringConversion.CalculateInt for e")
 
 	uut.Precision = 10
@@ -224,12 +251,14 @@ func TestFloatToStringConversion(t *testing.T) {
 		t,
 		uut,
 		stringPi,
+		noGrammarContext,
 		"FloatToStringConversion.CalculateInt for pi")
 
 	uut.Precision = -1
 	assertCalculatesToStringFails(
 		t,
 		uut,
+		noGrammarContext,
 		"FloatToStringConversion.CalculateInt for big number")
 }
 
@@ -241,6 +270,7 @@ func TestIntToBoolConversion(t *testing.T) {
 	assertCalculatesToBoolFails(
 		t,
 		uut,
+		noGrammarContext,
 		"IntToBoolConversion.CalculateBool fails on uninitialized")
 
 	uut.SetArg(intArg)
@@ -248,6 +278,7 @@ func TestIntToBoolConversion(t *testing.T) {
 		t,
 		uut,
 		true,
+		noGrammarContext,
 		"IntToBoolConversion.CalculateBool for non zero number")
 
 	intArg.Value = 0
@@ -255,6 +286,7 @@ func TestIntToBoolConversion(t *testing.T) {
 		t,
 		uut,
 		false,
+		noGrammarContext,
 		"IntToBoolConversion.CalculateBool for zero")
 }
 
@@ -266,6 +298,7 @@ func TestFloatToBoolConversion(t *testing.T) {
 	assertCalculatesToBoolFails(
 		t,
 		uut,
+		noGrammarContext,
 		"FloatToBoolConversion.CalculateBool fails on uninitialized")
 
 	uut.SetArg(floatArg)
@@ -273,6 +306,7 @@ func TestFloatToBoolConversion(t *testing.T) {
 		t,
 		uut,
 		true,
+		noGrammarContext,
 		"FloatToBoolConversion.CalculateBool for non zero number")
 
 	floatArg.Value = 0.
@@ -280,6 +314,7 @@ func TestFloatToBoolConversion(t *testing.T) {
 		t,
 		uut,
 		false,
+		noGrammarContext,
 		"FloatToBoolConversion.CalculateBool for zero")
 
 	floatArg.Value = math.NaN()
@@ -287,6 +322,7 @@ func TestFloatToBoolConversion(t *testing.T) {
 		t,
 		uut,
 		true,
+		noGrammarContext,
 		"FloatToBoolConversion.CalculateBool for zero")
 
 	floatArg.Value = math.Inf(1)
@@ -294,6 +330,7 @@ func TestFloatToBoolConversion(t *testing.T) {
 		t,
 		uut,
 		true,
+		noGrammarContext,
 		"FloatToBoolConversion.CalculateBool for zero")
 
 	floatArg.Value = math.Inf(-1)
@@ -301,6 +338,7 @@ func TestFloatToBoolConversion(t *testing.T) {
 		t,
 		uut,
 		true,
+		noGrammarContext,
 		"FloatToBoolConversion.CalculateBool for zero")
 }
 
@@ -312,6 +350,7 @@ func TestStringToBoolConversion(t *testing.T) {
 	assertCalculatesToBoolFails(
 		t,
 		uut,
+		noGrammarContext,
 		"StringToBoolConversion.CalculateBool fails on uninitialized")
 
 	uut.SetArg(stringArg)
@@ -319,6 +358,7 @@ func TestStringToBoolConversion(t *testing.T) {
 		t,
 		uut,
 		true,
+		noGrammarContext,
 		"StringToBoolConversion.CalculateBool for 'true'")
 
 	stringArg.Value = "false"
@@ -326,12 +366,14 @@ func TestStringToBoolConversion(t *testing.T) {
 		t,
 		uut,
 		false,
+		noGrammarContext,
 		"StringToBoolConversion.CalculateBool for 'false'")
 
 	stringArg.Value = "Anything else"
 	assertCalculatesToBoolFails(
 		t,
 		uut,
+		noGrammarContext,
 		"StringToBoolConversion.CalculateBool for anything else fails")
 }
 
@@ -343,6 +385,7 @@ func TestBoolToIntConversion(t *testing.T) {
 	assertCalculatesToIntFails(
 		t,
 		uut,
+		noGrammarContext,
 		"IntToStringConversion.CalculateInt fails on uninitialized")
 
 	uut.SetArg(boolArg)
@@ -350,6 +393,7 @@ func TestBoolToIntConversion(t *testing.T) {
 		t,
 		uut,
 		1,
+		noGrammarContext,
 		"IntToStringConversion.CalculateInt")
 
 	boolArg.Value = false
@@ -357,6 +401,7 @@ func TestBoolToIntConversion(t *testing.T) {
 		t,
 		uut,
 		0,
+		noGrammarContext,
 		"IntToStringConversion.CalculateInt")
 }
 
@@ -368,6 +413,7 @@ func TestBoolToFloatConversion(t *testing.T) {
 	assertCalculatesToFloatFails(
 		t,
 		uut,
+		noGrammarContext,
 		"BoolToFloatConversion.CalculateFloat fails on uninitialized")
 
 	uut.SetArg(boolArg)
@@ -375,6 +421,7 @@ func TestBoolToFloatConversion(t *testing.T) {
 		t,
 		uut,
 		1.,
+		noGrammarContext,
 		"BoolToFloatConversion.CalculateFloat")
 
 	boolArg.Value = false
@@ -382,6 +429,7 @@ func TestBoolToFloatConversion(t *testing.T) {
 		t,
 		uut,
 		0.,
+		noGrammarContext,
 		"BoolToFloatConversion.CalculateFloat")
 }
 
@@ -393,6 +441,7 @@ func TestBoolToStringConversion(t *testing.T) {
 	assertCalculatesToStringFails(
 		t,
 		uut,
+		noGrammarContext,
 		"BoolToStringConversion.CalculateString fails on uninitialized")
 
 	uut.SetArg(boolArg)
@@ -400,6 +449,7 @@ func TestBoolToStringConversion(t *testing.T) {
 		t,
 		uut,
 		"true",
+		noGrammarContext,
 		"BoolToStringConversion.CalculateString")
 
 	boolArg.Value = false
@@ -407,5 +457,6 @@ func TestBoolToStringConversion(t *testing.T) {
 		t,
 		uut,
 		"false",
+		noGrammarContext,
 		"BoolToStringConversion.CalculateString")
 }

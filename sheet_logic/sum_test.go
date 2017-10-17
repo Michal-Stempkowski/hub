@@ -15,12 +15,14 @@ func TestIntSum(t *testing.T) {
 		t,
 		uut,
 		5,
+		noGrammarContext,
 		"IntSum.CalculateInt")
 
 	uut.SetLeftArg(NewEmptyIntExpression())
 	assertCalculatesToIntFails(
 		t,
 		uut,
+		noGrammarContext,
 		"IntSum.CalculateInt fails when argLeft missing")
 
 	uut.SetLeftArg(NewIntConstant(variableName, 2))
@@ -28,6 +30,7 @@ func TestIntSum(t *testing.T) {
 	assertCalculatesToIntFails(
 		t,
 		uut,
+		noGrammarContext,
 		"IntSum.CalculateInt fails when argRight missing")
 }
 
@@ -41,12 +44,14 @@ func TestFloatSum(t *testing.T) {
 		t,
 		uut,
 		5.7,
+		noGrammarContext,
 		"FloatSum.CalculateFloat")
 
 	uut.SetLeftArg(NewEmptyFloatExpression())
 	assertCalculatesToFloatFails(
 		t,
 		uut,
+		noGrammarContext,
 		"FloatSum.CalculateFloat fails when argLeft missing")
 
 	uut.SetLeftArg(NewFloatConstant(variableName, 2.5))
@@ -54,6 +59,7 @@ func TestFloatSum(t *testing.T) {
 	assertCalculatesToFloatFails(
 		t,
 		uut,
+		noGrammarContext,
 		"FloatSum.CalculateFloat fails when argRight missing")
 }
 
@@ -67,12 +73,14 @@ func TestStringSum(t *testing.T) {
 		t,
 		uut,
 		"abc",
+		noGrammarContext,
 		"StringSum.CalculateString")
 
 	uut.SetLeftArg(NewEmptyStringExpression())
 	assertCalculatesToStringFails(
 		t,
 		uut,
+		noGrammarContext,
 		"StringSum.CalculateString fails when argLeft missing")
 
 	uut.SetLeftArg(NewStringConstant(variableName, "ab"))
@@ -80,5 +88,6 @@ func TestStringSum(t *testing.T) {
 	assertCalculatesToStringFails(
 		t,
 		uut,
+		noGrammarContext,
 		"StringSum.CalculateString fails when argRight missing")
 }

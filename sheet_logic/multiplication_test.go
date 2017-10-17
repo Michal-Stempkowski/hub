@@ -15,12 +15,14 @@ func TestIntMultiplication(t *testing.T) {
 		t,
 		uut,
 		6,
+		noGrammarContext,
 		"IntMultiplication.CalculateInt")
 
 	uut.SetLeftArg(NewEmptyIntExpression())
 	assertCalculatesToIntFails(
 		t,
 		uut,
+		noGrammarContext,
 		"IntMultiplication.CalculateInt fails when argLeft missing")
 
 	uut.SetLeftArg(NewIntConstant(variableName, 2))
@@ -28,6 +30,7 @@ func TestIntMultiplication(t *testing.T) {
 	assertCalculatesToIntFails(
 		t,
 		uut,
+		noGrammarContext,
 		"IntMultiplication.CalculateInt fails when argRight missing")
 }
 
@@ -41,12 +44,14 @@ func TestFloatMultiplication(t *testing.T) {
 		t,
 		uut,
 		3.75,
+		noGrammarContext,
 		"FloatMultiplication.CalculateFloat")
 
 	uut.SetLeftArg(NewEmptyFloatExpression())
 	assertCalculatesToFloatFails(
 		t,
 		uut,
+		noGrammarContext,
 		"FloatMultiplication.CalculateFloat fails when argLeft missing")
 
 	uut.SetLeftArg(NewFloatConstant(variableName, 2.5))
@@ -54,5 +59,6 @@ func TestFloatMultiplication(t *testing.T) {
 	assertCalculatesToFloatFails(
 		t,
 		uut,
+		noGrammarContext,
 		"FloatMultiplication.CalculateFloat fails when argRight missing")
 }

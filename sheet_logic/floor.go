@@ -10,10 +10,10 @@ type FloatFloor struct {
 	UnaryOperationFloat
 }
 
-func (f *FloatFloor) CalculateFloat() (result float64, err error) {
+func (f *FloatFloor) CalculateFloat(g GrammarContext) (result float64, err error) {
 	var arg float64
 
-	if arg, err = f.GetArg().CalculateFloat(); err == nil {
+	if arg, err = f.GetArg().CalculateFloat(g); err == nil {
 		result = math.Floor(arg)
 	}
 

@@ -15,12 +15,14 @@ func TestIntDivision(t *testing.T) {
 		t,
 		uut,
 		1,
+		noGrammarContext,
 		"IntDivision.CalculateInt")
 
 	uut.SetLeftArg(NewEmptyIntExpression())
 	assertCalculatesToIntFails(
 		t,
 		uut,
+		noGrammarContext,
 		"IntDivision.CalculateInt fails when argLeft missing")
 
 	uut.SetLeftArg(NewIntConstant(variableName, 3))
@@ -28,12 +30,14 @@ func TestIntDivision(t *testing.T) {
 	assertCalculatesToIntFails(
 		t,
 		uut,
+		noGrammarContext,
 		"IntDivision.CalculateInt fails when argRight missing")
 
 	uut.SetRightArg(NewIntConstant(variableName, 0))
 	assertCalculatesToIntFails(
 		t,
 		uut,
+		noGrammarContext,
 		"IntDivision.CalculateInt fails when dividing by zero")
 }
 
@@ -47,12 +51,14 @@ func TestFloatDivision(t *testing.T) {
 		t,
 		uut,
 		3.0,
+		noGrammarContext,
 		"FloatDivision.CalculateFloat")
 
 	uut.SetLeftArg(NewEmptyFloatExpression())
 	assertCalculatesToFloatFails(
 		t,
 		uut,
+		noGrammarContext,
 		"FloatDivision.CalculateFloat fails when argLeft missing")
 
 	uut.SetLeftArg(NewFloatConstant(variableName, 7.5))
@@ -60,11 +66,13 @@ func TestFloatDivision(t *testing.T) {
 	assertCalculatesToFloatFails(
 		t,
 		uut,
+		noGrammarContext,
 		"FloatDivision.CalculateFloat fails when argRight missing")
 
 	uut.SetRightArg(NewFloatConstant(variableName, 0.0))
 	assertCalculatesToFloatFails(
 		t,
 		uut,
+		noGrammarContext,
 		"FloatDivision.CalculateFloat fails when dividing by zero")
 }

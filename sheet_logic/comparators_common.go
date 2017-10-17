@@ -8,9 +8,9 @@ type IntComparator struct {
 	comparatorFunc func(int64, int64) bool
 }
 
-func (i *IntComparator) CalculateBool() (result bool, err error) {
-	leftVal, errL := i.GetLeftArg().CalculateInt()
-	rightVal, errR := i.GetRightArg().CalculateInt()
+func (i *IntComparator) CalculateBool(g GrammarContext) (result bool, err error) {
+	leftVal, errL := i.GetLeftArg().CalculateInt(g)
+	rightVal, errR := i.GetRightArg().CalculateInt(g)
 	if err = getFirstError(errL, errR); err == nil {
 		result = i.comparatorFunc(leftVal, rightVal)
 	}
@@ -32,9 +32,9 @@ type FloatComparator struct {
 	comparatorFunc func(float64, float64) bool
 }
 
-func (f *FloatComparator) CalculateBool() (result bool, err error) {
-	leftVal, errL := f.GetLeftArg().CalculateFloat()
-	rightVal, errR := f.GetRightArg().CalculateFloat()
+func (f *FloatComparator) CalculateBool(g GrammarContext) (result bool, err error) {
+	leftVal, errL := f.GetLeftArg().CalculateFloat(g)
+	rightVal, errR := f.GetRightArg().CalculateFloat(g)
 	if err = getFirstError(errL, errR); err == nil {
 		result = f.comparatorFunc(leftVal, rightVal)
 	}
@@ -56,9 +56,9 @@ type BoolComparator struct {
 	comparatorFunc func(bool, bool) bool
 }
 
-func (b *BoolComparator) CalculateBool() (result bool, err error) {
-	leftVal, errL := b.GetLeftArg().CalculateBool()
-	rightVal, errR := b.GetRightArg().CalculateBool()
+func (b *BoolComparator) CalculateBool(g GrammarContext) (result bool, err error) {
+	leftVal, errL := b.GetLeftArg().CalculateBool(g)
+	rightVal, errR := b.GetRightArg().CalculateBool(g)
 	if err = getFirstError(errL, errR); err == nil {
 		result = b.comparatorFunc(leftVal, rightVal)
 	}
@@ -80,9 +80,9 @@ type StringComparator struct {
 	comparatorFunc func(string, string) bool
 }
 
-func (s *StringComparator) CalculateBool() (result bool, err error) {
-	leftVal, errL := s.GetLeftArg().CalculateString()
-	rightVal, errR := s.GetRightArg().CalculateString()
+func (s *StringComparator) CalculateBool(g GrammarContext) (result bool, err error) {
+	leftVal, errL := s.GetLeftArg().CalculateString(g)
+	rightVal, errR := s.GetRightArg().CalculateString(g)
 	if err = getFirstError(errL, errR); err == nil {
 		result = s.comparatorFunc(leftVal, rightVal)
 	}

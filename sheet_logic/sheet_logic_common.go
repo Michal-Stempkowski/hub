@@ -7,6 +7,13 @@ import (
 
 const EmptyExpressionName string = "<none>"
 
+type GrammarContext interface {
+	GetIntValue(string) (int64, error)
+	GetFloatValue(string) (float64, error)
+	GetStringValue(string) (string, error)
+	GetBoolValue(string) (bool, error)
+}
+
 type GrammarElement interface {
 	GetType() sheet_logic_types.T
 	GetName() string
@@ -67,14 +74,14 @@ type BinaryOperationBool interface {
 
 // Because there will be also volatile sources (formulas, textfields etc.)
 type IntExpresion interface {
-	CalculateInt() (int64, error)
+	CalculateInt(GrammarContext) (int64, error)
 }
 
 type EmptyIntExpression struct {
 	GrammarElement
 }
 
-func (e *EmptyIntExpression) CalculateInt() (int64, error) {
+func (e *EmptyIntExpression) CalculateInt(_ GrammarContext) (int64, error) {
 	return 0, fmt.Errorf("%T.CalculateInt", e)
 }
 
@@ -84,14 +91,14 @@ func NewEmptyIntExpression() *EmptyIntExpression {
 }
 
 type FloatExpresion interface {
-	CalculateFloat() (float64, error)
+	CalculateFloat(GrammarContext) (float64, error)
 }
 
 type EmptyFloatExpression struct {
 	GrammarElement
 }
 
-func (e *EmptyFloatExpression) CalculateFloat() (float64, error) {
+func (e *EmptyFloatExpression) CalculateFloat(_ GrammarContext) (float64, error) {
 	return 0, fmt.Errorf("%T.CalculateFloat", e)
 }
 
@@ -101,14 +108,14 @@ func NewEmptyFloatExpression() *EmptyFloatExpression {
 }
 
 type StringExpresion interface {
-	CalculateString() (string, error)
+	CalculateString(GrammarContext) (string, error)
 }
 
 type EmptyStringExpression struct {
 	GrammarElement
 }
 
-func (e *EmptyStringExpression) CalculateString() (string, error) {
+func (e *EmptyStringExpression) CalculateString(_ GrammarContext) (string, error) {
 	return "", fmt.Errorf("%T.CalculateString", e)
 }
 
@@ -118,14 +125,14 @@ func NewEmptyStringExpression() *EmptyStringExpression {
 }
 
 type BoolExpresion interface {
-	CalculateBool() (bool, error)
+	CalculateBool(GrammarContext) (bool, error)
 }
 
 type EmptyBoolExpression struct {
 	GrammarElement
 }
 
-func (e *EmptyBoolExpression) CalculateBool() (bool, error) {
+func (e *EmptyBoolExpression) CalculateBool(_ GrammarContext) (bool, error) {
 	return false, fmt.Errorf("%T.CalculateBool", e)
 }
 

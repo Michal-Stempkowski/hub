@@ -7,7 +7,7 @@ type IntConstant struct {
 	Value int64
 }
 
-func (i *IntConstant) CalculateInt() (int64, error) {
+func (i *IntConstant) CalculateInt(_ GrammarContext) (int64, error) {
 	return i.Value, nil
 }
 
@@ -20,7 +20,7 @@ type StringConstant struct {
 	Value string
 }
 
-func (s *StringConstant) CalculateString() (string, error) {
+func (s *StringConstant) CalculateString(_ GrammarContext) (string, error) {
 	return s.Value, nil
 }
 
@@ -33,7 +33,7 @@ type FloatConstant struct {
 	Value float64
 }
 
-func (f *FloatConstant) CalculateFloat() (float64, error) {
+func (f *FloatConstant) CalculateFloat(_ GrammarContext) (float64, error) {
 	return f.Value, nil
 }
 
@@ -46,7 +46,7 @@ type BoolConstant struct {
 	Value bool
 }
 
-func (b *BoolConstant) CalculateBool() (bool, error) {
+func (b *BoolConstant) CalculateBool(_ GrammarContext) (bool, error) {
 	return b.Value, nil
 }
 

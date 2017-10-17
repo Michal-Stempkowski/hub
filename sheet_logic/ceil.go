@@ -10,10 +10,10 @@ type FloatCeil struct {
 	UnaryOperationFloat
 }
 
-func (f *FloatCeil) CalculateFloat() (result float64, err error) {
+func (f *FloatCeil) CalculateFloat(c GrammarContext) (result float64, err error) {
 	var arg float64
 
-	if arg, err = f.GetArg().CalculateFloat(); err == nil {
+	if arg, err = f.GetArg().CalculateFloat(c); err == nil {
 		result = math.Ceil(arg)
 	}
 

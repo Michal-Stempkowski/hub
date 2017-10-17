@@ -10,9 +10,9 @@ type IntModulo struct {
 	BinaryOperationInt
 }
 
-func (i *IntModulo) CalculateInt() (result int64, err error) {
-	leftVal, errL := i.GetLeftArg().CalculateInt()
-	rightVal, errR := i.GetRightArg().CalculateInt()
+func (i *IntModulo) CalculateInt(g GrammarContext) (result int64, err error) {
+	leftVal, errL := i.GetLeftArg().CalculateInt(g)
+	rightVal, errR := i.GetRightArg().CalculateInt(g)
 	var errDivisionByZero error
 	if rightVal == 0 {
 		errDivisionByZero = fmt.Errorf("IntDivision: Division by zero!")

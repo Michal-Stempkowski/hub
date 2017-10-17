@@ -14,10 +14,10 @@ type IntToStringConversion struct {
 	UnaryOperationInt
 }
 
-func (i *IntToStringConversion) CalculateString() (result string, err error) {
+func (i *IntToStringConversion) CalculateString(g GrammarContext) (result string, err error) {
 	var intVal int64
 
-	if intVal, err = i.GetArg().CalculateInt(); err == nil {
+	if intVal, err = i.GetArg().CalculateInt(g); err == nil {
 		result = strconv.FormatInt(intVal, 10)
 	}
 
@@ -35,10 +35,10 @@ type IntToFloatConversion struct {
 	UnaryOperationInt
 }
 
-func (i *IntToFloatConversion) CalculateFloat() (result float64, err error) {
+func (i *IntToFloatConversion) CalculateFloat(g GrammarContext) (result float64, err error) {
 	var intVal int64
 
-	if intVal, err = i.GetArg().CalculateInt(); err == nil {
+	if intVal, err = i.GetArg().CalculateInt(g); err == nil {
 		result = float64(intVal)
 	}
 
@@ -52,10 +52,13 @@ func NewIntToFloatConversion(name string) *IntToFloatConversion {
 }
 
 func generalizedCalculateFloatAndConvertToInt(
-	expr FloatExpresion, rounding_function func(float64) float64) (result int64, err error) {
+	expr FloatExpresion,
+	rounding_function func(float64) float64,
+	g GrammarContext) (result int64, err error) {
+
 	var floatVal float64
 
-	if floatVal, err = expr.CalculateFloat(); err == nil {
+	if floatVal, err = expr.CalculateFloat(g); err == nil {
 		floatVal = rounding_function(floatVal)
 		if floatVal >= math.MaxInt64 || floatVal <= math.MinInt64 {
 			err = fmt.Errorf("Number %g to big to be represented as int")
@@ -72,8 +75,8 @@ type FloatToIntConversion struct {
 	UnaryOperationFloat
 }
 
-func (f *FloatToIntConversion) CalculateInt() (int64, error) {
-	return generalizedCalculateFloatAndConvertToInt(f.GetArg(), framework.Round)
+func (f *FloatToIntConversion) CalculateInt(g GrammarContext) (int64, error) {
+	return generalizedCalculateFloatAndConvertToInt(f.GetArg(), framework.Round, g)
 }
 
 func NewFloatToIntConversion(name string) *FloatToIntConversion {
@@ -87,8 +90,8 @@ type FloatToIntRoundDownConversion struct {
 	UnaryOperationFloat
 }
 
-func (f *FloatToIntRoundDownConversion) CalculateInt() (result int64, err error) {
-	return generalizedCalculateFloatAndConvertToInt(f.GetArg(), math.Floor)
+func (f *FloatToIntRoundDownConversion) CalculateInt(g GrammarContext) (result int64, err error) {
+	return generalizedCalculateFloatAndConvertToInt(f.GetArg(), math.Floor, g)
 }
 
 func NewFloatToIntRoundDownConversion(name string) *FloatToIntRoundDownConversion {
@@ -102,8 +105,8 @@ type FloatToIntRoundUpConversion struct {
 	UnaryOperationFloat
 }
 
-func (f *FloatToIntRoundUpConversion) CalculateInt() (result int64, err error) {
-	return generalizedCalculateFloatAndConvertToInt(f.GetArg(), math.Ceil)
+func (f *FloatToIntRoundUpConversion) CalculateInt(g GrammarContext) (result int64, err error) {
+	return generalizedCalculateFloatAndConvertToInt(f.GetArg(), math.Ceil, g)
 }
 
 func NewFloatToIntRoundUpConversion(name string) *FloatToIntRoundUpConversion {
@@ -117,10 +120,10 @@ type StringToIntConversion struct {
 	UnaryOperationString
 }
 
-func (s *StringToIntConversion) CalculateInt() (result int64, err error) {
+func (s *StringToIntConversion) CalculateInt(g GrammarContext) (result int64, err error) {
 	var stringVal string
 
-	if stringVal, err = s.GetArg().CalculateString(); err == nil {
+	if stringVal, err = s.GetArg().CalculateString(g); err == nil {
 		result, err = strconv.ParseInt(stringVal, 10, 64)
 	}
 
@@ -138,10 +141,10 @@ type StringToFloatConversion struct {
 	UnaryOperationString
 }
 
-func (s *StringToFloatConversion) CalculateFloat() (result float64, err error) {
+func (s *StringToFloatConversion) CalculateFloat(g GrammarContext) (result float64, err error) {
 	var stringVal string
 
-	if stringVal, err = s.GetArg().CalculateString(); err == nil {
+	if stringVal, err = s.GetArg().CalculateString(g); err == nil {
 		result, err = strconv.ParseFloat(stringVal, 64)
 	}
 
@@ -160,9 +163,9 @@ type FloatToStringConversion struct {
 	Precision int64
 }
 
-func (f *FloatToStringConversion) CalculateString() (result string, err error) {
+func (f *FloatToStringConversion) CalculateString(g GrammarContext) (result string, err error) {
 	var floatVal float64
-	floatVal, err = f.GetArg().CalculateFloat()
+	floatVal, err = f.GetArg().CalculateFloat(g)
 
 	if f.Precision < 0 {
 		err = fmt.Errorf("Negative precision not supported: %d", f.Precision)
@@ -190,10 +193,10 @@ type IntToBoolConversion struct {
 	UnaryOperationInt
 }
 
-func (i *IntToBoolConversion) CalculateBool() (result bool, err error) {
+func (i *IntToBoolConversion) CalculateBool(g GrammarContext) (result bool, err error) {
 	var intVal int64
 
-	if intVal, err = i.GetArg().CalculateInt(); err == nil {
+	if intVal, err = i.GetArg().CalculateInt(g); err == nil {
 		if intVal == 0 {
 			result = false
 		} else {
@@ -215,10 +218,10 @@ type FloatToBoolConversion struct {
 	UnaryOperationFloat
 }
 
-func (f *FloatToBoolConversion) CalculateBool() (result bool, err error) {
+func (f *FloatToBoolConversion) CalculateBool(g GrammarContext) (result bool, err error) {
 	var floatVal float64
 
-	if floatVal, err = f.GetArg().CalculateFloat(); err == nil {
+	if floatVal, err = f.GetArg().CalculateFloat(g); err == nil {
 		result = math.IsInf(floatVal, 1) ||
 			math.IsInf(floatVal, -1) ||
 			math.IsNaN(floatVal) ||
@@ -239,10 +242,10 @@ type StringToBoolConversion struct {
 	UnaryOperationString
 }
 
-func (s *StringToBoolConversion) CalculateBool() (result bool, err error) {
+func (s *StringToBoolConversion) CalculateBool(g GrammarContext) (result bool, err error) {
 	var stringVal string
 
-	if stringVal, err = s.GetArg().CalculateString(); err == nil {
+	if stringVal, err = s.GetArg().CalculateString(g); err == nil {
 		switch stringVal {
 		case "true":
 			result = true
@@ -269,10 +272,10 @@ type BoolToIntConversion struct {
 	UnaryOperationBool
 }
 
-func (b *BoolToIntConversion) CalculateInt() (result int64, err error) {
+func (b *BoolToIntConversion) CalculateInt(g GrammarContext) (result int64, err error) {
 	var boolVal bool
 
-	if boolVal, err = b.GetArg().CalculateBool(); err == nil {
+	if boolVal, err = b.GetArg().CalculateBool(g); err == nil {
 		if boolVal {
 			result = 1
 		} else {
@@ -294,10 +297,10 @@ type BoolToFloatConversion struct {
 	UnaryOperationBool
 }
 
-func (b *BoolToFloatConversion) CalculateFloat() (result float64, err error) {
+func (b *BoolToFloatConversion) CalculateFloat(g GrammarContext) (result float64, err error) {
 	var boolVal bool
 
-	if boolVal, err = b.GetArg().CalculateBool(); err == nil {
+	if boolVal, err = b.GetArg().CalculateBool(g); err == nil {
 		if boolVal {
 			result = 1.
 		} else {
@@ -319,10 +322,10 @@ type BoolToStringConversion struct {
 	UnaryOperationBool
 }
 
-func (b *BoolToStringConversion) CalculateString() (result string, err error) {
+func (b *BoolToStringConversion) CalculateString(g GrammarContext) (result string, err error) {
 	var boolVal bool
 
-	if boolVal, err = b.GetArg().CalculateBool(); err == nil {
+	if boolVal, err = b.GetArg().CalculateBool(g); err == nil {
 		if boolVal {
 			result = "true"
 		} else {

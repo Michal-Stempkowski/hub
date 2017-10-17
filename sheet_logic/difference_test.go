@@ -15,12 +15,14 @@ func TestIntDifference(t *testing.T) {
 		t,
 		uut,
 		-1,
+		noGrammarContext,
 		"IntDifference.CalculateInt")
 
 	uut.SetLeftArg(NewEmptyIntExpression())
 	assertCalculatesToIntFails(
 		t,
 		uut,
+		noGrammarContext,
 		"IntDifference.CalculateInt fails when argLeft missing")
 
 	uut.SetLeftArg(NewIntConstant(variableName, 2))
@@ -28,6 +30,7 @@ func TestIntDifference(t *testing.T) {
 	assertCalculatesToIntFails(
 		t,
 		uut,
+		noGrammarContext,
 		"IntDifference.CalculateInt fails when argRight missing")
 }
 
@@ -41,12 +44,14 @@ func TestFloatDifference(t *testing.T) {
 		t,
 		uut,
 		-0.7,
+		noGrammarContext,
 		"FloatDifference.CalculateFloat")
 
 	uut.SetLeftArg(NewEmptyFloatExpression())
 	assertCalculatesToFloatFails(
 		t,
 		uut,
+		noGrammarContext,
 		"FloatDifference.CalculateFloat fails when argLeft missing")
 
 	uut.SetLeftArg(NewFloatConstant(variableName, 2.5))
@@ -54,5 +59,6 @@ func TestFloatDifference(t *testing.T) {
 	assertCalculatesToFloatFails(
 		t,
 		uut,
+		noGrammarContext,
 		"FloatDifference.CalculateFloat fails when argRight missing")
 }

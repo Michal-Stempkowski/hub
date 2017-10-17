@@ -10,10 +10,10 @@ type FloatRound struct {
 	UnaryOperationFloat
 }
 
-func (f *FloatRound) CalculateFloat() (result float64, err error) {
+func (f *FloatRound) CalculateFloat(g GrammarContext) (result float64, err error) {
 	var arg float64
 
-	if arg, err = f.GetArg().CalculateFloat(); err == nil {
+	if arg, err = f.GetArg().CalculateFloat(g); err == nil {
 		result = framework.Round(arg)
 	}
 

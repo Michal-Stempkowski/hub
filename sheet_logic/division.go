@@ -10,9 +10,9 @@ type IntDivision struct {
 	BinaryOperationInt
 }
 
-func (i *IntDivision) CalculateInt() (result int64, err error) {
-	leftVal, errL := i.GetLeftArg().CalculateInt()
-	rightVal, errR := i.GetRightArg().CalculateInt()
+func (i *IntDivision) CalculateInt(g GrammarContext) (result int64, err error) {
+	leftVal, errL := i.GetLeftArg().CalculateInt(g)
+	rightVal, errR := i.GetRightArg().CalculateInt(g)
 	var errDivisionByZero error
 	if rightVal == 0 {
 		errDivisionByZero = fmt.Errorf("IntDivision: Division by zero!")
@@ -35,9 +35,9 @@ type FloatDivision struct {
 	BinaryOperationFloat
 }
 
-func (f *FloatDivision) CalculateFloat() (result float64, err error) {
-	leftVal, errL := f.GetLeftArg().CalculateFloat()
-	rightVal, errR := f.GetRightArg().CalculateFloat()
+func (f *FloatDivision) CalculateFloat(g GrammarContext) (result float64, err error) {
+	leftVal, errL := f.GetLeftArg().CalculateFloat(g)
+	rightVal, errR := f.GetRightArg().CalculateFloat(g)
 	var errDivisionByZero error
 	if rightVal == 0 {
 		errDivisionByZero = fmt.Errorf("FloatDivision: Division by zero!")

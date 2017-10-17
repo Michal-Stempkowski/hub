@@ -13,6 +13,7 @@ func TestIntGreaterEqual(t *testing.T) {
 	IntComparatorScenario(
 		t,
 		(*IntComparator)(uut),
+		noGrammarContext,
 		"IntGreaterEqual",
 		lesser,
 		equal,
@@ -27,6 +28,7 @@ func TestFloatGreaterEqual(t *testing.T) {
 	FloatComparatorScenario(
 		t,
 		(*FloatComparator)(uut),
+		noGrammarContext,
 		"FloatGreaterEqual",
 		lesser,
 		equal,
@@ -41,6 +43,7 @@ func TestStringGreaterEqual(t *testing.T) {
 	StringComparatorScenario(
 		t,
 		(*StringComparator)(uut),
+		noGrammarContext,
 		"StringGreaterEqual",
 		lesser,
 		equal,

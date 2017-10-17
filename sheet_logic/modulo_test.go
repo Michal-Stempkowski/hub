@@ -15,12 +15,14 @@ func TestIntModulo(t *testing.T) {
 		t,
 		uut,
 		1,
+		noGrammarContext,
 		"IntModulo.CalculateInt")
 
 	uut.SetLeftArg(NewEmptyIntExpression())
 	assertCalculatesToIntFails(
 		t,
 		uut,
+		noGrammarContext,
 		"IntModulo.CalculateInt fails when argLeft missing")
 
 	uut.SetLeftArg(NewIntConstant(variableName, 5))
@@ -28,11 +30,13 @@ func TestIntModulo(t *testing.T) {
 	assertCalculatesToIntFails(
 		t,
 		uut,
+		noGrammarContext,
 		"IntModulo.CalculateInt fails when argRight missing")
 
 	uut.SetRightArg(NewIntConstant(variableName, 0))
 	assertCalculatesToIntFails(
 		t,
 		uut,
+		noGrammarContext,
 		"IntModulo.CalculateInt fails when dividing by zero")
 }

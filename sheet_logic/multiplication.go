@@ -9,9 +9,9 @@ type IntMultiplication struct {
 	BinaryOperationInt
 }
 
-func (i *IntMultiplication) CalculateInt() (result int64, err error) {
-	leftVal, errL := i.GetLeftArg().CalculateInt()
-	rightVal, errR := i.GetRightArg().CalculateInt()
+func (i *IntMultiplication) CalculateInt(g GrammarContext) (result int64, err error) {
+	leftVal, errL := i.GetLeftArg().CalculateInt(g)
+	rightVal, errR := i.GetRightArg().CalculateInt(g)
 	if err = getFirstError(errL, errR); err == nil {
 		result = leftVal * rightVal
 	}
@@ -30,9 +30,9 @@ type FloatMultiplication struct {
 	BinaryOperationFloat
 }
 
-func (f *FloatMultiplication) CalculateFloat() (result float64, err error) {
-	leftVal, errL := f.GetLeftArg().CalculateFloat()
-	rightVal, errR := f.GetRightArg().CalculateFloat()
+func (f *FloatMultiplication) CalculateFloat(g GrammarContext) (result float64, err error) {
+	leftVal, errL := f.GetLeftArg().CalculateFloat(g)
+	rightVal, errR := f.GetRightArg().CalculateFloat(g)
 	if err = getFirstError(errL, errR); err == nil {
 		result = leftVal * rightVal
 	}
