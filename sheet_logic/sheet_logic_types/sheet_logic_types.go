@@ -103,4 +103,5 @@ const (
 	// Input
 	IntInput
 	FloatInput
+	StringInput
 )

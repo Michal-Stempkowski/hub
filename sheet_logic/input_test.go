@@ -57,3 +57,28 @@ func TestFloatInput(t *testing.T) {
 	uut.Identifier = inputIdentifier
 	assertCalculatesToFloat(t, uut, 5.0, c, "TestFloatInput (ok case)")
 }
+
+func TestStringInput(t *testing.T) {
+	uut := NewStringInput(variableName)
+
+	c := noGrammarContext
+	uut.Identifier = inputIdentifier
+	assertCalculatesToStringFails(
+		t, uut, c, "TestStringInput (grammar context is needed)")
+
+	c = newDummyGrammarContext()
+	// grammar context may or may not handle empty identifiers - StringInput verifies
+	c.expectedStrings[emptyIdentifier] = "a"
+	c.expectedStrings[inputIdentifier] = "b"
+
+	uut.Identifier = inputIdentifierNotExisting
+	assertCalculatesToStringFails(
+		t, uut, c, "TestStringInput (unknown identifier)")
+
+	uut.Identifier = emptyIdentifier
+	assertCalculatesToStringFails(
+		t, uut, c, "TestStringInput (empty identifier)")
+
+	uut.Identifier = inputIdentifier
+	assertCalculatesToString(t, uut, "b", c, "TestStringInput (ok case)")
+}

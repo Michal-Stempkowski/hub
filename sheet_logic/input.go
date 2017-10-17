@@ -30,7 +30,7 @@ type FloatInput struct {
 
 func (f *FloatInput) CalculateFloat(g GrammarContext) (float64, error) {
 	if f.Identifier == "" {
-		return 0, fmt.Errorf("FloatInput: Empty identifier not allowed!")
+		return 0.0, fmt.Errorf("FloatInput: Empty identifier not allowed!")
 	}
 	return g.GetFloatValue(f.Identifier)
 }
@@ -38,5 +38,23 @@ func (f *FloatInput) CalculateFloat(g GrammarContext) (float64, error) {
 func NewFloatInput(name string) *FloatInput {
 	return &FloatInput{
 		&grammarElementImpl{name, sheet_logic_types.FloatInput},
+		""}
+}
+
+type StringInput struct {
+	GrammarElement
+	Identifier string
+}
+
+func (f *StringInput) CalculateString(g GrammarContext) (string, error) {
+	if f.Identifier == "" {
+		return "", fmt.Errorf("StringInput: Empty identifier not allowed!")
+	}
+	return g.GetStringValue(f.Identifier)
+}
+
+func NewStringInput(name string) *StringInput {
+	return &StringInput{
+		&grammarElementImpl{name, sheet_logic_types.StringInput},
 		""}
 }
