@@ -8,11 +8,13 @@ const (
 	EmptyFloatExpression
 	EmptyStringExpression
 	EmptyBoolExpression
+
 	// Constants
 	IntConstant
 	StringConstant
 	FloatConstant
 	BoolConstant
+
 	// Conversions
 	IntToStringConversion
 	IntToFloatConversion
@@ -73,9 +75,6 @@ const (
 	BoolNotEquals
 	StringNotEquals
 
-	// Boolean expressions specific
-	Negation
-
 	// Lesser
 	IntLesser
 	FloatLesser
@@ -97,6 +96,10 @@ const (
 	StringGreaterEqual
 
 	// Logical
+	Negation
 	And
 	Or
+
+	// Input
+	IntInput
 )

@@ -28,26 +28,77 @@ const (
 	bigNumber                  = 1 << 80
 	bigNumberAsString          = "1.0e80"
 	noContext                  = "No grammar context passed"
+	idNotFound                 = "Input with given id (%s) not found"
 )
 
 var noGrammarContext *dummyGrammarContext
 
-type dummyGrammarContext struct{}
-
-func (_ *dummyGrammarContext) GetIntValue(string) (int64, error) {
-	return 0, fmt.Errorf(noContext)
+type dummyGrammarContext struct {
+	expectedInts    map[string]int64
+	expectedFloats  map[string]float64
+	expectedStrings map[string]string
+	expectedBools   map[string]bool
 }
 
-func (_ *dummyGrammarContext) GetFloatValue(string) (float64, error) {
-	return 0., fmt.Errorf(noContext)
+func (d *dummyGrammarContext) GetIntValue(id string) (result int64, err error) {
+	if d == nil {
+		err = fmt.Errorf(noContext)
+		return
+	}
+
+	var ok bool
+	if result, ok = d.expectedInts[id]; !ok {
+		err = fmt.Errorf(idNotFound, id)
+	}
+	return
 }
 
-func (_ *dummyGrammarContext) GetStringValue(string) (string, error) {
-	return "", fmt.Errorf(noContext)
+func (d *dummyGrammarContext) GetFloatValue(id string) (result float64, err error) {
+	if d == nil {
+		err = fmt.Errorf(noContext)
+		return
+	}
+
+	var ok bool
+	if result, ok = d.expectedFloats[id]; !ok {
+		err = fmt.Errorf(idNotFound, id)
+	}
+	return
 }
 
-func (_ *dummyGrammarContext) GetBoolValue(string) (bool, error) {
-	return false, fmt.Errorf(noContext)
+func (d *dummyGrammarContext) GetStringValue(id string) (result string, err error) {
+	if d == nil {
+		err = fmt.Errorf(noContext)
+		return
+	}
+
+	var ok bool
+	if result, ok = d.expectedStrings[id]; !ok {
+		err = fmt.Errorf(idNotFound, id)
+	}
+	return
+}
+
+func (d *dummyGrammarContext) GetBoolValue(id string) (result bool, err error) {
+	if d == nil {
+		err = fmt.Errorf(noContext)
+		return
+	}
+
+	var ok bool
+	if result, ok = d.expectedBools[id]; !ok {
+		err = fmt.Errorf(idNotFound, id)
+	}
+	return
+}
+
+func newDummyGrammarContext() *dummyGrammarContext {
+	return &dummyGrammarContext{
+		expectedInts:    make(map[string]int64),
+		expectedFloats:  make(map[string]float64),
+		expectedStrings: make(map[string]string),
+		expectedBools:   make(map[string]bool),
+	}
 }
 
 func assertHasType(t *testing.T, el GrammarElement, expectedType sheet_logic_types.T) {
