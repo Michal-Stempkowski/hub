@@ -82,3 +82,28 @@ func TestStringInput(t *testing.T) {
 	uut.Identifier = inputIdentifier
 	assertCalculatesToString(t, uut, "b", c, "TestStringInput (ok case)")
 }
+
+func TestBoolInput(t *testing.T) {
+	uut := NewBoolInput(variableName)
+
+	c := noGrammarContext
+	uut.Identifier = inputIdentifier
+	assertCalculatesToBoolFails(
+		t, uut, c, "TestBoolInput (grammar context is needed)")
+
+	c = newDummyGrammarContext()
+	// grammar context may or may not handle empty identifiers - BoolInput verifies
+	c.expectedBools[emptyIdentifier] = false
+	c.expectedBools[inputIdentifier] = true
+
+	uut.Identifier = inputIdentifierNotExisting
+	assertCalculatesToBoolFails(
+		t, uut, c, "TestBoolInput (unknown identifier)")
+
+	uut.Identifier = emptyIdentifier
+	assertCalculatesToBoolFails(
+		t, uut, c, "TestBoolInput (empty identifier)")
+
+	uut.Identifier = inputIdentifier
+	assertCalculatesToBool(t, uut, true, c, "TestBoolInput (ok case)")
+}

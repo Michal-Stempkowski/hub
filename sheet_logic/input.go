@@ -46,15 +46,33 @@ type StringInput struct {
 	Identifier string
 }
 
-func (f *StringInput) CalculateString(g GrammarContext) (string, error) {
-	if f.Identifier == "" {
+func (s *StringInput) CalculateString(g GrammarContext) (string, error) {
+	if s.Identifier == "" {
 		return "", fmt.Errorf("StringInput: Empty identifier not allowed!")
 	}
-	return g.GetStringValue(f.Identifier)
+	return g.GetStringValue(s.Identifier)
 }
 
 func NewStringInput(name string) *StringInput {
 	return &StringInput{
 		&grammarElementImpl{name, sheet_logic_types.StringInput},
+		""}
+}
+
+type BoolInput struct {
+	GrammarElement
+	Identifier string
+}
+
+func (b *BoolInput) CalculateBool(g GrammarContext) (bool, error) {
+	if b.Identifier == "" {
+		return false, fmt.Errorf("BoolInput: Empty identifier not allowed!")
+	}
+	return g.GetBoolValue(b.Identifier)
+}
+
+func NewBoolInput(name string) *BoolInput {
+	return &BoolInput{
+		&grammarElementImpl{name, sheet_logic_types.BoolInput},
 		""}
 }

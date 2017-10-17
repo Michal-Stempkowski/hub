@@ -104,4 +104,5 @@ const (
 	IntInput
 	FloatInput
 	StringInput
+	BoolInput
 )
